@@ -7,6 +7,7 @@ import { Navbar } from './components/Navbar'
 import { PromptBox } from './components/PromptBox'
 import { OSWindow } from './components/OSWindow'
 import { BentoCards } from './components/BentoCards'
+import { TechStackRequirements } from './components/TechStackRequirements'
 import { WaitlistCTA } from './components/WaitlistCTA'
 import { Footer } from './components/Footer'
 import { NorvaBot } from './components/CactusSVG'
@@ -170,6 +171,11 @@ export default function App() {
                 BENTO CARDS (replaces CapabilityCards)
             ==================================================== */}
             <BentoCards theme={theme} />
+
+            {/* ====================================================
+                TECH STACK REQUIREMENTS
+            ==================================================== */}
+            <TechStackRequirements theme={theme} />
 
             {/* ====================================================
                 TEAM SECTION (Founders)
