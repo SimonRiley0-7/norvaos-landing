@@ -25,7 +25,7 @@ export function TeamSection({ theme }) {
   const isDark = theme === 'dark'
 
   return (
-    <section style={{ padding: '90px 24px 0' }}>
+    <section className="px-6 md:px-6 pt-16 md:pt-[90px]">
       {/* Section header */}
       <motion.div
         className="flex flex-col items-center text-center mb-14"
@@ -65,15 +65,9 @@ export function TeamSection({ theme }) {
         </p>
       </motion.div>
 
-      {/* Cards container */}
       <div
-        className="mx-auto"
-        style={{
-          maxWidth: 920,
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(360px, 1fr))',
-          gap: 24,
-        }}
+        className="mx-auto grid grid-cols-1 md:grid-cols-2 gap-6"
+        style={{ maxWidth: 920 }}
       >
         {TEAM.map((member, i) => (
           <motion.div
@@ -86,7 +80,7 @@ export function TeamSection({ theme }) {
             className="group relative"
             style={{
               borderRadius: '2.25rem',
-              padding: 36,
+              padding: '24px 24px 32px 24px',
               background: isDark ? 'rgba(18,18,18,0.75)' : 'rgba(255,255,255,0.65)',
               backdropFilter: 'blur(24px)',
               WebkitBackdropFilter: 'blur(24px)',

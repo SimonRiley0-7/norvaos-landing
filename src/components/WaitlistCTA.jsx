@@ -58,8 +58,8 @@ export function WaitlistCTA({ theme }) {
     <section
       id="waitlist"
       style={{
-        margin: '80px 24px',
-        borderRadius: '3rem',
+        margin: '40px 16px',
+        borderRadius: '2rem',
         position: 'relative',
         overflow: 'hidden',
         ...(theme === 'dark'
@@ -93,8 +93,7 @@ export function WaitlistCTA({ theme }) {
       />
 
       <div
-        className="relative flex flex-col items-center text-center"
-        style={{ padding: '80px 48px' }}
+        className="relative flex flex-col items-center text-center px-6 py-16 md:px-12 md:py-20"
       >
         {/* Badge */}
         <motion.span
@@ -123,7 +122,7 @@ export function WaitlistCTA({ theme }) {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.1 }}
-          className="font-instrument text-5xl font-normal leading-tight m-0 mb-4"
+          className="font-instrument text-4xl md:text-5xl font-normal leading-tight m-0 mb-4"
           style={{ color: 'var(--text-primary)' }}
         >
           Your desktop is waiting.
@@ -150,7 +149,7 @@ export function WaitlistCTA({ theme }) {
               viewport={{ once: true }}
               transition={{ delay: 0.3 }}
               onSubmit={handleSubmit}
-              className="flex gap-3 w-full"
+              className="flex flex-col sm:flex-row gap-3 w-full"
             >
               <input
                 type="email"
@@ -230,9 +229,8 @@ export function WaitlistCTA({ theme }) {
           NO SPAM. BETA ACCESS ONLY.
         </p>
 
-        {/* Bouncing cactus */}
         <motion.div
-          className="absolute bottom-8 right-8"
+          className="absolute bottom-6 right-6 hidden md:block"
           animate={{ y: [0, -6, 0] }}
           transition={{ duration: 2, ease: 'easeInOut', repeat: Infinity }}
         >

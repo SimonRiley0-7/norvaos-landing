@@ -30,11 +30,11 @@ function InstagramIcon({ size = 16 }) {
 export function Footer() {
   return (
     <footer
-      className="flex items-center justify-between"
-      style={{ padding: '32px 48px', borderTop: '1px solid var(--border-subtle)' }}
+      className="flex flex-col sm:flex-row items-center justify-between gap-6 sm:gap-0 px-6 py-8 md:px-12"
+      style={{ borderTop: '1px solid var(--border-subtle)' }}
     >
       {/* Left */}
-      <div className="flex flex-col gap-1">
+      <div className="flex flex-col gap-1 items-center sm:items-start text-center sm:text-left">
         <span
           className="font-geist text-[13px] tracking-[0.25em]"
           style={{ color: 'var(--text-primary)', opacity: 0.7, fontWeight: 300 }}

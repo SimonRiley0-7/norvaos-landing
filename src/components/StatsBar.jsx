@@ -14,16 +14,11 @@ export function StatsBar({ theme }) {
       whileInView={{ opacity: 1 }}
       viewport={{ once: true }}
       transition={{ delay: 0.2, duration: 0.7 }}
+      className="flex flex-wrap justify-center items-center gap-6 md:gap-12 px-6 py-6 md:px-12 md:py-7"
       style={{
         width: '100%',
-        padding: '28px 48px',
         borderTop: theme === 'dark' ? '1px solid var(--border-subtle)' : '1px solid rgba(123,92,240,0.08)',
         borderBottom: theme === 'dark' ? '1px solid var(--border-subtle)' : '1px solid rgba(123,92,240,0.08)',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        gap: 48,
-        flexWrap: 'wrap',
       }}
     >
       {ITEMS.map((item, i) => (

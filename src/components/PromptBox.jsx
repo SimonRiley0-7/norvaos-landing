@@ -213,8 +213,7 @@ export function PromptBox({ theme, onThemeSwitch, onScrollToWaitlist }) {
   const sendMessage = useCallback((text) => {
     if (!text.trim()) return
     const response = getResponse(text)
-    if (response.action === 'switchTheme') onThemeSwitch(response.theme)
-    if (response.action === 'showEmailInput') onScrollToWaitlist()
+    
     setConversation(prev => [...prev, { type: 'user', text }])
     setInputValue('')
 
@@ -228,6 +227,19 @@ export function PromptBox({ theme, onThemeSwitch, onScrollToWaitlist }) {
         setIsProcessing(false)
         setBeamDuration(4)
         setConversation(prev => [...prev, { type: 'norva', message: response }])
+        
+        // Execute side effects AFTER the message is shown
+        if (response.action === 'switchTheme') {
+          onThemeSwitch(response.theme)
+        }
+        
+        if (response.action === 'showEmailInput') {
+          // Calculate typing duration based on text length (28ms per char)
+          const typeDuration = (response.text?.length || 0) * 28
+          setTimeout(() => {
+            onScrollToWaitlist()
+          }, typeDuration + 400) // Scroll smoothly after finishing typing
+        }
       }, 900)
     }, 300)
   }, [onThemeSwitch, onScrollToWaitlist])

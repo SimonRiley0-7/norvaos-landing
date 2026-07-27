@@ -149,12 +149,7 @@ export function BentoCards({ theme = 'dark' }) {
       </motion.div>
 
       <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(3, 1fr)',
-          gridTemplateRows: 'auto auto auto',
-          gap: 16,
-        }}
+        className="grid grid-cols-1 md:grid-cols-3 gap-4 md:grid-rows-[auto_auto_auto]"
       >
         {/* ── NORVA ENGINE — hero cell, col 1-2, row 1 ── */}
         <motion.div
@@ -163,8 +158,8 @@ export function BentoCards({ theme = 'dark' }) {
           viewport={{ once: true, margin: '-40px' }}
           transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
           whileHover={{ y: -6, transition: { type: 'spring', stiffness: 200, damping: 18 } }}
-          style={{ ...heroStyle, gridColumn: '1 / 3', gridRow: '1' }}
-          className="group"
+          style={{ ...heroStyle }}
+          className="group md:col-span-2 md:row-start-1"
         >
           {/* Permanent BorderBeam — most important card */}
           <BorderBeam duration={3} colorFrom="#7B5CF0" colorTo="#C4B0FA" />
@@ -199,8 +194,8 @@ export function BentoCards({ theme = 'dark' }) {
           viewport={{ once: true, margin: '-40px' }}
           transition={{ delay: 0.07, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
           whileHover={{ y: -6, transition: { type: 'spring', stiffness: 200, damping: 18 } }}
-          style={{ ...cardStyle, gridColumn: '3', gridRow: '1' }}
-          className="group"
+          style={{ ...cardStyle }}
+          className="group md:col-start-3 md:row-start-1"
         >
           <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-500 absolute inset-0 pointer-events-none" style={{ borderRadius: 'inherit' }}>
             <BorderBeam duration={3} colorFrom="#7B5CF0" colorTo="#C4B0FA" />
@@ -224,8 +219,8 @@ export function BentoCards({ theme = 'dark' }) {
           viewport={{ once: true, margin: '-40px' }}
           transition={{ delay: 0.10, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
           whileHover={{ y: -6, transition: { type: 'spring', stiffness: 200, damping: 18 } }}
-          style={{ ...cardStyle, gridColumn: '1', gridRow: '2' }}
-          className="group"
+          style={{ ...cardStyle }}
+          className="group md:col-start-1 md:row-start-2"
         >
           <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-500 absolute inset-0 pointer-events-none" style={{ borderRadius: 'inherit' }}>
             <BorderBeam duration={3} colorFrom="#7B5CF0" colorTo="#C4B0FA" />
@@ -249,8 +244,8 @@ export function BentoCards({ theme = 'dark' }) {
           viewport={{ once: true, margin: '-40px' }}
           transition={{ delay: 0.14, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
           whileHover={{ y: -6, transition: { type: 'spring', stiffness: 200, damping: 18 } }}
-          style={{ ...cardStyle, gridColumn: '2', gridRow: '2' }}
-          className="group"
+          style={{ ...cardStyle }}
+          className="group md:col-start-2 md:row-start-2"
         >
           <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-500 absolute inset-0 pointer-events-none" style={{ borderRadius: 'inherit' }}>
             <BorderBeam duration={3} colorFrom="#7B5CF0" colorTo="#C4B0FA" />
@@ -274,8 +269,8 @@ export function BentoCards({ theme = 'dark' }) {
           viewport={{ once: true, margin: '-40px' }}
           transition={{ delay: 0.18, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
           whileHover={{ y: -6, transition: { type: 'spring', stiffness: 200, damping: 18 } }}
-          style={{ ...cardStyle, gridColumn: '3', gridRow: '2' }}
-          className="group"
+          style={{ ...cardStyle }}
+          className="group md:col-start-3 md:row-start-2"
         >
           <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-500 absolute inset-0 pointer-events-none" style={{ borderRadius: 'inherit' }}>
             <BorderBeam duration={3} colorFrom="#7B5CF0" colorTo="#C4B0FA" />
@@ -299,8 +294,8 @@ export function BentoCards({ theme = 'dark' }) {
           viewport={{ once: true, margin: '-40px' }}
           transition={{ delay: 0.22, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
           whileHover={{ y: -4, transition: { type: 'spring', stiffness: 200, damping: 18 } }}
-          style={{ ...cardStyle, gridColumn: '1 / 4', gridRow: '3', display: 'flex', alignItems: 'center', gap: 48 }}
-          className="group"
+          style={{ ...cardStyle }}
+          className="group md:col-span-3 md:row-start-3 flex flex-col md:flex-row md:items-center gap-8 md:gap-12"
         >
           <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-500 absolute inset-0 pointer-events-none" style={{ borderRadius: 'inherit' }}>
             <BorderBeam duration={3} colorFrom="#7B5CF0" colorTo="#C4B0FA" />

@@ -100,7 +100,7 @@ export function OSWindow({ theme = 'dark' }) {
   const isDark = theme === 'dark'
 
   return (
-    <section style={{ marginTop: 120 }}>
+    <section className="mt-20 md:mt-[120px]">
       {/* Section label */}
       <div className="flex items-center justify-center gap-4 mb-10">
         <div style={{ flex: 1, height: 1, background: 'var(--border-subtle)' }} />
@@ -167,16 +167,15 @@ export function OSWindow({ theme = 'dark' }) {
           </span>
         </div>
 
-        {/* Tabs */}
         <div
-          className="flex px-6 gap-0"
-          style={{ borderBottom: isDark ? '1px solid rgba(255,255,255,0.06)' : '1px solid rgba(123,92,240,0.10)' }}
+          className="flex px-4 md:px-6 gap-0 overflow-x-auto"
+          style={{ borderBottom: isDark ? '1px solid rgba(255,255,255,0.06)' : '1px solid rgba(123,92,240,0.10)', scrollbarWidth: 'none' }}
         >
           {TABS.map(t => (
             <button
               key={t.id}
               onClick={() => setActiveTab(t.id)}
-              className="font-geist text-sm px-5 py-3 cursor-pointer transition-all relative flex items-center gap-2"
+              className="font-geist text-xs md:text-sm px-4 md:px-5 py-3 cursor-pointer transition-all relative flex items-center gap-2 whitespace-nowrap"
               style={{
                 background: 'transparent',
                 borderStyle: 'none',
@@ -207,8 +206,8 @@ export function OSWindow({ theme = 'dark' }) {
             animate={{ opacity: 1, filter: 'blur(0px)' }}
             exit={{ opacity: 0, filter: 'blur(4px)' }}
             transition={{ duration: 0.2, ease: 'easeInOut' }}
-            className="grid gap-8 p-8"
-            style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))' }}
+            className="grid gap-6 md:gap-8 p-6 md:p-8"
+            style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))' }}
           >
             {/* Left column */}
             <div className="flex flex-col gap-4">
