@@ -46,15 +46,15 @@ function buildWelcomeHTML(email) {
     </head>
     <body>
       <div class="card">
-        <div class="logo">🌵 NORVA OS</div>
+        <div class="logo"><img src="https://raw.githubusercontent.com/SimonRiley0-7/norvaos-landing/master/public/Norva-bot.png" alt="NORVA" style="width: 16px; height: 16px; vertical-align: middle; margin-right: 6px; border-radius: 4px;" /> NORVA OS</div>
         <div class="badge">WAITLIST CONFIRMED</div>
         <h1>You're on the list.</h1>
         <p>Hey there,</p>
-        <p>Thanks for joining the NORVA waitlist. We're building autonomous desktop intelligence that runs <span class="highlight">100% locally on Apple Silicon</span> — zero cloud roundtrips, zero telemetry.</p>
+        <p>Thanks for joining the NORVA waitlist. We're building autonomous desktop intelligence that runs <span class="highlight">100% locally</span> — zero cloud roundtrips, zero telemetry.</p>
         <p>As soon as the beta is ready for download, you'll get an instant notification and private access link right here at <strong>${email}</strong>.</p>
         <p>Between the two of us — one thinks it, one ships it. Stay tuned!</p>
         <div class="footer">
-          Built with 💜 by Bhumi Chavan & Shivam Wadatkar<br>
+          Built by Bhumi Chavan & Shivam Wadatkar<br>
           NORVA OS · Autonomous Desktop Intelligence
         </div>
       </div>
@@ -85,14 +85,14 @@ export function buildLaunchHTML(recipientEmail, customMessage, downloadUrl) {
     </head>
     <body>
       <div class="card">
-        <div class="logo">🌵 NORVA OS IS LIVE</div>
+        <div class="logo"><img src="https://raw.githubusercontent.com/SimonRiley0-7/norvaos-landing/master/public/Norva-bot.png" alt="NORVA" style="width: 16px; height: 16px; vertical-align: middle; margin-right: 6px; border-radius: 4px;" /> NORVA OS IS LIVE</div>
         <h1>NORVA Beta is Here. 🎉</h1>
         <p>Hey!</p>
         <p>${customMessage || "The wait is over. NORVA is officially live and ready for download on your Mac."}</p>
         <div style="text-align: center;">
           <a href="${launchUrl}" class="btn">Download NORVA for macOS</a>
         </div>
-        <p>Runs 100% locally on Apple Silicon. Qwen 1.5B model, LangGraph 5-agent pipeline, mlx-whisper voice control.</p>
+        <p>Runs 100% locally. Qwen 1.5B model, LangGraph 5-agent pipeline, mlx-whisper voice control.</p>
         <div class="footer">
           Shipped by Bhumi Chavan & Shivam Wadatkar<br>
           NORVA OS · Autonomous Desktop Intelligence
