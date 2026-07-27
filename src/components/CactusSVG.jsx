@@ -36,7 +36,7 @@ export function NorvaLogo({ size = 22, showName = true, className = '', theme = 
       style={{ userSelect: 'none' }}
     >
       <img
-        src="/logo.png"
+        src="/favicon-zoomed.png"
         alt="NORVA logo"
         className="rounded-lg object-cover flex-shrink-0"
         style={{
