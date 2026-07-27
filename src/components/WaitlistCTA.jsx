@@ -69,9 +69,9 @@ export function WaitlistCTA({ theme }) {
               boxShadow: '0 0 80px rgba(123,92,240,0.15), inset 0 1px 0 rgba(255,255,255,0.05)',
             }
           : {
-              background: 'linear-gradient(135deg, #EDE9FF 0%, #DDD6FF 50%, #E8E0FF 100%)',
-              border: '1px solid rgba(123,92,240,0.25)',
-              boxShadow: '0 20px 60px rgba(123,92,240,0.15)',
+              background: 'linear-gradient(135deg, #F0EDFF 0%, #E4DEFF 50%, #EAE4FF 100%)',
+              border: '1px solid rgba(123, 92, 240, 0.20)',
+              boxShadow: '0 20px 60px rgba(123, 92, 240, 0.12)',
             }),
       }}
     >

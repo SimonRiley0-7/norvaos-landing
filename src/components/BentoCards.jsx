@@ -12,15 +12,15 @@ const PURPLE_ICON_STYLE = {
 function getCardStyle(theme, isHero = false) {
   const isDark = theme === 'dark'
   return {
-    background: isDark ? 'rgba(20,20,20,0.80)' : 'rgba(255,255,255,0.65)',
+    background: isDark ? 'rgba(20,20,20,0.80)' : 'rgba(255, 255, 255, 0.80)',
     backdropFilter: 'blur(20px)',
     WebkitBackdropFilter: 'blur(20px)',
     border: isHero
-      ? (isDark ? '1px solid rgba(123,92,240,0.30)' : '1px solid rgba(123,92,240,0.35)')
-      : (isDark ? '1px solid rgba(255,255,255,0.08)' : '1px solid rgba(123,92,240,0.15)'),
+      ? (isDark ? '1px solid rgba(123,92,240,0.30)' : '1px solid rgba(123,92,240,0.12)')
+      : (isDark ? '1px solid rgba(255,255,255,0.08)' : '1px solid rgba(123,92,240,0.12)'),
     boxShadow: isDark
       ? 'inset 0 1px 0 rgba(255,255,255,0.06)'
-      : 'inset 0 1px 0 rgba(255,255,255,0.9), 0 10px 40px rgba(123,92,240,0.08)',
+      : '0 4px 24px rgba(123,92,240,0.08)',
     borderRadius: '2rem',
     padding: 32,
     position: 'relative',

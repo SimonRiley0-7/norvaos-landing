@@ -120,13 +120,13 @@ export function OSWindow({ theme = 'dark' }) {
           maxWidth: 1000,
           borderRadius: '2.5rem',
           /* NO overflow:hidden — kills Safari backdrop-filter */
-          background: isDark ? 'rgba(12,12,12,0.75)' : 'rgba(255,255,255,0.65)',
-          backdropFilter: isDark ? 'blur(24px) saturate(140%)' : 'blur(24px) saturate(180%)',
-          WebkitBackdropFilter: isDark ? 'blur(24px) saturate(140%)' : 'blur(24px) saturate(180%)',
-          border: isDark ? '1px solid rgba(255,255,255,0.08)' : '1px solid rgba(123,92,240,0.18)',
+          background: isDark ? 'rgba(12,12,12,0.75)' : 'rgba(255,255,255,0.75)',
+          backdropFilter: isDark ? 'blur(24px) saturate(140%)' : 'blur(24px) saturate(160%)',
+          WebkitBackdropFilter: isDark ? 'blur(24px) saturate(140%)' : 'blur(24px) saturate(160%)',
+          border: isDark ? '1px solid rgba(255,255,255,0.08)' : '1px solid rgba(123,92,240,0.12)',
           boxShadow: isDark
             ? 'inset 0 1px 0 rgba(255,255,255,0.06), 0 40px 120px rgba(0,0,0,0.7)'
-            : 'inset 0 1px 0 rgba(255,255,255,0.9), 0 20px 80px rgba(123,92,240,0.12)',
+            : '0 20px 60px rgba(123,92,240,0.10)',
         }}
       >
         {/* Toolbar */}
@@ -134,7 +134,7 @@ export function OSWindow({ theme = 'dark' }) {
           className="flex items-center px-5"
           style={{
             height: 48,
-            borderBottom: isDark ? '1px solid rgba(255,255,255,0.06)' : '1px solid rgba(123,92,240,0.12)',
+            borderBottom: isDark ? '1px solid rgba(255,255,255,0.06)' : '1px solid rgba(123,92,240,0.10)',
           }}
         >
           {/* macOS Window Controls */}
@@ -170,7 +170,7 @@ export function OSWindow({ theme = 'dark' }) {
         {/* Tabs */}
         <div
           className="flex px-6 gap-0"
-          style={{ borderBottom: isDark ? '1px solid rgba(255,255,255,0.06)' : '1px solid rgba(123,92,240,0.12)' }}
+          style={{ borderBottom: isDark ? '1px solid rgba(255,255,255,0.06)' : '1px solid rgba(123,92,240,0.10)' }}
         >
           {TABS.map(t => (
             <button

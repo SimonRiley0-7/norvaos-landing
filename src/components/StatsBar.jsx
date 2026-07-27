@@ -17,8 +17,8 @@ export function StatsBar({ theme }) {
       style={{
         width: '100%',
         padding: '28px 48px',
-        borderTop: '1px solid var(--border-subtle)',
-        borderBottom: '1px solid var(--border-subtle)',
+        borderTop: theme === 'dark' ? '1px solid var(--border-subtle)' : '1px solid rgba(123,92,240,0.08)',
+        borderBottom: theme === 'dark' ? '1px solid var(--border-subtle)' : '1px solid rgba(123,92,240,0.08)',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
@@ -31,7 +31,7 @@ export function StatsBar({ theme }) {
           <span
             className="font-mono-jb text-[10px] font-bold tracking-widest uppercase"
             style={{
-              color: theme === 'dark' ? 'var(--text-mono)' : 'rgba(91,63,208,0.60)',
+              color: theme === 'dark' ? 'var(--text-mono)' : 'rgba(91,63,208,0.55)',
             }}
           >
             {item}

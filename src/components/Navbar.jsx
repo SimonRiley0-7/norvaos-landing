@@ -10,16 +10,16 @@ export function Navbar({ theme }) {
     `rgba(15,15,15,${0.55 + v * 0.3})`
   )
   const lightBg = useTransform(scrolled, v =>
-    `rgba(255,255,255,${0.6 + v * 0.25})`
+    `rgba(255,255,255,${0.80 + v * 0.15})`
   )
   const blurVal = useTransform(scrolled, v =>
-    `blur(${16 + v * 8}px) saturate(160%) brightness(${theme === 'dark' ? 1.08 : 1.02})`
+    `blur(${theme === 'dark' ? 16 + v * 8 : 20}px) saturate(160%) brightness(${theme === 'dark' ? 1.08 : 1.0})`
   )
 
   const bg = theme === 'dark' ? darkBg : lightBg
   const border = theme === 'dark'
     ? 'rgba(255,255,255,0.09)'
-    : 'rgba(123,92,240,0.18)'
+    : 'rgba(123,92,240,0.12)'
 
   return (
     <motion.nav
@@ -32,19 +32,19 @@ export function Navbar({ theme }) {
         border: `1px solid ${border}`,
         boxShadow: theme === 'dark'
           ? 'inset 0 1px 0 rgba(255,255,255,0.07), inset 0 -1px 0 rgba(0,0,0,0.4), 0 20px 60px rgba(0,0,0,0.4)'
-          : 'inset 0 1px 0 rgba(255,255,255,0.9), 0 8px 32px rgba(123,92,240,0.12)',
+          : 'none',
       }}
       initial={{ y: -60, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
     >
       {/* Left: Logo lockup */}
-      <NorvaLogo size={22} showName />
+      <NorvaLogo size={22} showName theme={theme} />
 
       {/* Center: tagline (dark only) */}
       {theme === 'dark' && (
         <motion.span
-          className="font-mono-jb absolute left-1/2 -translate-x-1/2 text-[9px] uppercase tracking-widest whitespace-nowrap"
+          className="font-mono-jb text-[9px] uppercase tracking-[0.2em] whitespace-nowrap hidden md:block mx-8"
           style={{ color: 'var(--text-mono)' }}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}

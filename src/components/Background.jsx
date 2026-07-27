@@ -64,11 +64,11 @@ export function Background({ theme }) {
         <motion.div
           className="absolute rounded-full"
           style={{
-            width: 500,
-            height: 500,
+            width: 450,
+            height: 450,
             background: '#C4B0FA',
-            filter: 'blur(150px)',
-            opacity: 0.25,
+            filter: 'blur(160px)',
+            opacity: 0.18,
             top: '-5%',
             left: '15%',
             willChange: 'transform',
@@ -79,11 +79,11 @@ export function Background({ theme }) {
         <motion.div
           className="absolute rounded-full"
           style={{
-            width: 500,
-            height: 500,
+            width: 450,
+            height: 450,
             background: '#C4B0FA',
-            filter: 'blur(150px)',
-            opacity: 0.25,
+            filter: 'blur(160px)',
+            opacity: 0.18,
             bottom: '-5%',
             right: '10%',
             willChange: 'transform',

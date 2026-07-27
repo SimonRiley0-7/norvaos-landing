@@ -111,18 +111,10 @@ export default function App() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.2, duration: 0.7, type: 'spring', stiffness: 100, damping: 20 }}
                   className="font-instrument text-center m-0"
-                  style={{ fontSize: 'clamp(3rem, 6vw, 5.5rem)', lineHeight: 1.05, color: 'var(--text-primary)' }}
+                  style={{ fontSize: 'clamp(3rem, 6vw, 5.5rem)', lineHeight: 1.05, color: theme === 'dark' ? 'var(--text-primary)' : '#000000' }}
                 >
                   Your desktop,<br />
-                  <span
-                    style={{
-                      background: 'linear-gradient(135deg, var(--text-primary) 30%, #C4B0FA 100%)',
-                      WebkitBackgroundClip: 'text',
-                      WebkitTextFillColor: 'transparent',
-                    }}
-                  >
-                    finally.
-                  </span>
+                  finally.
                 </motion.h1>
 
                 {/* Hero subtext */}

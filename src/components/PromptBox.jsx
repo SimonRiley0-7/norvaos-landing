@@ -186,6 +186,8 @@ export function PromptBox({ theme, onThemeSwitch, onScrollToWaitlist }) {
   const timersRef = useRef([])
   const pauseTimerRef = useRef(null)
   const isPausedRef = useRef(false)
+  const typeIntervalRef = useRef(null)
+  const isCinematicTypingRef = useRef(false)
 
   // Placeholder rotation
   useEffect(() => {
@@ -235,18 +237,25 @@ export function PromptBox({ theme, onThemeSwitch, onScrollToWaitlist }) {
 
   const runScenario = useCallback((scenarioIndex) => {
     if (isPausedRef.current) return
+    scenarioRef.current = scenarioIndex
     const scenario = SCENARIOS[scenarioIndex % SCENARIOS.length]
     const response = scenario.response || getResponse(scenario.responseKey || scenario.prompt)
     const prompt = scenario.prompt
 
     // Auto-type into prompt
     let charIndex = 0
-    const typeInterval = setInterval(() => {
-      if (isPausedRef.current) { clearInterval(typeInterval); return }
+    isCinematicTypingRef.current = true
+    typeIntervalRef.current = setInterval(() => {
+      if (isPausedRef.current) { 
+        clearInterval(typeIntervalRef.current)
+        isCinematicTypingRef.current = false
+        return 
+      }
       charIndex++
       setInputValue(prompt.slice(0, charIndex))
       if (charIndex >= prompt.length) {
-        clearInterval(typeInterval)
+        clearInterval(typeIntervalRef.current)
+        isCinematicTypingRef.current = false
 
         // Send after brief pause
         addTimer(() => {
@@ -298,21 +307,45 @@ export function PromptBox({ theme, onThemeSwitch, onScrollToWaitlist }) {
     }
   }, []) // eslint-disable-line
 
-  // User input pauses cinematic for 8s
+  const pauseCinematic = useCallback(() => {
+    isPausedRef.current = true
+    clearAllTimers()
+    clearInterval(typeIntervalRef.current)
+    clearTimeout(pauseTimerRef.current)
+  }, [clearAllTimers])
+
+  const resumeCinematic = useCallback(() => {
+    clearTimeout(pauseTimerRef.current)
+    pauseTimerRef.current = setTimeout(() => {
+      isPausedRef.current = false
+      setConversation([])
+      runScenario(scenarioRef.current)
+    }, 8000)
+  }, [runScenario])
+
   const handleInputChange = e => {
     const val = e.target.value
     setInputValue(val)
-    if (val.length > 0) {
-      isPausedRef.current = true
-      clearAllTimers()
-      clearTimeout(pauseTimerRef.current)
-    } else {
-      clearTimeout(pauseTimerRef.current)
-      pauseTimerRef.current = setTimeout(() => {
-        isPausedRef.current = false
-        setConversation([])
-        runScenario(scenarioRef.current)
-      }, 8000)
+    isCinematicTypingRef.current = false
+    pauseCinematic()
+    if (val.length === 0) {
+      resumeCinematic()
+    }
+  }
+
+  const handleFocus = () => {
+    setIsFocused(true)
+    pauseCinematic()
+    if (isCinematicTypingRef.current) {
+      setInputValue('')
+      isCinematicTypingRef.current = false
+    }
+  }
+
+  const handleBlur = () => {
+    setIsFocused(false)
+    if (inputValue.length === 0) {
+      resumeCinematic()
     }
   }
 
@@ -404,17 +437,17 @@ export function PromptBox({ theme, onThemeSwitch, onScrollToWaitlist }) {
           style={{
             borderRadius: '1.75rem',
             padding: '16px 20px',
-            background: 'var(--bg-glass)',
+            background: theme === 'dark' ? 'var(--bg-glass)' : 'rgba(255,255,255,0.85)',
             backdropFilter: 'blur(24px) saturate(160%) brightness(1.08)',
             WebkitBackdropFilter: 'blur(24px) saturate(160%) brightness(1.08)',
             border: isAcknowledging
               ? '1px solid #7B5CF0'
-              : `1px solid ${isFocused ? 'var(--border-focus)' : 'var(--border-glass)'}`,
+              : `1px solid ${isFocused ? (theme === 'dark' ? 'var(--border-focus)' : '#7B5CF0') : (theme === 'dark' ? 'var(--border-glass)' : 'rgba(123,92,240,0.15)')}`,
             boxShadow: isAcknowledging
               ? '0 0 20px rgba(123,92,240,0.3)'
               : isFocused
-              ? '0 0 0 3px rgba(123,92,240,0.15), 0 0 50px rgba(123,92,240,0.12), var(--inset-top), var(--shadow-glass)'
-              : 'var(--inset-top), var(--inset-bottom), var(--shadow-glass)',
+              ? (theme === 'dark' ? '0 0 0 3px rgba(123,92,240,0.15), 0 0 50px rgba(123,92,240,0.12), var(--inset-top), var(--shadow-glass)' : '0 0 0 3px rgba(123,92,240,0.12), 0 0 40px rgba(123,92,240,0.10)')
+              : (theme === 'dark' ? 'var(--inset-top), var(--inset-bottom), var(--shadow-glass)' : '0 8px 40px rgba(123,92,240,0.12), inset 0 1px 0 rgba(255,255,255,1.0)'),
             transition: 'box-shadow 200ms ease, border-color 200ms ease',
             position: 'relative',
           }}
@@ -433,8 +466,8 @@ export function PromptBox({ theme, onThemeSwitch, onScrollToWaitlist }) {
               value={inputValue}
               onChange={handleInputChange}
               onKeyDown={handleKeyDown}
-              onFocus={() => setIsFocused(true)}
-              onBlur={() => setIsFocused(false)}
+              onFocus={handleFocus}
+              onBlur={handleBlur}
               placeholder={PLACEHOLDER_CYCLE[placeholderIndex]}
               className="font-mono-jb flex-1 bg-transparent border-none outline-none text-[14px]"
               style={{ color: 'var(--text-primary)', caretColor: 'var(--purple-primary)' }}

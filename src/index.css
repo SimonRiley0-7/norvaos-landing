@@ -44,33 +44,31 @@ html.dark {
    LIGHT THEME — "Liquid Crystal"
    ============================================================ */
 html.light {
-  --bg-base: #f5f3ff;
-  --bg-surface: rgba(255, 255, 255, 0.5);
-  --bg-elevated: rgba(255, 255, 255, 0.7);
-  --bg-glass: rgba(255, 255, 255, 0.45);
-  --bg-tinted: rgba(237, 233, 255, 0.5);
-  --bg-deep-tinted: rgba(220, 213, 255, 0.35);
-  --border-subtle: rgba(139, 92, 246, 0.12);
-  --border-glass: rgba(255, 255, 255, 0.8);
-  --border-mid: rgba(139, 92, 246, 0.2);
-  --border-focus: #7b5cf0;
-  --purple-primary: #7b5cf0;
-  --purple-mid: #6d4fe8;
-  --purple-deep: #5b3fd0;
-  --purple-soft: #8b6ff5;
-  --purple-pale: #ede9ff;
-  --purple-pale-mid: #ddd6ff;
-  --purple-glow: rgba(123, 92, 240, 0.2);
-  --purple-subtle: rgba(123, 92, 240, 0.06);
-  --purple-subtle-mid: rgba(123, 92, 240, 0.1);
-  --text-primary: #1a1033;
-  --text-secondary: #6b5e8a;
-  --text-mono: #8b7baa;
-  --text-norva: #5b3fd0;
-  --inset-top: inset 0 1px 0 rgba(255, 255, 255, 0.95);
-  --inset-bottom: inset 0 -1px 0 rgba(139, 92, 246, 0.08);
-  --shadow-glass: 0 8px 40px rgba(123, 92, 240, 0.12),
-    0 2px 8px rgba(0, 0, 0, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  --bg-base: #FFFFFF;
+  --bg-surface: rgba(255, 255, 255, 0.85);
+  --bg-elevated: rgba(255, 255, 255, 0.95);
+  --bg-glass: rgba(255, 255, 255, 0.60);
+  --bg-tinted: rgba(243, 240, 255, 0.60);
+  --bg-deep-tinted: rgba(233, 228, 255, 0.50);
+  --border-subtle: rgba(123, 92, 240, 0.10);
+  --border-glass: rgba(255, 255, 255, 0.90);
+  --border-mid: rgba(123, 92, 240, 0.18);
+  --border-focus: #7B5CF0;
+  --purple-primary: #7B5CF0;
+  --purple-mid: #6D4FE8;
+  --purple-deep: #5B3FD0;
+  --purple-soft: #9D7FF5;
+  --purple-pale: #F0EDFF;
+  --purple-pale-mid: #E4DEFF;
+  --purple-glow: rgba(123, 92, 240, 0.15);
+  --purple-subtle: rgba(123, 92, 240, 0.05);
+  --text-primary: #1A1033;
+  --text-secondary: #6B5E8A;
+  --text-mono: #9B8FBA;
+  --text-norva: #5B3FD0;
+  --inset-top: inset 0 1px 0 rgba(255, 255, 255, 1.0);
+  --inset-bottom: inset 0 -1px 0 rgba(123, 92, 246, 0.06);
+  --shadow-glass: 0 8px 32px rgba(123, 92, 240, 0.10), 0 2px 8px rgba(0,0,0,0.03), inset 0 1px 0 rgba(255,255,255,1.0);
 }
 
 /* ============================================================
@@ -97,15 +95,7 @@ body {
 }
 
 html.light body {
-  background: linear-gradient(145deg, #f5f3ff 0%, #fafaff 35%, #eef0ff 65%, #f8f5ff 100%);
-  background-size: 400% 400%;
-  animation: gradientShift 15s ease infinite;
-}
-
-@keyframes gradientShift {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  background: #FFFFFF;
 }
 
 /* ============================================================
@@ -120,8 +110,11 @@ html.light body {
 }
 
 html.light .glass {
-  backdrop-filter: blur(28px) saturate(200%) brightness(1.02);
-  -webkit-backdrop-filter: blur(28px) saturate(200%) brightness(1.02);
+  background: rgba(255, 255, 255, 0.70);
+  backdrop-filter: blur(28px) saturate(180%) brightness(1.01);
+  -webkit-backdrop-filter: blur(28px) saturate(180%) brightness(1.01);
+  border: 1px solid rgba(255, 255, 255, 0.90);
+  box-shadow: 0 0 0 1px rgba(123, 92, 240, 0.10), var(--shadow-glass);
 }
 
 .glass-tinted {
@@ -201,7 +194,7 @@ html.light .glass {
 
 html.light .dot-grid {
   background-image: radial-gradient(
-    rgba(123, 92, 240, 0.08) 1px,
+    rgba(123, 92, 240, 0.04) 1px,
     transparent 1px
   );
   opacity: 1;
