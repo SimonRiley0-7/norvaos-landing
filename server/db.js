@@ -88,15 +88,19 @@ export async function addSubscriber(email) {
 }
 
 export async function getSubscriberCount() {
+  let count = 0
   if (isSupabaseConfigured) {
-    const { count, error } = await supabase
+    const { count: sbCount, error } = await supabase
       .from('waitlist')
       .select('*', { count: 'exact', head: true })
 
-    if (!error && typeof count === 'number') return count
+    if (!error && typeof sbCount === 'number') {
+      count = sbCount
+    }
   }
 
-  return getLocalSubscribers().length
+  const localCount = getLocalSubscribers().length
+  return Math.max(count, localCount)
 }
 
 export async function getSubscribers() {

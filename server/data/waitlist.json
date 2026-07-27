@@ -4,5 +4,41 @@
     "email": "test@example.com",
     "created_at": "2026-07-27T13:15:55.132Z",
     "status": "active"
+  },
+  {
+    "id": "wl_1785180078332_oj9nmw",
+    "email": "shivamwadatkar16@gmail.com",
+    "created_at": "2026-07-27T19:21:18.332Z",
+    "status": "active"
+  },
+  {
+    "id": "wl_1785180682067_owkqdn",
+    "email": "edushivam123@gmail.com",
+    "created_at": "2026-07-27T19:31:22.067Z",
+    "status": "active"
+  },
+  {
+    "id": "wl_1785180893996_ionzdj",
+    "email": "bhomi04chavhan@gmail.com",
+    "created_at": "2026-07-27T19:34:53.996Z",
+    "status": "active"
+  },
+  {
+    "id": "wl_1785181273795_ocaeqj",
+    "email": "shivamwofficial@gmail.com",
+    "created_at": "2026-07-27T19:41:13.795Z",
+    "status": "active"
+  },
+  {
+    "id": "wl_1785181469564_nsbj9e",
+    "email": "shivam.wadatkar24@sakec.ac.in",
+    "created_at": "2026-07-27T19:44:29.564Z",
+    "status": "active"
+  },
+  {
+    "id": "wl_1785181622652_8a9qwg",
+    "email": "wadatkarshivam04@gmail.com",
+    "created_at": "2026-07-27T19:47:02.652Z",
+    "status": "active"
   }
 ]

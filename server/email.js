@@ -46,7 +46,7 @@ function buildWelcomeHTML(email) {
     </head>
     <body>
       <div class="card">
-        <div class="logo"><img src="https://raw.githubusercontent.com/SimonRiley0-7/norvaos-landing/master/public/Norva-bot.png" alt="NORVA" style="width: 16px; height: 16px; vertical-align: middle; margin-right: 6px; border-radius: 4px;" /> NORVA OS</div>
+        <div class="logo"><img src="https://raw.githubusercontent.com/SimonRiley0-7/norvaos-landing/master/public/Norva-bot.png" alt="NORVA" style="width: 28px; height: 28px; vertical-align: middle; margin-right: 8px; border-radius: 6px;" /> NORVA OS</div>
         <div class="badge">WAITLIST CONFIRMED</div>
         <h1>You're on the list.</h1>
         <p>Hey there,</p>
@@ -85,7 +85,7 @@ export function buildLaunchHTML(recipientEmail, customMessage, downloadUrl) {
     </head>
     <body>
       <div class="card">
-        <div class="logo"><img src="https://raw.githubusercontent.com/SimonRiley0-7/norvaos-landing/master/public/Norva-bot.png" alt="NORVA" style="width: 16px; height: 16px; vertical-align: middle; margin-right: 6px; border-radius: 4px;" /> NORVA OS IS LIVE</div>
+        <div class="logo"><img src="https://raw.githubusercontent.com/SimonRiley0-7/norvaos-landing/master/public/Norva-bot.png" alt="NORVA" style="width: 28px; height: 28px; vertical-align: middle; margin-right: 8px; border-radius: 6px;" /> NORVA OS IS LIVE</div>
         <h1>NORVA Beta is Here. 🎉</h1>
         <p>Hey!</p>
         <p>${customMessage || "The wait is over. NORVA is officially live and ready for download on your Mac."}</p>
