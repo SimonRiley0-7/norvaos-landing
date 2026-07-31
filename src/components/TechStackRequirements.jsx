@@ -3,7 +3,7 @@ import { Terminal, Database, Box } from 'lucide-react'
 
 export function TechStackRequirements({ theme }) {
   const isDark = theme === 'dark'
-  
+
   const stack = [
     {
       id: 'antigravity',
@@ -29,7 +29,7 @@ export function TechStackRequirements({ theme }) {
   ]
 
   return (
-    <section 
+    <section
       className="relative flex flex-col items-center justify-center w-full"
       style={{
         padding: '80px 24px',
@@ -37,7 +37,7 @@ export function TechStackRequirements({ theme }) {
       }}
     >
       <div className="max-w-5xl w-full flex flex-col items-center gap-12">
-        
+
         {/* Header */}
         <div className="flex flex-col items-center text-center gap-4 max-w-2xl">
           <motion.div
@@ -54,7 +54,7 @@ export function TechStackRequirements({ theme }) {
               Opinionated by Design
             </span>
           </motion.div>
-          <motion.h2 
+          <motion.h2
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -62,9 +62,9 @@ export function TechStackRequirements({ theme }) {
             className="font-instrument text-4xl md:text-5xl"
             style={{ color: isDark ? '#FFF' : '#000' }}
           >
-            The NOVA Stack
+            The NORVA Stack
           </motion.h2>
-          <motion.p 
+          <motion.p
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -93,14 +93,14 @@ export function TechStackRequirements({ theme }) {
               }}
             >
               {/* Glow effect on hover */}
-              <div 
+              <div
                 className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                 style={{
                   background: `radial-gradient(circle at top left, ${item.color}15, transparent 70%)`
                 }}
               />
-              
-              <div 
+
+              <div
                 className="w-12 h-12 rounded-2xl flex items-center justify-center mb-2"
                 style={{
                   background: isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.03)',
@@ -109,7 +109,7 @@ export function TechStackRequirements({ theme }) {
               >
                 <item.icon size={24} style={{ color: item.color }} />
               </div>
-              
+
               <h3 className="font-geist font-medium text-xl m-0" style={{ color: isDark ? '#FFF' : '#000' }}>
                 {item.title}
               </h3>

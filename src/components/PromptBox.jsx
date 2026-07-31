@@ -214,6 +214,21 @@ export function PromptBox({ theme, onThemeSwitch, onScrollToWaitlist }) {
     if (!text.trim()) return
     const response = getResponse(text)
     
+    // Intercept download action to detect OS
+    if (response.action === 'downloadNorva') {
+      const platform = navigator.userAgent.toLowerCase()
+      if (platform.includes('mac')) {
+        response.text = "Downloading NORVA for Mac..."
+        response.downloadUrl = "https://github.com/SimonRiley0-7/landingpage-install/releases/download/v1.0.0/NORVA-1.0.0-arm64.dmg"
+      } else if (platform.includes('win')) {
+        response.text = "Downloading NORVA for Windows..."
+        response.downloadUrl = "https://github.com/SimonRiley0-7/landingpage-install/releases/download/v1.0.0/NORVA.Setup.1.0.0.exe"
+      } else {
+        response.text = "NORVA is currently only available for Mac and Windows. Join the waitlist for updates!"
+        response.action = 'showEmailInput'
+      }
+    }
+    
     setConversation(prev => [...prev, { type: 'user', text }])
     setInputValue('')
 
@@ -239,6 +254,18 @@ export function PromptBox({ theme, onThemeSwitch, onScrollToWaitlist }) {
           setTimeout(() => {
             onScrollToWaitlist()
           }, typeDuration + 400) // Scroll smoothly after finishing typing
+        }
+        
+        if (response.action === 'downloadNorva') {
+          const typeDuration = (response.text?.length || 0) * 28
+          setTimeout(() => {
+            const link = document.createElement('a');
+            link.href = response.downloadUrl;
+            link.download = "";
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+          }, typeDuration + 400)
         }
       }, 900)
     }, 300)

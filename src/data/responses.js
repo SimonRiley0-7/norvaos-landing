@@ -97,8 +97,7 @@ export const RESPONSES = {
     text: 'Scanning ~/Desktop for screenshots... Found 28 files. Creating ~/Desktop/Archive/Screenshots/2026-07/ and moving old screenshots. Desktop cleared!',
   },
   'download norva': {
-    text: "Join the waitlist. Once it is live, we'll notify you through your email.",
-    action: 'showEmailInput',
+    action: 'downloadNorva',
   },
   'join waitlist': {
     text: "Drop your email below and you'll be first to know when beta drops.",
