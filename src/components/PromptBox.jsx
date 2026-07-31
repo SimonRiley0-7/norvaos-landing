@@ -436,6 +436,7 @@ export function PromptBox({ theme, onThemeSwitch, onScrollToWaitlist }) {
       <AnimatePresence>
         {conversation.length > 0 && (
           <motion.div
+            data-lenis-prevent="true"
             initial={{ opacity: 0 }}
             animate={{ opacity: isFadingOut ? 0 : 1 }}
             exit={{ opacity: 0 }}
