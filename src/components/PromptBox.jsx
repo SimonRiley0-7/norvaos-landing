@@ -219,10 +219,10 @@ export function PromptBox({ theme, onThemeSwitch, onScrollToWaitlist }) {
       const platform = navigator.userAgent.toLowerCase()
       if (platform.includes('mac')) {
         response.text = "Downloading NORVA for Mac..."
-        response.downloadUrl = "https://github.com/SimonRiley0-7/landingpage-install/releases/download/v1.0.0/NORVA-1.0.0-arm64.dmg"
+        response.downloadUrl = "https://github.com/SimonRiley0-7/landingpage-install/releases/download/v1.0.12/NORVA-1.0.12-arm64.dmg"
       } else if (platform.includes('win')) {
         response.text = "Downloading NORVA for Windows..."
-        response.downloadUrl = "https://github.com/SimonRiley0-7/landingpage-install/releases/download/v1.0.0/NORVA.Setup.1.0.0.exe"
+        response.downloadUrl = "https://github.com/SimonRiley0-7/landingpage-install/releases/download/v1.0.12/NORVA.Setup.1.0.12.exe"
       } else {
         response.text = "NORVA is currently only available for Mac and Windows. Join the waitlist for updates!"
         response.action = 'showEmailInput'
