@@ -30,9 +30,8 @@ function TerminalLine({ line, delay }) {
       initial={{ opacity: 0, x: -8 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.2 }}
-      className={`font-mono-jb text-xs leading-relaxed ${
-        isLive ? 'term-live animate-pulse' : isOk ? 'term-ok' : isDone ? 'term-done' : 'term-cmd'
-      }`}
+      className={`font-mono-jb text-xs leading-relaxed ${isLive ? 'term-live animate-pulse' : isOk ? 'term-ok' : isDone ? 'term-done' : 'term-cmd'
+        }`}
     >
       {line}
     </motion.div>
@@ -213,7 +212,7 @@ export function PromptBox({ theme, onThemeSwitch, onScrollToWaitlist }) {
   const sendMessage = useCallback((text) => {
     if (!text.trim()) return
     const response = getResponse(text)
-    
+
     // Intercept download action to detect OS
     if (response.action === 'downloadNorva') {
       const platform = navigator.userAgent.toLowerCase()
@@ -222,13 +221,13 @@ export function PromptBox({ theme, onThemeSwitch, onScrollToWaitlist }) {
         response.downloadUrl = "https://github.com/SimonRiley0-7/landingpage-install/releases/download/v1.0.12/NORVA-1.0.12-arm64.dmg"
       } else if (platform.includes('win')) {
         response.text = "Downloading NORVA for Windows..."
-        response.downloadUrl = "https://github.com/SimonRiley0-7/landingpage-install/releases/download/v1.0.12/NORVA.Setup.1.0.12.exe"
+        response.downloadUrl = "https://github.com/SimonRiley0-7/landingpage-install/releases/download/v1.0.13/NORVA.Setup.1.0.13.exe"
       } else {
         response.text = "NORVA is currently only available for Mac and Windows. Join the waitlist for updates!"
         response.action = 'showEmailInput'
       }
     }
-    
+
     setConversation(prev => [...prev, { type: 'user', text }])
     setInputValue('')
 
@@ -242,12 +241,12 @@ export function PromptBox({ theme, onThemeSwitch, onScrollToWaitlist }) {
         setIsProcessing(false)
         setBeamDuration(4)
         setConversation(prev => [...prev, { type: 'norva', message: response }])
-        
+
         // Execute side effects AFTER the message is shown
         if (response.action === 'switchTheme') {
           onThemeSwitch(response.theme)
         }
-        
+
         if (response.action === 'showEmailInput') {
           // Calculate typing duration based on text length (28ms per char)
           const typeDuration = (response.text?.length || 0) * 28
@@ -255,7 +254,7 @@ export function PromptBox({ theme, onThemeSwitch, onScrollToWaitlist }) {
             onScrollToWaitlist()
           }, typeDuration + 400) // Scroll smoothly after finishing typing
         }
-        
+
         if (response.action === 'downloadNorva') {
           const typeDuration = (response.text?.length || 0) * 28
           setTimeout(() => {
@@ -272,7 +271,7 @@ export function PromptBox({ theme, onThemeSwitch, onScrollToWaitlist }) {
   }, [onThemeSwitch, onScrollToWaitlist])
 
   // Cinematic loop — each run is self-contained with no stale closures
-  const { addLiveMessage = () => {}, clearLiveMessages = () => {} } = useCinematic() || {}
+  const { addLiveMessage = () => { }, clearLiveMessages = () => { } } = useCinematic() || {}
 
   const runScenario = useCallback((scenarioIndex) => {
     if (isPausedRef.current) return
@@ -285,10 +284,10 @@ export function PromptBox({ theme, onThemeSwitch, onScrollToWaitlist }) {
     let charIndex = 0
     isCinematicTypingRef.current = true
     typeIntervalRef.current = setInterval(() => {
-      if (isPausedRef.current) { 
+      if (isPausedRef.current) {
         clearInterval(typeIntervalRef.current)
         isCinematicTypingRef.current = false
-        return 
+        return
       }
       charIndex++
       setInputValue(prompt.slice(0, charIndex))
@@ -486,8 +485,8 @@ export function PromptBox({ theme, onThemeSwitch, onScrollToWaitlist }) {
             boxShadow: isAcknowledging
               ? '0 0 20px rgba(123,92,240,0.3)'
               : isFocused
-              ? (theme === 'dark' ? '0 0 0 3px rgba(123,92,240,0.15), 0 0 50px rgba(123,92,240,0.12), var(--inset-top), var(--shadow-glass)' : '0 0 0 3px rgba(123,92,240,0.12), 0 0 40px rgba(123,92,240,0.10)')
-              : (theme === 'dark' ? 'var(--inset-top), var(--inset-bottom), var(--shadow-glass)' : '0 8px 40px rgba(123,92,240,0.12), inset 0 1px 0 rgba(255,255,255,1.0)'),
+                ? (theme === 'dark' ? '0 0 0 3px rgba(123,92,240,0.15), 0 0 50px rgba(123,92,240,0.12), var(--inset-top), var(--shadow-glass)' : '0 0 0 3px rgba(123,92,240,0.12), 0 0 40px rgba(123,92,240,0.10)')
+                : (theme === 'dark' ? 'var(--inset-top), var(--inset-bottom), var(--shadow-glass)' : '0 8px 40px rgba(123,92,240,0.12), inset 0 1px 0 rgba(255,255,255,1.0)'),
             transition: 'box-shadow 200ms ease, border-color 200ms ease',
             position: 'relative',
           }}
