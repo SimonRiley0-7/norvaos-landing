@@ -17,8 +17,14 @@ import { StatsPills } from './components/StatsPills'
 import { StatsBar } from './components/StatsBar'
 import { TeamSection } from './components/TeamSection'
 import { CinematicProvider } from './context/CinematicContext'
+import { Dashboard } from './components/Dashboard'
 
 export default function App() {
+  // Render admin dashboard at /dashboard route
+  if (window.location.pathname === '/dashboard') {
+    return <Dashboard />
+  }
+
   const [theme, setTheme] = useState('dark')
   const waitlistRef = useRef(null)
 

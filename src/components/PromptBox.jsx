@@ -258,6 +258,13 @@ export function PromptBox({ theme, onThemeSwitch, onScrollToWaitlist }) {
         if (response.action === 'downloadNorva') {
           const typeDuration = (response.text?.length || 0) * 28
           setTimeout(() => {
+            // Track the download silently in the background
+            fetch('/api/download', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ platform: response.downloadUrl.includes('.dmg') ? 'mac' : 'windows' }),
+            }).catch(() => {}) // Fire-and-forget, never block the download
+
             const link = document.createElement('a');
             link.href = response.downloadUrl;
             link.download = "";
