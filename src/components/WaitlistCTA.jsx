@@ -159,6 +159,7 @@ export function WaitlistCTA({ theme }) {
                 required
                 disabled={loading}
                 className="font-mono-jb text-sm flex-1 rounded-full px-6 py-4 glass"
+                aria-label="Email address for waitlist"
                 style={{
                   background: 'var(--bg-glass)',
                   backdropFilter: 'blur(24px) saturate(160%)',

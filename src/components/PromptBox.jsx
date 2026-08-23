@@ -515,6 +515,7 @@ export function PromptBox({ theme, onThemeSwitch, onScrollToWaitlist }) {
               onFocus={handleFocus}
               onBlur={handleBlur}
               placeholder={PLACEHOLDER_CYCLE[placeholderIndex]}
+              aria-label="Enter your prompt"
               className="font-mono-jb flex-1 bg-transparent border-none outline-none text-[14px]"
               style={{ color: 'var(--text-primary)', caretColor: 'var(--purple-primary)' }}
             />
@@ -522,6 +523,7 @@ export function PromptBox({ theme, onThemeSwitch, onScrollToWaitlist }) {
             {/* Send button */}
             <motion.button
               onClick={handleSubmit}
+              aria-label="Send prompt"
               whileTap={{ scale: 0.92 }}
               animate={{
                 background: hasContent ? 'var(--purple-primary)' : 'var(--purple-subtle)',
