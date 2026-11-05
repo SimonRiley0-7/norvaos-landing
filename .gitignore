@@ -22,3 +22,8 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Symlinks & temporary root test files
+/components
+/norva-widget-3d.html
+/widget.html

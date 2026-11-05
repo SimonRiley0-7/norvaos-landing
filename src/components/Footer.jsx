@@ -1,115 +1,130 @@
-// Social icons as inline SVGs — Twitter/X and Instagram not reliably in lucide-react
+import { NorvaBrandLockup } from './NorvaLogo'
 
-function XIcon({ size = 16 }) {
+export function Footer({ onOpenModal, onNavigate }) {
+  const handleOpen = (e, modalType) => {
+    e.preventDefault()
+    if (modalType === 'team') {
+      if (onNavigate) {
+        onNavigate('/team')
+      } else {
+        window.history.pushState(null, '', '/team')
+      }
+      return
+    }
+    if (onOpenModal) {
+      onOpenModal(modalType)
+    }
+  }
+
   return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
-      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.258 5.632 5.906-5.632Zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77Z" />
-    </svg>
-  )
-}
+    <footer className="py-16 bg-[#FAF9F7] border-t border-[#E8E6E1]/90">
+      <div className="max-w-[1240px] mx-auto px-6 md:px-10">
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-8 pb-12 border-b border-[#E8E6E1]/70 text-left">
+          {/* Brand Col */}
+          <div className="col-span-2 space-y-3">
+            <div className="flex items-center gap-3">
+              <NorvaBrandLockup size={24} showWordmark={true} />
+              <span className="text-xs text-[#8E8E98] border-l border-[#E8E6E1] pl-3">
+                OS-Native Intelligence
+              </span>
+            </div>
+            <p className="text-[13.5px] text-[#5A5A66] max-w-[340px] leading-relaxed">
+              NORVA is your personal desktop employee — quietly working alongside you to handle repetitive workflows, manage tasks, and get real work done directly on your machine.
+            </p>
+          </div>
 
-function InstagramIcon({ size = 16 }) {
-  return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
-      <circle cx="12" cy="12" r="4" />
-      <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
-    </svg>
-  )
-}
+          {/* Product Links */}
+          <div className="space-y-3">
+            <p className="text-[11.5px] font-mono text-[#8E8E98] uppercase tracking-wider font-semibold">
+              Product
+            </p>
+            <ul className="space-y-2 text-[13.5px] text-[#5A5A66]">
+              <li><a href="#product" className="hover:text-[#111116] transition-colors">Overview</a></li>
+              <li><a href="#capabilities" className="hover:text-[#111116] transition-colors">Core Capabilities</a></li>
+              <li><a href="#privacy" className="hover:text-[#111116] transition-colors">Privacy by Design</a></li>
+              <li><a href="#audiences" className="hover:text-[#111116] transition-colors">Who It's For</a></li>
+            </ul>
+          </div>
 
-function LinkedinIcon({ size = 16 }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
-      <rect x="2" y="9" width="4" height="12"/>
-      <circle cx="4" cy="4" r="2"/>
-    </svg>
-  )
-}
+          {/* Architecture Links */}
+          <div className="space-y-3">
+            <p className="text-[11.5px] font-mono text-[#8E8E98] uppercase tracking-wider font-semibold">
+              Architecture
+            </p>
+            <ul className="space-y-2 text-[13.5px] text-[#5A5A66]">
+              <li><a href="#workflows" className="hover:text-[#111116] transition-colors">Everyday Workflows</a></li>
+              <li><a href="#faq" className="hover:text-[#111116] transition-colors">FAQ</a></li>
+              <li>
+                <a
+                  href="/team"
+                  onClick={(e) => handleOpen(e, 'team')}
+                  className="hover:text-[#7B5CF0] transition-colors font-medium cursor-pointer"
+                >
+                  The Team
+                </a>
+              </li>
+            </ul>
+          </div>
 
-function RedditIcon({ size = 16 }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
-      <path d="M22.062 12.001c0-1.282-1.04-2.321-2.322-2.321-.861 0-1.606.471-2.001 1.155-1.46-.97-3.411-1.6-5.59-1.691l1.196-5.632 3.904.832c.032.96 .832 1.722 1.8 1.722 1.002 0 1.821-.82 1.821-1.822 0-1.001-.819-1.82-1.821-1.82-.711 0-1.332.41-1.632 1.01l-4.32-.921c-.2-.04-.401.07-.461.27l-1.32 6.223c-2.27.061-4.301.711-5.811 1.712-.39-.681-1.141-1.162-2.001-1.162-1.281 0-2.32.1-2.32 2.322 0 .931.551 1.722 1.341 2.091-.041.24-.061.471-.061.712 0 3.522 4.453 6.383 9.945 6.383s9.945-2.861 9.945-6.383c0-.241-.02-.471-.06-.712.791-.36 1.34-1.15 1.34-2.091zm-14.773 1.251c0-.85.69-1.541 1.54-1.541.851 0 1.541.691 1.541 1.541 0 .85-.69 1.54-1.541 1.54-.85 0-1.54-.69-1.54-1.54zm7.394 4.382c-1.441 1.442-4.012 1.442-5.453 0-.17-.17-.17-.46 0-.64.17-.17.46-.17.64 0 1.09 1.091 2.871 1.091 3.962 0 .17-.17.46-.17.64 0 .17.18.17.47.21.64zM16.713 14.8c-.85 0-1.54-.69-1.54-1.54 0-.85.69-1.541 1.54-1.541.85 0 1.54.691 1.54 1.541 0 .85-.69 1.54-1.54 1.54z"/>
-    </svg>
-  )
-}
+          {/* Company & Legal */}
+          <div className="space-y-3">
+            <p className="text-[11.5px] font-mono text-[#8E8E98] uppercase tracking-wider font-semibold">
+              Legal &amp; Contact
+            </p>
+            <ul className="space-y-2 text-[13.5px] text-[#5A5A66]">
+              <li>
+                <a
+                  href="/privacy"
+                  onClick={(e) => handleOpen(e, 'privacy')}
+                  className="hover:text-[#111116] transition-colors cursor-pointer"
+                >
+                  Privacy Policy
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/terms"
+                  onClick={(e) => handleOpen(e, 'terms')}
+                  className="hover:text-[#111116] transition-colors cursor-pointer"
+                >
+                  Terms &amp; Conditions
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/contact"
+                  onClick={(e) => handleOpen(e, 'contact')}
+                  className="hover:text-[#7B5CF0] transition-colors font-medium cursor-pointer"
+                >
+                  Contact Team
+                </a>
+              </li>
+              <li>
+                <a
+                  href="mailto:act@norvaos.co.in"
+                  className="font-mono text-[#7B5CF0] hover:underline text-[12.5px] font-medium"
+                >
+                  act@norvaos.co.in
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
 
-export function Footer() {
-  return (
-    <footer
-      className="flex flex-col sm:flex-row items-center justify-between gap-6 sm:gap-0 px-6 py-8 md:px-12"
-      style={{ borderTop: '1px solid var(--border-subtle)' }}
-    >
-      {/* Left */}
-      <div className="flex flex-col gap-1 items-center sm:items-start text-center sm:text-left">
-        <span
-          className="font-geist text-[13px] tracking-[0.25em]"
-          style={{ color: 'var(--text-primary)', opacity: 0.7, fontWeight: 300 }}
-        >
-          NORVA
-        </span>
-        <span
-          className="font-mono-jb text-[10px] uppercase tracking-widest"
-          style={{ color: 'var(--text-mono)' }}
-        >
-          © 2026 NORVA. ALL RIGHTS RESERVED.
-        </span>
-      </div>
-
-      {/* Right: social icons */}
-      <div className="flex items-center gap-4">
-        <a
-          href="https://x.com/norvaos"
-          target="_blank"
-          rel="noopener noreferrer"
-          style={{ color: 'var(--text-secondary)', transition: 'color 150ms ease' }}
-          onMouseEnter={e => (e.currentTarget.style.color = 'var(--purple-primary)')}
-          onMouseLeave={e => (e.currentTarget.style.color = 'var(--text-secondary)')}
-        >
-          <XIcon size={16} />
-        </a>
-        <a
-          href="https://www.instagram.com/norva.os/"
-          target="_blank"
-          rel="noopener noreferrer"
-          style={{ color: 'var(--text-secondary)', transition: 'color 150ms ease' }}
-          onMouseEnter={e => (e.currentTarget.style.color = 'var(--purple-primary)')}
-          onMouseLeave={e => (e.currentTarget.style.color = 'var(--text-secondary)')}
-        >
-          <InstagramIcon size={16} />
-        </a>
-        <a
-          href="https://www.linkedin.com/company/norva-os/"
-          target="_blank"
-          rel="noopener noreferrer"
-          style={{ color: 'var(--text-secondary)', transition: 'color 150ms ease' }}
-          onMouseEnter={e => (e.currentTarget.style.color = 'var(--purple-primary)')}
-          onMouseLeave={e => (e.currentTarget.style.color = 'var(--text-secondary)')}
-        >
-          <LinkedinIcon size={16} />
-        </a>
-        <a
-          href="https://www.reddit.com/r/Norva_OS/"
-          target="_blank"
-          rel="noopener noreferrer"
-          style={{ color: 'var(--text-secondary)', transition: 'color 150ms ease' }}
-          onMouseEnter={e => (e.currentTarget.style.color = 'var(--purple-primary)')}
-          onMouseLeave={e => (e.currentTarget.style.color = 'var(--text-secondary)')}
-        >
-          <RedditIcon size={16} />
-        </a>
+        {/* Bottom line */}
+        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#8E8E98]">
+          <p>© 2026 Norva OS. All rights reserved.</p>
+          <div className="flex items-center gap-4 text-[#8E8E98]">
+            <span>macOS &amp; Windows</span>
+            <span>·</span>
+            <span>Air-Gapped Capable</span>
+            <span>·</span>
+            <span>Privacy First</span>
+          </div>
+        </div>
       </div>
     </footer>
   )
 }
+
+export default Footer

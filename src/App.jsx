@@ -1,207 +1,154 @@
-import { useState, useRef, useCallback } from 'react'
-import { motion, AnimatePresence, useMotionValue } from 'framer-motion'
-import { Sparkles } from 'lucide-react'
-
-import { Background } from './components/Background'
+import { useState, useCallback, useEffect } from 'react'
 import { Navbar } from './components/Navbar'
-import { PromptBox } from './components/PromptBox'
-import { OSWindow } from './components/OSWindow'
-import { BentoCards } from './components/BentoCards'
-import { TechStackRequirements } from './components/TechStackRequirements'
-import { WaitlistCTA } from './components/WaitlistCTA'
+import { HeroSection } from './components/HeroSection'
+import { ProblemSection } from './components/ProblemSection'
+import { ContextAwareSection } from './components/ContextAwareSection'
+import { CapabilityStrip } from './components/CapabilityStrip'
+import { IntentToActionSection } from './components/IntentToActionSection'
+import { WorkflowsSection } from './components/WorkflowsSection'
+import { PrivacySection } from './components/PrivacySection'
+import { AudienceSection } from './components/AudienceSection'
+import { FAQSection } from './components/FAQSection'
+import { DownloadSection } from './components/DownloadSection'
 import { Footer } from './components/Footer'
-import { NorvaBot } from './components/CactusSVG'
-import { LiveChatWidget } from './components/LiveChatWidget'
-import { HeroBeams } from './components/HeroBeams'
-import { StatsPills } from './components/StatsPills'
-import { StatsBar } from './components/StatsBar'
-import { TeamSection } from './components/TeamSection'
-import { CinematicProvider } from './context/CinematicContext'
+import { DemoModal } from './components/DemoModal'
 import { Dashboard } from './components/Dashboard'
+import { LegalContactModals } from './components/LegalContactModals'
+import { TeamPage } from './components/TeamPage'
 
 export default function App() {
-  // Render admin dashboard at /dashboard route
+  // Render private admin dashboard at /dashboard route
   if (window.location.pathname === '/dashboard') {
     return <Dashboard />
   }
 
-  const [theme, setTheme] = useState('dark')
-  const waitlistRef = useRef(null)
+  const [currentPath, setCurrentPath] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return window.location.pathname
+    }
+    return '/'
+  })
 
-  // Mouse position for parallax widgets
-  const mouseX = useMotionValue(0)
-  const mouseY = useMotionValue(0)
+  const [showDemoModal, setShowDemoModal] = useState(false)
+  const [activeModal, setActiveModal] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const p = window.location.pathname
+      if (p === '/privacy') return 'privacy'
+      if (p === '/terms') return 'terms'
+      if (p === '/contact') return 'contact'
+    }
+    return null
+  })
 
-  const handleMouseMove = e => {
-    mouseX.set((e.clientX / window.innerWidth) - 0.5)
-    mouseY.set((e.clientY / window.innerHeight) - 0.5)
+  useEffect(() => {
+    const onPop = () => {
+      const p = window.location.pathname
+      setCurrentPath(p)
+      if (p === '/privacy') setActiveModal('privacy')
+      else if (p === '/terms') setActiveModal('terms')
+      else if (p === '/contact') setActiveModal('contact')
+      else setActiveModal(null)
+    }
+    window.addEventListener('popstate', onPop)
+    return () => window.removeEventListener('popstate', onPop)
+  }, [])
+
+  const handleNavigate = useCallback((path) => {
+    window.history.pushState(null, '', path)
+    setCurrentPath(path)
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }, [])
+
+  const handleOpenModal = useCallback((modalType) => {
+    setActiveModal(modalType)
+    window.history.pushState(null, '', `/${modalType}`)
+  }, [])
+
+  const handleCloseModal = useCallback(() => {
+    setActiveModal(null)
+    window.history.pushState(null, '', '/')
+  }, [])
+
+  const handleDownload = useCallback((platform = 'mac') => {
+    const notifyEl = document.getElementById('notify-me')
+    if (notifyEl) {
+      notifyEl.scrollIntoView({ behavior: 'smooth', block: 'center' })
+      setTimeout(() => {
+        const input = document.getElementById('beta-email-input')
+        if (input) {
+          input.focus()
+          input.classList.add('ring-2', 'ring-[#7B5CF0]')
+          setTimeout(() => input.classList.remove('ring-2', 'ring-[#7B5CF0]'), 2500)
+        }
+      }, 450)
+    }
+  }, [])
+
+  // Dedicated Team Page route
+  if (currentPath === '/team') {
+    return (
+      <TeamPage
+        onBack={() => handleNavigate('/')}
+        onContactClick={() => handleOpenModal('contact')}
+      />
+    )
   }
 
-  const handleThemeSwitch = useCallback(newTheme => {
-    document.documentElement.className = newTheme
-    setTheme(newTheme)
-  }, [])
-
-  const scrollToWaitlist = useCallback(() => {
-    waitlistRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })
-  }, [])
-
   return (
-    <CinematicProvider>
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={theme}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.4, ease: 'easeInOut' }}
-          style={{ position: 'relative', minHeight: '100vh' }}
-        >
-          {/* Fixed background layers */}
-          <Background theme={theme} />
+    <div className="min-h-screen bg-[#FAF9F7] text-[#17171C] antialiased selection:bg-[#7B5CF0]/20 selection:text-[#17171C]">
+      {/* 1. Refined Sticky Navigation */}
+      <Navbar onDownloadClick={handleDownload} onNavigate={handleNavigate} />
 
-          {/* Navbar — z-index 9999, always on top */}
-          <Navbar theme={theme} />
+      <main>
+        {/* Section 1: Hero — Introduce NORVA */}
+        <HeroSection
+          onWatchDemo={() => setShowDemoModal(true)}
+          onDownloadClick={handleDownload}
+        />
 
-          {/* Main content */}
-          <main style={{ position: 'relative', zIndex: 1 }}>
+        {/* Section 2: The Problem — Why NORVA Exists */}
+        <ProblemSection />
 
-            {/* ====================================================
-                HERO SECTION
-            ==================================================== */}
-            <section
-              className="relative flex flex-col items-center justify-center"
-              onMouseMove={handleMouseMove}
-              style={{
-                minHeight: '100vh',
-                gap: 32,
-                paddingTop: 120,
-                paddingBottom: 60,
-                paddingLeft: 24,
-                paddingRight: 24,
-              }}
-            >
-              {/* Animated beam lines — z-index 1, behind content */}
-              <HeroBeams theme={theme} />
+        {/* Section 3: Product Introduction — What Is NORVA? */}
+        <ContextAwareSection />
 
-              {/* Hero content — z-index 10 */}
-              <div
-                className="relative flex flex-col items-center w-full"
-                style={{ zIndex: 10, gap: 32, maxWidth: 1200 }}
-              >
-                {/* Live chat widget — absolute left */}
-                <LiveChatWidget theme={theme} />
+        {/* Section 4: Core Capabilities — What NORVA Can Do (3 Liquid Glass Bento) */}
+        <CapabilityStrip />
 
-                {/* Stats pills — absolute right */}
-                <StatsPills mouseX={mouseX} mouseY={mouseY} theme={theme} />
+        {/* Section 5: How NORVA Works — Deterministic Execution Pipeline */}
+        <IntentToActionSection />
 
-                {/* Cinematic badge */}
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.1, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                  className="flex items-center gap-2 rounded-full px-4 py-1.5"
-                  style={{
-                    background: theme === 'dark' ? 'rgba(123,92,240,0.08)' : 'rgba(237,233,255,0.8)',
-                    border: theme === 'dark' ? '1px solid rgba(123,92,240,0.20)' : '1px solid rgba(196,176,250,0.5)',
-                  }}
-                >
-                  <Sparkles size={12} style={{ color: 'var(--purple-primary)' }} />
-                  <span className="font-mono-jb text-[10px] uppercase tracking-widest" style={{ color: 'var(--purple-soft)' }}>
-                    Autonomous Desktop Intelligence
-                  </span>
-                </motion.div>
+        {/* Section 6: Everyday Workflows — Real-World Applications */}
+        <WorkflowsSection />
 
-                {/* Hero headline */}
-                <motion.h1
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.2, duration: 0.7, type: 'spring', stiffness: 100, damping: 20 }}
-                  className="font-instrument text-center m-0"
-                  style={{ fontSize: 'clamp(3rem, 6vw, 5.5rem)', lineHeight: 1.05, color: theme === 'dark' ? 'var(--text-primary)' : '#000000' }}
-                >
-                  Your desktop,<br />
-                  finally.
-                </motion.h1>
+        {/* Section 7: Local-First Architecture — Privacy by Design */}
+        <PrivacySection />
 
-                {/* Hero subtext */}
-                <motion.p
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.4, duration: 0.6 }}
-                  className="font-geist text-xl text-center m-0"
-                  style={{ color: 'var(--text-secondary)', maxWidth: 480 }}
-                >
-                  One prompt. Your entire desktop, handled.
-                </motion.p>
+        {/* Section 8: Who NORVA Is Built For */}
+        <AudienceSection />
 
-                {/* Prompt box + conversation + chips + marquee */}
-                <div style={{ width: '100%', maxWidth: 680 }}>
-                  <PromptBox
-                    theme={theme}
-                    onThemeSwitch={handleThemeSwitch}
-                    onScrollToWaitlist={scrollToWaitlist}
-                  />
-                </div>
-              </div>
+        {/* Section 9: Frequently Asked Questions & Availability Status */}
+        <FAQSection />
 
-              {/* NorvaBot mascot — fixed corner */}
-              <motion.div
-                className="fixed bottom-8 right-8 cursor-pointer hidden md:block"
-                style={{ zIndex: 9990 }}
-                animate={{ y: [0, -6, 0] }}
-                transition={{ duration: 3, ease: 'easeInOut', repeat: Infinity }}
-                whileHover={{ scale: 1.15 }}
-              >
-                <NorvaBot
-                  size={36}
-                  style={{ opacity: theme === 'dark' ? 0.28 : 0.4, transition: 'opacity 200ms' }}
-                  glow={false}
-                />
-              </motion.div>
-            </section>
+        {/* Section 10: Final Download Section */}
+        <DownloadSection onDownloadClick={handleDownload} />
+      </main>
 
-            {/* ====================================================
-                STATS BAR — between hero and OS window (FIX 2: no dead space)
-            ==================================================== */}
-            <StatsBar theme={theme} />
+      {/* Footer: Comprehensive Links, Architecture & Legal */}
+      <Footer onOpenModal={handleOpenModal} onNavigate={handleNavigate} />
 
-            {/* ====================================================
-                OS WINDOW SECTION
-            ==================================================== */}
-            <div style={{ padding: '40px 24px 0' }}>
-              <OSWindow theme={theme} />
-            </div>
+      {/* Interactive Product Demo Modal */}
+      <DemoModal
+        isOpen={showDemoModal}
+        onClose={() => setShowDemoModal(false)}
+        onDownloadClick={handleDownload}
+      />
 
-            {/* ====================================================
-                BENTO CARDS (replaces CapabilityCards)
-            ==================================================== */}
-            <BentoCards theme={theme} />
-
-            {/* ====================================================
-                TECH STACK REQUIREMENTS
-            ==================================================== */}
-            <TechStackRequirements theme={theme} />
-
-            {/* ====================================================
-                TEAM SECTION (Founders)
-            ==================================================== */}
-            <TeamSection theme={theme} />
-
-            {/* ====================================================
-                WAITLIST CTA
-            ==================================================== */}
-            <div ref={waitlistRef}>
-              <WaitlistCTA theme={theme} />
-            </div>
-
-            {/* ====================================================
-                FOOTER
-            ==================================================== */}
-            <Footer />
-          </main>
-        </motion.div>
-      </AnimatePresence>
-    </CinematicProvider>
+      {/* Privacy Policy, Terms & Conditions, and Contact Modals */}
+      <LegalContactModals
+        activeModal={activeModal}
+        onClose={handleCloseModal}
+      />
+    </div>
   )
 }

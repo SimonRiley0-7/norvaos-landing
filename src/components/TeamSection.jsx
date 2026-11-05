@@ -51,7 +51,7 @@ export function TeamSection({ theme }) {
         </div>
 
         <h2
-          className="font-instrument text-4xl font-normal m-0"
+          className="text-4xl font-normal tracking-tight m-0"
           style={{ color: 'var(--text-primary)' }}
         >
           Two CS majors. One mission.

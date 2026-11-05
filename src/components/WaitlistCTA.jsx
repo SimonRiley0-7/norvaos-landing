@@ -122,7 +122,7 @@ export function WaitlistCTA({ theme }) {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.1 }}
-          className="font-instrument text-4xl md:text-5xl font-normal leading-tight m-0 mb-4"
+          className="text-4xl md:text-5xl font-normal tracking-tight leading-tight m-0 mb-4"
           style={{ color: 'var(--text-primary)' }}
         >
           Your desktop is waiting.
@@ -214,7 +214,7 @@ export function WaitlistCTA({ theme }) {
               <CheckCircle2 size={24} color="#4ADE80" />
             </div>
             <p
-              className="font-instrument italic text-2xl m-0 max-w-md"
+              className="text-2xl font-normal tracking-tight m-0 max-w-md"
               style={{ color: 'var(--purple-soft)' }}
             >
               {successMsg}

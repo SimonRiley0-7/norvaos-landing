@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NORVA — 3D Floating macOS AI Assistant</title>
+  <style>
+    /* ============================================================
+       RESET & VIEWPORT SETUP
+       ============================================================ */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      overflow: hidden;
+      /* Warm macOS Sonoma wallpaper background (purples, mauves, dusty pinks, sandy beiges) */
+      background:
+        radial-gradient(ellipse 85% 75% at 85% 15%, rgba(255, 218, 190, 0.75) 0%, transparent 60%),
+        radial-gradient(ellipse 75% 65% at 15% 85%, rgba(195, 175, 235, 0.8) 0%, transparent 65%),
+        radial-gradient(ellipse 90% 60% at 50% 50%, rgba(245, 210, 222, 0.65) 0%, transparent 75%),
+        radial-gradient(circle at 75% 65%, rgba(220, 185, 175, 0.7) 0%, transparent 55%),
+        linear-gradient(135deg, #d8cae8 0%, #e8cdc5 35%, #ebdad0 65%, #c8bde0 100%);
+      background-size: cover;
+      background-position: center;
+      padding: 24px;
+    }
+
+    /* Ambient scenic glow and soft diffusion */
+    body::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      backdrop-filter: blur(50px);
+      -webkit-backdrop-filter: blur(50px);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Decorative rounded background frame */
+    .scene-canvas {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 620px;
+      height: 600px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 36px;
+      border-radius: 36px;
+      background: radial-gradient(circle at 50% 35%, rgba(255, 255, 255, 0.28) 0%, transparent 70%);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      box-shadow:
+        0 30px 80px -20px rgba(60, 40, 80, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.6);
+      perspective: 900px;
+      perspective-origin: center;
+    }
+
+    /* ============================================================
+       ENTRY ANIMATION WRAPPER
+       (Opacity 0→1, translateY 20px→0, 600ms ease-out)
+       ============================================================ */
+    .entrance-wrapper {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: entryReveal 600ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transform-style: preserve-3d;
+    }
+
+    @keyframes entryReveal {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* ============================================================
+       3D TILTED & CONTINUOUS FLOATING WIDGET
+       ============================================================ */
+    .widget-3d-card {
+      width: 380px;
+      max-width: calc(100vw - 48px);
+      background: rgba(242, 240, 245, 0.88);
+      backdrop-filter: blur(32px) saturate(190%);
+      -webkit-backdrop-filter: blur(32px) saturate(190%);
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.95);
+      padding: 16px 20px 20px;
+      /* 3D tilt + Continuous floating sine-wave translateY (0px to -10px, 3.5s loop) */
+      animation: float3DTilt 3.5s ease-in-out infinite;
+      transform-style: preserve-3d;
+      /* Large realistic drop shadow to sell the 3D depth */
+      box-shadow:
+        0 40px 80px -15px rgba(45, 30, 65, 0.28),
+        0 18px 40px -10px rgba(45, 30, 65, 0.16),
+        0 6px 16px -4px rgba(45, 30, 65, 0.10),
+        inset 0 1.5px 0 rgba(255, 255, 255, 1);
+      transition: box-shadow 0.3s ease;
+    }
+
+    /* Sine-wave floating layered directly onto the 3D perspective tilt */
+    @keyframes float3DTilt {
+      0%, 100% {
+        transform: perspective(900px) rotateY(-12deg) rotateX(6deg) translateY(0px);
+      }
+      50% {
+        transform: perspective(900px) rotateY(-12deg) rotateX(6deg) translateY(-10px);
+      }
+    }
+
+    /* ============================================================
+       HEADER (TRAFFIC LIGHTS & ⌘ K PILL)
+       ============================================================ */
+    .widget-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 6px;
+    }
+
+    .traffic-lights {
+      display: flex;
+      align-items: center;
+      gap: 6.5px;
+    }
+
+    .dot {
+      width: 10.5px;
+      height: 10.5px;
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.25);
+      transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.18s ease;
+    }
+
+    /* Traffic light dots scale up + darken on hover */
+    .dot:hover {
+      transform: scale(1.22);
+      filter: brightness(0.82);
+    }
+
+    .dot-red {
+      background: #FF5F57;
+      border: 0.5px solid rgba(224, 68, 62, 0.6);
+    }
+
+    .dot-yellow {
+      background: #FEBC2E;
+      border: 0.5px solid rgba(222, 161, 35, 0.6);
+    }
+
+    .dot-green {
+      background: #28C840;
+      border: 0.5px solid rgba(26, 171, 41, 0.6);
+    }
+
+    /* ⌘ K pill badge */
+    .shortcut-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      padding: 2.5px 7.5px;
+      border-radius: 9999px;
+      background: rgba(255, 255, 255, 0.75);
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      font-family: -apple-system, monospace;
+      font-size: 10.5px;
+      font-weight: 600;
+      color: #646470;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+      user-select: none;
+    }
+
+    /* ============================================================
+       CENTER "N" LOGO & SUBHEADING
+       ============================================================ */
+    .center-branding {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      margin-top: -2px;
+      margin-bottom: 15px;
+    }
+
+    /* Small abstract purple "N" logo mark (SVG two strokes forming a letter) */
+    .logo-n {
+      width: 32px;
+      height: 32px;
+      margin-bottom: 8px;
+      filter: drop-shadow(0 2px 8px rgba(123, 92, 240, 0.35));
+      transition: transform 0.25s ease;
+    }
+
+    .logo-n:hover {
+      transform: scale(1.1);
+    }
+
+    .subheading {
+      font-size: 15px;
+      font-weight: 500;
+      color: #17171C;
+      letter-spacing: -0.01em;
+      user-select: none;
+    }
+
+    /* ============================================================
+       SEARCH BAR & ROTATING SEND BUTTON
+       ============================================================ */
+    .search-bar-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+      width: 100%;
+      height: 44px;
+      background: rgba(255, 255, 255, 0.95);
+      border: 1px solid #E4E2DC;
+      border-radius: 9999px;
+      padding-left: 16px;
+      padding-right: 5px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      margin-bottom: 14px;
+    }
+
+    /* Search bar focus: soft purple glow ring */
+    .search-bar-wrap:focus-within {
+      border-color: #7B5CF0;
+      background: #FFFFFF;
+      box-shadow:
+        0 0 0 3px rgba(123, 92, 240, 0.25),
+        0 3px 12px rgba(123, 92, 240, 0.1);
+    }
+
+    .search-input {
+      width: 100%;
+      height: 100%;
+      background: transparent;
+      border: none;
+      outline: none;
+      font-family: inherit;
+      font-size: 13.5px;
+      color: #17171C;
+      padding-right: 8px;
+    }
+
+    .search-input::placeholder {
+      color: #8E8E98;
+      font-weight: 400;
+    }
+
+    /* Purple circular send button */
+    .send-btn {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #8E70FF 0%, #7B5CF0 60%, #6848E4 100%);
+      color: #FFFFFF;
+      flex-shrink: 0;
+      box-shadow: 0 2px 6px rgba(123, 92, 240, 0.35);
+      transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .send-btn svg {
+      width: 15px;
+      height: 15px;
+      stroke-width: 2.4;
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    /* Send button hover: scale(1.1), slight rotation, brighter purple */
+    .send-btn:hover {
+      transform: scale(1.1);
+      filter: brightness(1.15);
+      box-shadow: 0 4px 12px rgba(123, 92, 240, 0.5);
+    }
+
+    .send-btn:hover svg {
+      transform: rotate(45deg);
+    }
+
+    .send-btn:active {
+      transform: scale(0.96);
+    }
+
+    /* ============================================================
+       QUICK-ACTION CHIPS
+       ============================================================ */
+    .chips-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6.5px;
+      flex-wrap: wrap;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 6px 11px;
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid #E2E0D8;
+      border-radius: 9999px;
+      font-family: inherit;
+      font-size: 12px;
+      font-weight: 500;
+      color: #3F3F46;
+      cursor: pointer;
+      user-select: none;
+      transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.18s ease, box-shadow 0.18s ease, background 0.18s ease, color 0.18s ease;
+    }
+
+    .chip svg {
+      width: 13px;
+      height: 13px;
+      color: #71717A;
+      transition: color 0.18s ease;
+    }
+
+    /* Chip hover: scale(1.05), white bg, purple border tint, soft purple box-shadow */
+    .chip:hover {
+      transform: scale(1.05);
+      background: #FFFFFF;
+      border-color: #7B5CF0;
+      color: #18181B;
+      box-shadow: 0 2px 12px rgba(96, 71, 200, 0.15);
+    }
+
+    .chip:hover svg {
+      color: #7B5CF0;
+    }
+
+    .chip:active {
+      transform: scale(0.98);
+    }
+
+    .chip-dots {
+      padding: 6px 10px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+    }
+
+    /* ============================================================
+       MACOS DOCK STRIP (BOTTOM OF SCENE)
+       ============================================================ */
+    .dock-strip {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 6px 12px;
+      background: rgba(255, 255, 255, 0.42);
+      backdrop-filter: blur(24px) saturate(180%);
+      -webkit-backdrop-filter: blur(24px) saturate(180%);
+      border: 1px solid rgba(255, 255, 255, 0.75);
+      border-radius: 18px;
+      box-shadow:
+        0 16px 36px rgba(45, 30, 65, 0.12),
+        0 2px 6px rgba(0, 0, 0, 0.04),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    }
+
+    .dock-icon {
+      position: relative;
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      user-select: none;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.14);
+      transform-origin: bottom center;
+      /* Spring-like transition */
+      transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    /* Tooltip */
+    .dock-icon::before {
+      content: attr(data-label);
+      position: absolute;
+      top: -30px;
+      background: rgba(23, 23, 28, 0.85);
+      color: #FFFFFF;
+      font-size: 10.5px;
+      font-weight: 500;
+      padding: 3px 8px;
+      border-radius: 6px;
+      white-space: nowrap;
+      opacity: 0;
+      transform: translateY(4px);
+      pointer-events: none;
+      transition: opacity 0.15s ease, transform 0.15s ease;
+      backdrop-filter: blur(6px);
+    }
+
+    .dock-icon:hover::before {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* 1. Finder */
+    .icon-finder {
+      background: linear-gradient(180deg, #3AA0FF 0%, #0566DD 100%);
+      color: #FFFFFF;
+    }
+
+    /* 2. Safari */
+    .icon-safari {
+      background: linear-gradient(180deg, #FFFFFF 0%, #E8F0FE 100%);
+      color: #1A73E8;
+    }
+
+    /* 3. Notion */
+    .icon-notion {
+      background: #FFFFFF;
+      color: #000000;
+      font-family: Georgia, serif;
+      font-weight: 700;
+      font-size: 20px;
+    }
+
+    /* 4. Figma */
+    .icon-figma {
+      background: #1E1E1E;
+    }
+
+    /* 5. Calendar */
+    .icon-calendar {
+      background: #FFFFFF;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      border: 0.5px solid rgba(0, 0, 0, 0.08);
+    }
+
+    .cal-top {
+      width: 100%;
+      height: 11px;
+      background: #E02E2E;
+      color: #FFFFFF;
+      font-size: 7px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      letter-spacing: 0.05em;
+    }
+
+    .cal-num {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      font-weight: 700;
+      color: #17171C;
+      line-height: 1;
+    }
+
+    /* 6. Mail */
+    .icon-mail {
+      background: linear-gradient(180deg, #2499FF 0%, #006CE0 100%);
+      color: #FFFFFF;
+    }
+
+    /* Interactive Status Toast */
+    .toast-pill {
+      position: absolute;
+      top: 20px;
+      padding: 7px 16px;
+      border-radius: 9999px;
+      background: rgba(23, 23, 28, 0.85);
+      backdrop-filter: blur(10px);
+      color: #FFFFFF;
+      font-size: 12px;
+      font-weight: 500;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+      opacity: 0;
+      transform: translateY(-8px);
+      pointer-events: none;
+      transition: opacity 0.22s ease, transform 0.22s ease;
+      z-index: 50;
+    }
+
+    .toast-pill.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Scenic 3D Canvas Scene -->
+  <div class="scene-canvas">
+
+    <!-- Interactive notification toast -->
+    <div class="toast-pill" id="toastPill"></div>
+
+    <!-- Entrance Animation Container (fade + slide up 600ms) -->
+    <div class="entrance-wrapper">
+
+      <!-- =========================================================
+           FROSTED GLASS WIDGET CARD (3D PERSPECTIVE TILT)
+           ========================================================= -->
+      <div class="widget-3d-card" id="widgetCard">
+
+        <!-- Top Header: Traffic Lights (Left) & ⌘ K Pill (Right) -->
+        <div class="widget-header">
+          <div class="traffic-lights">
+            <div class="dot dot-red" title="Close"></div>
+            <div class="dot dot-yellow" title="Minimize"></div>
+            <div class="dot dot-green" title="Zoom"></div>
+          </div>
+
+          <div class="shortcut-pill" title="Summon shortcut">
+            <span>⌘</span><span>K</span>
+          </div>
+        </div>
+
+        <!-- Center: Abstract Purple "N" Logo & Subheading -->
+        <div class="center-branding">
+          <!-- Abstract Purple "N" Logo Mark (SVG, two strokes forming a letter) -->
+          <svg class="logo-n" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="strokeGrad1" x1="10" y1="38" x2="36" y2="10" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stopColor="#6C4BE8" />
+                <stop offset="50%" stopColor="#7B5CF0" />
+                <stop offset="100%" stopColor="#A58BFF" />
+              </linearGradient>
+              <linearGradient id="strokeGrad2" x1="16" y1="14" x2="38" y2="38" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stopColor="#A58BFF" />
+                <stop offset="60%" stopColor="#7B5CF0" />
+                <stop offset="100%" stopColor="#5E3EDC" />
+              </linearGradient>
+            </defs>
+            <!-- Stroke 1 (Left vertical arch curving through diagonal) -->
+            <path
+              d="M 12 36 L 12 16 C 12 12 18 12 21 16 L 31 32 C 34 36 36 36 36 30"
+              stroke="url(#strokeGrad1)"
+              stroke-width="6.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <!-- Stroke 2 (Right upward stem completing the abstract "N") -->
+            <path
+              d="M 27 26 L 36 12 L 36 24"
+              stroke="url(#strokeGrad2)"
+              stroke-width="6.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+
+          <h3 class="subheading">What would you like to do?</h3>
+        </div>
+
+        <!-- Search Bar: Full pill with purple circular send button -->
+        <form class="search-bar-wrap" id="searchForm">
+          <input
+            type="text"
+            class="search-input"
+            id="searchInput"
+            placeholder="Ask NORVA anything…"
+            autocomplete="off"
+            spellcheck="false"
+          />
+          <button type="submit" class="send-btn" id="sendBtn" title="Send command">
+            <!-- Arrow icon -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="7" y1="17" x2="17" y2="7"></line>
+              <polyline points="7 7 17 7 17 17"></polyline>
+            </svg>
+          </button>
+        </form>
+
+        <!-- Quick-Action Chips -->
+        <div class="chips-row">
+          <!-- 1. Find files -->
+          <button type="button" class="chip" data-prompt="Find my recent documents">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+            </svg>
+            <span>Find files</span>
+          </button>
+
+          <!-- 2. Plan my day -->
+          <button type="button" class="chip" data-prompt="Plan my day">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="16" y1="2" x2="16" y2="6"></line>
+              <line x1="8" y1="2" x2="8" y2="6"></line>
+              <line x1="3" y1="10" x2="21" y2="10"></line>
+            </svg>
+            <span>Plan my day</span>
+          </button>
+
+          <!-- 3. Draft an email -->
+          <button type="button" class="chip" data-prompt="Draft an email to the team">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+              <polyline points="22,6 12,13 2,6"></polyline>
+            </svg>
+            <span>Draft an email</span>
+          </button>
+
+          <!-- 4. Overflow Chip -->
+          <button type="button" class="chip chip-dots" data-prompt="Organize my desktop files" title="More options">
+            <span>···</span>
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- =========================================================
+         MACOS DOCK STRIP (BOTTOM OF SCENE)
+         ========================================================= -->
+    <div class="dock-strip" id="dockStrip">
+      <!-- 1. Finder -->
+      <div class="dock-icon icon-finder" data-label="Finder">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+          <line x1="8" y1="21" x2="16" y2="21"></line>
+          <line x1="12" y1="17" x2="12" y2="21"></line>
+        </svg>
+      </div>
+
+      <!-- 2. Safari -->
+      <div class="dock-icon icon-safari" data-label="Safari">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1A73E8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
+        </svg>
+      </div>
+
+      <!-- 3. Notion -->
+      <div class="dock-icon icon-notion" data-label="Notion">
+        <span>N</span>
+      </div>
+
+      <!-- 4. Figma -->
+      <div class="dock-icon icon-figma" data-label="Figma">
+        <svg width="16" height="24" viewBox="0 0 38 57" fill="none">
+          <path d="M19 28.5C19 23.2533 23.2533 19 28.5 19C33.7467 19 38 23.2533 38 28.5C38 33.7467 33.7467 38 28.5 38C23.2533 38 19 33.7467 19 28.5Z" fill="#1ABCFE"/>
+          <path d="M0 47.5C0 42.2533 4.25329 38 9.5 38H19V47.5C19 52.7467 14.7467 57 9.5 57C4.25329 57 0 52.7467 0 47.5Z" fill="#0ACF83"/>
+          <path d="M19 0V19H28.5C33.7467 19 38 14.7467 38 9.5C38 4.25329 33.7467 0 28.5 0H19Z" fill="#FF7262"/>
+          <path d="M0 9.5C0 14.7467 4.25329 19 9.5 19H19V0H9.5C4.25329 0 0 4.25329 0 9.5Z" fill="#F24E1E"/>
+          <path d="M0 28.5C0 33.7467 4.25329 38 9.5 38H19V19H9.5C4.25329 19 0 23.2533 0 28.5Z" fill="#A259FF"/>
+        </svg>
+      </div>
+
+      <!-- 5. Calendar -->
+      <div class="dock-icon icon-calendar" data-label="Calendar">
+        <div class="cal-top">JUN</div>
+        <div class="cal-num">10</div>
+      </div>
+
+      <!-- 6. Mail -->
+      <div class="dock-icon icon-mail" data-label="Mail">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+          <polyline points="22,6 12,13 2,6"></polyline>
+        </svg>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ============================================================
+       INTERACTION SCRIPT
+       ============================================================ -->
+  <script>
+    // --- 1. macOS Dock Icon Spring Scaling with Neighbor Influence ---
+    const dockIcons = Array.from(document.querySelectorAll('.dock-icon'));
+    const dockStrip = document.getElementById('dockStrip');
+
+    dockIcons.forEach((icon, index) => {
+      icon.addEventListener('mouseenter', () => {
+        // Hovered icon: scale 1.35 and bounce up -6px
+        icon.style.transform = 'scale(1.35) translateY(-6px)';
+
+        // Immediate left neighbor: scale 1.15
+        if (index > 0) {
+          dockIcons[index - 1].style.transform = 'scale(1.15) translateY(-2px)';
+        }
+        // Immediate right neighbor: scale 1.15
+        if (index < dockIcons.length - 1) {
+          dockIcons[index + 1].style.transform = 'scale(1.15) translateY(-2px)';
+        }
+      });
+    });
+
+    dockStrip.addEventListener('mouseleave', () => {
+      dockIcons.forEach((icon) => {
+        icon.style.transform = 'scale(1) translateY(0)';
+      });
+    });
+
+    // --- 2. Interactive Toast & Chips Handling ---
+    const toast = document.getElementById('toastPill');
+    const searchInput = document.getElementById('searchInput');
+    const searchForm = document.getElementById('searchForm');
+    const chips = document.querySelectorAll('.chip');
+
+    function notify(text) {
+      toast.textContent = text;
+      toast.classList.add('active');
+      setTimeout(() => {
+        toast.classList.remove('active');
+      }, 2200);
+    }
+
+    chips.forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const prompt = chip.getAttribute('data-prompt');
+        searchInput.value = prompt;
+        searchInput.focus();
+        notify(`Running "${prompt}"...`);
+      });
+    });
+
+    searchForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const val = searchInput.value.trim();
+      if (!val) {
+        searchInput.focus();
+        return;
+      }
+      notify(`NORVA processing: "${val}"`);
+    });
+
+    dockIcons.forEach((icon) => {
+      icon.addEventListener('click', () => {
+        const label = icon.getAttribute('data-label');
+        notify(`Opening ${label}...`);
+      });
+    });
+  </script>
+</body>
+</html>

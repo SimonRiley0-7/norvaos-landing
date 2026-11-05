@@ -141,7 +141,7 @@ export function BentoCards({ theme = 'dark' }) {
           Capabilities
         </span>
         <h2
-          className="font-instrument text-4xl font-normal m-0"
+          className="text-4xl font-normal tracking-tight m-0"
           style={{ color: 'var(--text-primary)' }}
         >
           Everything. Locally.

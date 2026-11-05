@@ -1,82 +1,129 @@
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { useScroll, useTransform } from 'framer-motion'
-import { NorvaLogo } from './CactusSVG'
+import { NorvaBrandLockup } from './NorvaLogo'
 
-export function Navbar({ theme }) {
-  const { scrollY } = useScroll()
-  const scrolled = useTransform(scrollY, [0, 80], [0, 1])
+export function AppleIcon({ size = 16, className = '' }) {
+  return (
+    <img
+      src="/apple.png"
+      alt="Apple"
+      width={size}
+      height={size}
+      className={`inline-block object-contain shrink-0 brightness-0 invert ${className}`}
+      style={{
+        width: size,
+        height: size,
+      }}
+    />
+  )
+}
 
-  const darkBg = useTransform(scrolled, v =>
-    `rgba(15,15,15,${0.55 + v * 0.3})`
-  )
-  const lightBg = useTransform(scrolled, v =>
-    `rgba(255,255,255,${0.80 + v * 0.15})`
-  )
-  const blurVal = useTransform(scrolled, v =>
-    `blur(${theme === 'dark' ? 16 + v * 8 : 20}px) saturate(160%) brightness(${theme === 'dark' ? 1.08 : 1.0})`
-  )
+export function Navbar({ onDownloadClick, onNavigate }) {
+  const [scrolled, setScrolled] = useState(false)
 
-  const bg = theme === 'dark' ? darkBg : lightBg
-  const border = theme === 'dark'
-    ? 'rgba(255,255,255,0.09)'
-    : 'rgba(123,92,240,0.12)'
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20)
+    }
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  const navLinks = [
+    { name: 'Product', href: '#product' },
+    { name: 'Workflows', href: '#workflows' },
+    { name: 'Privacy', href: '#privacy' },
+    { name: 'Team', href: '/team' },
+    { name: 'Resources', href: '#resources' },
+  ]
+
+  const handleNavClick = (e, href) => {
+    e.preventDefault()
+    if (href === '/team') {
+      if (onNavigate) {
+        onNavigate('/team')
+      } else {
+        window.history.pushState(null, '', '/team')
+      }
+      return
+    }
+    const target = document.querySelector(href)
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth' })
+    }
+  }
+
+  const handleDownload = () => {
+    if (onDownloadClick) {
+      onDownloadClick()
+    } else {
+      // Default direct download for macOS
+      const link = document.createElement('a')
+      link.href = 'https://github.com/SimonRiley0-7/landingpage-install/releases/download/v1.0.0/NORVA-1.0.0-arm64.dmg'
+      link.download = ''
+      document.body.appendChild(link)
+      link.click()
+      document.body.removeChild(link)
+
+      // Silent analytics tracking
+      fetch('/api/download', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ platform: 'mac' }),
+      }).catch(() => {})
+    }
+  }
 
   return (
-    <motion.nav
-      className="fixed top-6 left-1/2 z-[9999] flex min-w-[320px] items-center justify-between rounded-full px-6 py-3"
-      style={{
-        x: '-50%',
-        backdropFilter: blurVal,
-        WebkitBackdropFilter: blurVal,
-        background: bg,
-        border: `1px solid ${border}`,
-        boxShadow: theme === 'dark'
-          ? 'inset 0 1px 0 rgba(255,255,255,0.07), inset 0 -1px 0 rgba(0,0,0,0.4), 0 20px 60px rgba(0,0,0,0.4)'
-          : 'none',
-      }}
-      initial={{ y: -60, opacity: 0 }}
+    <motion.header
+      initial={{ y: -24, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        scrolled
+          ? 'py-2.5 sm:py-3'
+          : 'py-5 bg-transparent'
+      }`}
     >
-      {/* Left: Logo lockup */}
-      <NorvaLogo size={22} showName theme={theme} />
+      <div
+        className={`max-w-[1240px] mx-auto px-6 md:px-10 flex items-center justify-between transition-all duration-300 ${
+          scrolled
+            ? 'py-2.5 px-6 sm:px-8 rounded-full bg-white/80 backdrop-blur-2xl border border-white/90 shadow-[0_12px_32px_-8px_rgba(23,23,28,0.08),inset_0_1px_1px_rgba(255,255,255,1)]'
+            : ''
+        }`}
+      >
+        {/* Left: Brand symbol & wordmark */}
+        <a href="/" className="group flex items-center transition-opacity hover:opacity-90">
+          <NorvaBrandLockup size={28} showWordmark={true} />
+        </a>
 
-      {/* Center: tagline (dark only) */}
-      {theme === 'dark' && (
-        <motion.span
-          className="font-mono-jb text-[9px] uppercase tracking-[0.2em] whitespace-nowrap hidden md:block mx-8"
-          style={{ color: 'var(--text-mono)' }}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.8 }}
-        >
-          Autonomous Desktop Intelligence
-        </motion.span>
-      )}
+        {/* Center: Navigation Links */}
+        <nav className="hidden md:flex items-center gap-9">
+          {navLinks.map((link) => (
+            <a
+              key={link.name}
+              href={link.href}
+              onClick={(e) => handleNavClick(e, link.href)}
+              className="text-[14px] font-medium text-[#5A5A66] hover:text-[#17171C] transition-colors relative py-1"
+            >
+              {link.name}
+            </a>
+          ))}
+        </nav>
 
-      {/* Right: live dot + BETA badge */}
-      <div className="flex items-center gap-2">
-        <div className="relative flex items-center justify-center w-4 h-4">
-          <span
-            className="absolute w-3 h-3 rounded-full animate-ping"
-            style={{ background: 'var(--purple-primary)', opacity: 0.5 }}
-          />
-          <span
-            className="w-2 h-2 rounded-full"
-            style={{ background: 'var(--purple-primary)' }}
-          />
+        {/* Right: Native Download for Mac CTA */}
+        <div className="flex items-center gap-3">
+          <button
+            onClick={handleDownload}
+            id="nav-download-btn"
+            className="group relative inline-flex items-center gap-2 px-4 py-2 md:px-4.5 md:py-2.2 rounded-full bg-[#17171C] text-white text-[13px] font-medium transition-all duration-200 hover:bg-black hover:shadow-md active:scale-[0.98]"
+            title="Download NORVA for macOS"
+          >
+            <AppleIcon size={14} className="text-white fill-current transition-transform group-hover:scale-105" />
+            <span>Download for Mac</span>
+          </button>
         </div>
-        <span
-          className="font-mono-jb text-[9px] tracking-widest rounded-full border px-2 py-0.5"
-          style={{
-            color: 'var(--purple-soft)',
-            borderColor: 'rgba(123,92,240,0.2)',
-            background: 'var(--purple-subtle)',
-          }}
-        >
-          BETA
-        </span>
       </div>
-    </motion.nav>
+    </motion.header>
   )
 }
