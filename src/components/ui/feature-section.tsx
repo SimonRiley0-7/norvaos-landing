@@ -48,7 +48,7 @@ export function FeatureSteps({
   className,
   title,
   autoPlayInterval = 3500,
-  imageHeight = "h-[420px]",
+  imageHeight,
 }: FeatureStepsProps) {
   const [currentFeature, setCurrentFeature] = useState(0)
   const [progress, setProgress] = useState(0)
@@ -172,7 +172,7 @@ export function FeatureSteps({
           {/* Right Column: Liquid Glass Visual Showcase Card */}
           <div
             className={cn(
-              "order-1 md:order-2 relative w-full h-[320px] sm:h-[400px] md:h-[440px] overflow-hidden rounded-[32px] sm:rounded-[36px] shadow-2xl border border-white/90",
+              "order-1 md:order-2 relative w-full h-[250px] xs:h-[300px] sm:h-[380px] md:h-[440px] overflow-hidden rounded-[26px] sm:rounded-[36px] shadow-2xl border border-white/90",
               imageHeight
             )}
             style={{

@@ -17,9 +17,9 @@ export function Footer({ onOpenModal, onNavigate }) {
   }
 
   return (
-    <footer className="py-16 bg-[#FAF9F7] border-t border-[#E8E6E1]/90">
-      <div className="max-w-[1240px] mx-auto px-6 md:px-10">
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-8 pb-12 border-b border-[#E8E6E1]/70 text-left">
+    <footer className="py-14 sm:py-16 bg-[#FAF9F7] border-t border-[#E8E6E1]/90">
+      <div className="max-w-[1240px] mx-auto px-5 sm:px-6 md:px-10">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-7 sm:gap-8 pb-10 sm:pb-12 border-b border-[#E8E6E1]/70 text-left">
           {/* Brand Col */}
           <div className="col-span-2 space-y-3">
             <div className="flex items-center gap-3">
@@ -28,7 +28,7 @@ export function Footer({ onOpenModal, onNavigate }) {
                 OS-Native Intelligence
               </span>
             </div>
-            <p className="text-[13.5px] text-[#5A5A66] max-w-[340px] leading-relaxed">
+            <p className="text-[13px] sm:text-[13.5px] text-[#5A5A66] max-w-[340px] leading-relaxed">
               NORVA is your personal desktop employee — quietly working alongside you to handle repetitive workflows, manage tasks, and get real work done directly on your machine.
             </p>
           </div>
@@ -112,9 +112,9 @@ export function Footer({ onOpenModal, onNavigate }) {
         </div>
 
         {/* Bottom line */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#8E8E98]">
+        <div className="pt-6 sm:pt-8 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4 text-xs text-[#8E8E98] text-center sm:text-left">
           <p>© 2026 Norva OS. All rights reserved.</p>
-          <div className="flex items-center gap-4 text-[#8E8E98]">
+          <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 text-[#8E8E98]">
             <span>macOS &amp; Windows</span>
             <span>·</span>
             <span>Air-Gapped Capable</span>

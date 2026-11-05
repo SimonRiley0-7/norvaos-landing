@@ -181,7 +181,7 @@ export function AudienceSection() {
                     key={tab.id}
                     type="button"
                     onClick={() => setActiveUser(tab.id)}
-                    className={`relative px-6 sm:px-8 py-2.5 rounded-full text-[14px] sm:text-[15px] font-medium transition-all duration-200 cursor-pointer select-none flex items-center gap-2.5 z-10 ${
+                    className={`relative px-3.5 sm:px-8 py-2 sm:py-2.5 rounded-full text-[12.5px] sm:text-[15px] font-medium transition-all duration-200 cursor-pointer select-none flex items-center gap-1.5 sm:gap-2.5 z-10 ${
                       isSelected
                         ? 'text-[#111116]'
                         : 'text-[#5A5A66] hover:text-[#111116] hover:bg-white/40'

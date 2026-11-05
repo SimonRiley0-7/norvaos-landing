@@ -8,23 +8,23 @@ export function FAQSection() {
   const faqs = [
     {
       q: 'How is NORVA different from ChatGPT or Copilot in the browser?',
-      a: 'Web chatbots are isolated in a browser tab. They know nothing about your open windows, git branches, or local files unless you manually copy-paste context. NORVA is an OS-native desktop intelligence layer that runs in background memory, perceiving your actual active screen context, querying local files semantically, and executing multi-step tasks across macOS natively.',
+      a: 'Web chatbots are isolated in a browser tab. They know nothing about your open windows, git branches, or local files unless you manually copy-paste context. NORVA is an OS-native desktop intelligence layer that runs in background memory, perceiving your actual active screen context, querying local files semantically, and executing multi-step tasks across macOS and Windows natively.',
     },
     {
       q: 'Does NORVA send my files, documents, or screen to cloud servers?',
-      a: 'No. NORVA is built on a strict local-first architecture. Quantized AI model weights are loaded directly into your Mac\'s Unified Memory. Vector embeddings and search indices are stored in an encrypted SQLite database on your local drive (~/Library). No desktop telemetry or document contents ever leave your device.',
+      a: 'No. NORVA is built on a strict local-first architecture. Quantized AI model weights are loaded directly into local hardware memory. Vector embeddings and search indices are stored in an encrypted local database on your drive. No desktop telemetry or document contents ever leave your device.',
     },
     {
       q: 'Does NORVA work offline in Airplane Mode?',
-      a: 'Yes. All core capabilities—natural language file search, document summarization, desktop automation, context perception, and workflow execution—run 100% on-device using your Apple Silicon Neural Engine or CPU. You can disconnect Wi-Fi entirely and NORVA continues to work with zero degradation.',
+      a: 'Yes. All core capabilities—natural language file search, document summarization, desktop automation, context perception, and workflow execution—run 100% on-device using local hardware acceleration. You can disconnect Wi-Fi entirely and NORVA continues to work with zero degradation.',
     },
     {
       q: 'What are the system requirements and supported operating systems?',
-      a: 'NORVA is optimized natively for macOS 14 (Sonoma) and macOS 15 (Sequoia). Apple Silicon Macs (M1, M2, M3, M4) with 16GB+ Unified Memory provide the fastest inference (~38 tokens/sec). Intel 64-bit Macs running macOS 14+ are also supported with CPU acceleration.',
+      a: 'NORVA supports macOS 14+ (Apple Silicon M1-M4 & Intel) and Windows 11 (x64 & ARM64). Local model acceleration leverages native GPU and NPU hardware with zero cloud dependencies.',
     },
     {
       q: 'What capabilities are available today vs planned on the roadmap?',
-      a: 'Available today (v1.0.0 Public Beta): Natural-language file discovery, document indexing & semantic QA (PDF, Markdown, TXT), active workspace context radar (VS Code, Figma, Terminal, Slack), multi-step file automation, and daily briefing workflows. Planned for upcoming releases: Multi-modal screen perception via local Vision models, cross-app deep AppleScript extensions, and custom workflow triggers.',
+      a: 'Available today (v1.0.0 Public Beta): Natural-language file discovery, document indexing & semantic QA (PDF, Markdown, TXT), active workspace context radar (VS Code, Figma, Terminal, Slack), multi-step file automation, and daily briefing workflows. Planned for upcoming releases: Multi-modal screen perception via local Vision models, cross-app deep system extensions, and custom workflow triggers.',
     },
     {
       q: 'How does NORVA prevent accidental or destructive file changes?',
@@ -78,10 +78,10 @@ export function FAQSection() {
                 <button
                   type="button"
                   onClick={() => setOpenIndex(isOpen ? -1 : idx)}
-                  className="w-full px-6 py-4.5 flex items-center justify-between text-left cursor-pointer gap-4"
+                  className="w-full px-4 sm:px-6 py-3.5 sm:py-4.5 flex items-center justify-between text-left cursor-pointer gap-3 sm:gap-4"
                 >
                   <span
-                    className="text-[16px] sm:text-[17px] font-medium text-[#111116] tracking-tight leading-snug"
+                    className="text-[15px] sm:text-[17px] font-medium text-[#111116] tracking-tight leading-snug"
                     style={{ fontFamily: "'Switzer', sans-serif", fontWeight: 500 }}
                   >
                     {faq.q}
@@ -104,7 +104,7 @@ export function FAQSection() {
                       transition={{ duration: 0.25, ease: 'easeInOut' }}
                       className="overflow-hidden"
                     >
-                      <div className="px-6 pb-5 pt-1 text-[14.5px] text-[#5A5A66] leading-relaxed border-t border-black/[0.04]">
+                      <div className="px-4 sm:px-6 pb-4 sm:pb-5 pt-1 text-[13.5px] sm:text-[14.5px] text-[#5A5A66] leading-relaxed border-t border-black/[0.04]">
                         {faq.a}
                       </div>
                     </motion.div>

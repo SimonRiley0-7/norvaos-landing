@@ -78,15 +78,15 @@ export function DownloadSection({ onDownloadClick }) {
 
   return (
     <section id="resources" className="py-24 md:py-36 bg-[#FAF9F7] border-t border-[#E8E6E1]/80 relative overflow-hidden">
-      <div className="max-w-[1240px] mx-auto px-6 md:px-10">
-        <div className="relative rounded-[36px] liquid-glass-card p-8 sm:p-14 md:p-18 overflow-hidden text-center">
+      <div className="max-w-[1240px] mx-auto px-4 sm:px-6 md:px-10">
+        <div className="relative rounded-[28px] sm:rounded-[36px] liquid-glass-card p-6 sm:p-12 md:p-16 overflow-hidden text-center">
           {/* Subtle Ambient Radial Glow */}
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[340px] bg-[#7B5CF0]/12 rounded-full blur-[100px] pointer-events-none" />
 
           {/* Center NORVA Bot Logo */}
-          <div className="relative mb-6 flex justify-center">
+          <div className="relative mb-5 sm:mb-6 flex justify-center">
             <div
-              className="p-3.5 sm:p-4 rounded-[24px] border border-white/90 flex items-center justify-center transition-transform duration-300 hover:scale-105"
+              className="p-3 sm:p-4 rounded-[22px] sm:rounded-[24px] border border-white/90 flex items-center justify-center transition-transform duration-300 hover:scale-105"
               style={{
                 background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.85) 0%, rgba(248, 246, 254, 0.65) 100%)',
                 backdropFilter: 'blur(24px) saturate(190%)',
@@ -97,31 +97,31 @@ export function DownloadSection({ onDownloadClick }) {
               <img
                 src="/Norva-bot.png"
                 alt="NORVA Bot logo"
-                className="w-12 h-12 sm:w-14 sm:h-14 object-contain select-none drop-shadow-sm"
+                className="w-10 h-10 sm:w-14 sm:h-14 object-contain select-none drop-shadow-sm"
               />
             </div>
           </div>
 
           {/* Confident Headline */}
           <h2
-            className="text-[36px] sm:text-[46px] md:text-[54px] font-medium text-[#17171C] tracking-tight leading-[1.08] max-w-[700px] mx-auto mb-5"
+            className="text-[28px] xs:text-[34px] sm:text-[46px] md:text-[54px] font-medium text-[#17171C] tracking-tight leading-[1.1] max-w-[700px] mx-auto mb-4 sm:mb-5"
             style={{ fontFamily: "'Switzer', sans-serif", fontWeight: 500 }}
           >
             Your desktop works for you.
           </h2>
 
           {/* Supporting Description */}
-          <p className="text-[17px] sm:text-[19px] text-[#5A5A66] max-w-[540px] mx-auto leading-relaxed mb-9">
+          <p className="text-[15px] sm:text-[19px] text-[#5A5A66] max-w-[540px] mx-auto leading-relaxed mb-7 sm:mb-9">
             Download NORVA and experience what autonomous desktop intelligence
             feels like across macOS and Windows.
           </p>
 
           {/* Download CTAs: Mac & Windows */}
-          <div className="flex flex-wrap items-center justify-center gap-3.5 mb-10">
+          <div className="flex flex-col xs:flex-row items-stretch xs:items-center justify-center gap-3 sm:gap-3.5 mb-8 sm:mb-10 max-w-[420px] xs:max-w-none mx-auto">
             <button
               onClick={() => handleDownload('mac')}
               id="cta-download-mac-btn"
-              className="group inline-flex items-center gap-2.5 px-7 py-3.5 rounded-full bg-[#17171C] text-white text-[15px] font-medium transition-all duration-200 hover:bg-black hover:shadow-lg hover:shadow-black/15 active:scale-[0.98] cursor-pointer"
+              className="group inline-flex items-center justify-center gap-2.5 px-6 sm:px-7 py-3 sm:py-3.5 rounded-full bg-[#17171C] text-white text-[14px] sm:text-[15px] font-medium transition-all duration-200 hover:bg-black hover:shadow-lg hover:shadow-black/15 active:scale-[0.98] cursor-pointer"
             >
               <AppleIcon size={16} className="text-white fill-current transition-transform group-hover:scale-110" />
               <span>Download for macOS</span>
@@ -130,7 +130,7 @@ export function DownloadSection({ onDownloadClick }) {
             <button
               onClick={() => handleDownload('windows')}
               id="cta-download-win-btn"
-              className="group inline-flex items-center gap-2.5 px-6 py-3.5 rounded-full bg-white text-[#17171C] border border-[#E8E6E1] text-[15px] font-medium transition-all duration-200 hover:bg-[#F5F4F0] hover:border-[#D8D6D0] active:scale-[0.98] cursor-pointer shadow-xs"
+              className="group inline-flex items-center justify-center gap-2.5 px-5 sm:px-6 py-3 sm:py-3.5 rounded-full bg-white text-[#17171C] border border-[#E8E6E1] text-[14px] sm:text-[15px] font-medium transition-all duration-200 hover:bg-[#F5F4F0] hover:border-[#D8D6D0] active:scale-[0.98] cursor-pointer shadow-xs"
             >
               <WindowsIcon size={15} />
               <span>Download for Windows</span>

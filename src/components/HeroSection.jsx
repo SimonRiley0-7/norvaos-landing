@@ -56,7 +56,7 @@ export function HeroSection({ onWatchDemo, onDownloadClick }) {
               initial={{ opacity: 0, y: 22 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-              className="text-[44px] sm:text-[54px] md:text-[62px] lg:text-[66px] font-medium text-[#17171C] tracking-tight leading-[1.06] mb-6"
+              className="text-[34px] xs:text-[40px] sm:text-[52px] md:text-[60px] lg:text-[66px] font-medium text-[#17171C] tracking-tight leading-[1.08] sm:leading-[1.06] mb-5 sm:mb-6"
               style={{
                 fontFamily: "'Switzer', sans-serif",
                 fontWeight: 500,
@@ -81,7 +81,7 @@ export function HeroSection({ onWatchDemo, onDownloadClick }) {
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.35, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-              className="text-[17px] sm:text-[18px] text-[#5A5A66] leading-relaxed max-w-[440px] mb-8 font-normal"
+              className="text-[16px] sm:text-[18px] text-[#5A5A66] leading-relaxed max-w-[440px] mb-7 sm:mb-8 font-normal"
             >
               NORVA is the OS-native intelligence layer that understands your work,
               automates the repetitive, and helps you get things done.
@@ -92,13 +92,13 @@ export function HeroSection({ onWatchDemo, onDownloadClick }) {
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.45, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-              className="flex flex-wrap items-center gap-3.5 mb-4"
+              className="flex flex-col xs:flex-row items-stretch xs:items-center gap-3 sm:gap-3.5 mb-4 w-full xs:w-auto"
             >
               {/* Primary: Download for macOS */}
               <button
                 onClick={() => handleDownload('mac')}
                 id="hero-download-mac-btn"
-                className="group inline-flex items-center gap-2.5 px-6 py-3.5 rounded-full bg-[#17171C] text-white text-[15px] font-medium transition-all duration-200 hover:bg-black hover:shadow-lg hover:shadow-black/10 active:scale-[0.98] cursor-pointer"
+                className="group inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-full bg-[#17171C] text-white text-[14.5px] sm:text-[15px] font-medium transition-all duration-200 hover:bg-black hover:shadow-lg hover:shadow-black/10 active:scale-[0.98] cursor-pointer"
               >
                 <AppleIcon size={16} className="text-white fill-current transition-transform group-hover:scale-110" />
                 <span>Download for macOS</span>
@@ -108,7 +108,7 @@ export function HeroSection({ onWatchDemo, onDownloadClick }) {
               <button
                 onClick={() => handleDownload('windows')}
                 id="hero-download-win-btn"
-                className="group inline-flex items-center gap-2.5 px-5 py-3.5 rounded-full bg-white/80 backdrop-blur-md text-[#17171C] border border-[#E8E6E1] text-[15px] font-medium transition-all duration-200 hover:bg-white hover:border-[#D8D6D0] active:scale-[0.98] cursor-pointer shadow-2xs"
+                className="group inline-flex items-center justify-center gap-2.5 px-5 py-3.5 rounded-full bg-white/80 backdrop-blur-md text-[#17171C] border border-[#E8E6E1] text-[14.5px] sm:text-[15px] font-medium transition-all duration-200 hover:bg-white hover:border-[#D8D6D0] active:scale-[0.98] cursor-pointer shadow-2xs"
               >
                 <WindowsIcon size={15} />
                 <span>Download for Windows</span>

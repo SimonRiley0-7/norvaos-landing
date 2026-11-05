@@ -78,14 +78,14 @@ export function ProblemSection() {
             ========================================================= */}
         <div className="max-w-[780px] mx-auto text-center mb-12">
           <h2
-            className="text-[42px] sm:text-[50px] md:text-[58px] font-medium text-[#111116] tracking-tight leading-[1.08] mb-4"
+            className="text-[32px] xs:text-[38px] sm:text-[50px] md:text-[58px] font-medium text-[#111116] tracking-tight leading-[1.08] mb-4"
             style={{ fontFamily: "'Switzer', sans-serif", fontWeight: 500 }}
           >
             A chatbot answers.<br />
             NORVA is always there.
           </h2>
 
-          <p className="text-[16.5px] sm:text-[17.5px] text-[#6B6B78] max-w-[540px] mx-auto leading-relaxed">
+          <p className="text-[15px] sm:text-[17.5px] text-[#6B6B78] max-w-[540px] mx-auto leading-relaxed">
             Other AI tools are either stuck in a chat window or have a narrow purpose. NORVA is always there.
           </p>
         </div>
@@ -93,9 +93,9 @@ export function ProblemSection() {
         {/* =========================================================
             21ST.DEV LIQUID GLASS SEGMENTED SWITCHER PILL
             ========================================================= */}
-        <div className="flex justify-center mb-12">
+        <div className="flex justify-center mb-10 sm:mb-12 px-2">
           <div
-            className="inline-flex items-center p-1.5 rounded-full overflow-x-auto max-w-full"
+            className="inline-flex items-center p-1 sm:p-1.5 rounded-full overflow-x-auto max-w-full"
             style={{
               background: 'linear-gradient(145deg, rgba(255, 255, 255, 0.85) 0%, rgba(246, 244, 252, 0.65) 100%)',
               backdropFilter: 'blur(24px) saturate(200%)',
@@ -115,7 +115,7 @@ export function ProblemSection() {
                   key={tool.id}
                   type="button"
                   onClick={() => setActiveTab(tool.id)}
-                  className={`relative flex items-center gap-2 px-5 py-2.5 rounded-full text-[13.5px] font-medium transition-all duration-200 cursor-pointer ${
+                  className={`relative flex items-center gap-1.5 sm:gap-2 px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-full text-[12.5px] sm:text-[13.5px] font-medium transition-all duration-200 cursor-pointer whitespace-nowrap ${
                     isActive ? 'text-[#111116]' : 'text-[#6B6B78] hover:text-[#111116]'
                   }`}
                 >
@@ -127,7 +127,7 @@ export function ProblemSection() {
                     />
                   )}
                   <span className="relative z-10 opacity-90">
-                    <Icon size={15} />
+                    <Icon size={14} />
                   </span>
                   <span className="relative z-10 tracking-tight font-medium">
                     {tool.name}
@@ -141,10 +141,10 @@ export function ProblemSection() {
         {/* =========================================================
             SIDE-BY-SIDE CARDS: BIG HEADINGS + 2 LINES OF CONTENT
             ========================================================= */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 items-stretch max-w-[1040px] mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6 lg:gap-8 items-stretch max-w-[1040px] mx-auto">
           {/* LEFT: THE CHATBOT WAY */}
           <div
-            className="rounded-[32px] p-8 sm:p-9 flex flex-col justify-between text-left min-h-[250px] sm:min-h-[270px] transition-all duration-300"
+            className="rounded-[28px] sm:rounded-[32px] p-6 sm:p-9 flex flex-col justify-between text-left min-h-[220px] sm:min-h-[270px] transition-all duration-300"
             style={{
               background: 'linear-gradient(155deg, rgba(255, 255, 255, 0.90) 0%, rgba(248, 246, 254, 0.60) 100%)',
               backdropFilter: 'blur(26px) saturate(190%)',

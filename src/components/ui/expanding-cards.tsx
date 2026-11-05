@@ -152,6 +152,24 @@ export const ExpandingCards = React.forwardRef<
                 <span className="w-1.5 h-1.5 rounded-full bg-black/30" />
               </div>
 
+              {/* COLLAPSED STATE (Mobile Horizontal Bar) */}
+              <div
+                className={cn(
+                  "absolute inset-0 flex md:hidden items-center justify-between px-3.5 transition-opacity duration-300 z-10 pointer-events-none",
+                  isActive ? "opacity-0" : "opacity-100"
+                )}
+              >
+                <div className="flex items-center gap-2.5">
+                  <div className="w-7 h-7 rounded-lg bg-white/90 backdrop-blur-xl border border-white/95 shadow-2xs flex items-center justify-center text-[#17171C]">
+                    {item.icon}
+                  </div>
+                  <span className="font-mono text-[11px] font-semibold uppercase tracking-wider text-[#17171C] drop-shadow-2xs truncate max-w-[210px]">
+                    {item.title}
+                  </span>
+                </div>
+                <span className="w-1.5 h-1.5 rounded-full bg-black/40" />
+              </div>
+
               {/* ACTIVE STATE: Top Liquid Badge (Pinned at Top-Left with generous breathing room) */}
               {item.tag && (
                 <div

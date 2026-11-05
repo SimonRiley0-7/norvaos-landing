@@ -135,7 +135,7 @@ export function WorkflowsSection() {
             depth={0.58}
             perspective={3.2}
             falloff={0.56}
-            cardWidth="clamp(300px, 28vw, 420px)"
+            cardWidth="min(calc(100vw - 48px), clamp(250px, 28vw, 420px))"
             gap={0.07}
             loop={true}
             showCaption={true}

@@ -18,7 +18,17 @@ export function DesktopHeroApp({ onTriggerDownload }) {
   const [executionStep, setExecutionStep] = useState(0)
   const [dockHoverIndex, setDockHoverIndex] = useState(null)
   const [isHovered, setIsHovered] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
   const inputRef = useRef(null)
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 640)
+    }
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
 
   const chips = [
     { id: 'files', label: 'Find files', prompt: 'Find my recent documents', icon: FileText },
@@ -97,7 +107,9 @@ export function DesktopHeroApp({ onTriggerDownload }) {
             backgroundImage: `linear-gradient(180deg, rgba(240, 245, 255, 0.08) 0%, rgba(245, 235, 225, 0.05) 100%), url('/macos-wallpaper.jpg')`,
             backgroundSize: 'cover',
             backgroundPosition: 'right 35%',
-            transform: isHovered
+            transform: isMobile
+              ? 'rotateY(-6deg) rotateX(6deg) rotateZ(-0.5deg)'
+              : isHovered
               ? 'rotateY(-10deg) rotateX(8deg) rotateZ(-1deg)'
               : 'rotateY(-20deg) rotateX(16deg) rotateZ(-2.5deg)',
             transformOrigin: 'right center',
@@ -226,13 +238,15 @@ export function DesktopHeroApp({ onTriggerDownload }) {
             (Compact sizing, centered nicely in the middle of the desktop scene)
             ========================================================= */}
         <div
-          className="absolute top-[22%] sm:top-[24%] left-[2%] sm:left-[4%] z-20 w-[76%] sm:w-[68%] rounded-[26px] sm:rounded-[30px] p-5 sm:p-6 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]"
+          className="absolute top-[20%] sm:top-[24%] left-[3%] sm:left-[4%] z-20 w-[88%] sm:w-[68%] rounded-[24px] sm:rounded-[30px] p-4 sm:p-6 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]"
           style={{
             background: 'linear-gradient(155deg, rgba(255, 255, 255, 0.62) 0%, rgba(246, 244, 252, 0.40) 100%)',
             backdropFilter: 'blur(18px) saturate(200%)',
             WebkitBackdropFilter: 'blur(18px) saturate(200%)',
             border: '1.5px solid rgba(255, 255, 255, 0.85)',
-            transform: isHovered
+            transform: isMobile
+              ? 'rotateY(-4deg) rotateX(4deg) translateZ(30px)'
+              : isHovered
               ? 'rotateY(-7deg) rotateX(6deg) rotateZ(-1.5deg) translateZ(55px)'
               : 'rotateY(-15deg) rotateX(12deg) rotateZ(-3deg) translateZ(75px)',
             transformOrigin: 'center center',
