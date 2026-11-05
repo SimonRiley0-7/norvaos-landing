@@ -14,6 +14,12 @@ const lenis = new Lenis({
   infinite: false,
 })
 
+if (typeof window !== 'undefined') {
+  window.lenis = lenis
+}
+
+export { lenis }
+
 function raf(time) {
   lenis.raf(time)
   requestAnimationFrame(raf)

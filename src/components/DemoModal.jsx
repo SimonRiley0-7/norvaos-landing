@@ -1,13 +1,29 @@
+import { useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { X, Play, Sparkles, CheckCircle2, Apple } from 'lucide-react'
 import { AppleIcon } from './Navbar'
 
 export function DemoModal({ isOpen, onClose, onDownloadClick }) {
+  useEffect(() => {
+    if (isOpen) {
+      window.lenis?.stop()
+      const original = document.body.style.overflow
+      document.body.style.overflow = 'hidden'
+      return () => {
+        document.body.style.overflow = original
+        window.lenis?.start()
+      }
+    }
+  }, [isOpen])
+
   if (!isOpen) return null
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-[99999] flex items-center justify-center p-4 sm:p-6">
+      <div
+        className="fixed inset-0 z-[99999] flex items-center justify-center p-4 sm:p-6"
+        data-lenis-prevent="true"
+      >
         {/* Backdrop */}
         <motion.div
           initial={{ opacity: 0 }}

@@ -10,13 +10,15 @@ export function LegalContactModals({ activeModal, onClose }) {
   const [contactSubmitted, setContactSubmitted] = useState(false)
   const [contactSubmitting, setContactSubmitting] = useState(false)
 
-  // Lock background scroll when modal is active
+  // Lock background scroll and pause Lenis smooth scrolling when modal is active
   useEffect(() => {
     if (activeModal) {
+      window.lenis?.stop()
       const original = document.body.style.overflow
       document.body.style.overflow = 'hidden'
       return () => {
         document.body.style.overflow = original
+        window.lenis?.start()
       }
     }
   }, [activeModal])
@@ -34,7 +36,10 @@ export function LegalContactModals({ activeModal, onClose }) {
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-6">
+      <div
+        className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-6"
+        data-lenis-prevent="true"
+      >
         {/* Backdrop */}
         <motion.div
           initial={{ opacity: 0 }}
@@ -51,6 +56,7 @@ export function LegalContactModals({ activeModal, onClose }) {
           exit={{ opacity: 0, scale: 0.96, y: 14 }}
           transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
           className="relative w-full max-w-3xl rounded-[32px] overflow-hidden shadow-2xl border border-white/90 text-left z-10 flex flex-col"
+          data-lenis-prevent="true"
           style={{
             height: activeModal === 'contact' ? 'auto' : '82vh',
             maxHeight: activeModal === 'contact' ? '88vh' : '84vh',
@@ -85,7 +91,9 @@ export function LegalContactModals({ activeModal, onClose }) {
 
           {/* Modal Body: Smoothly Scrollable with Guaranteed Viewport Constraint */}
           <div
-            className="p-6 sm:p-8 space-y-6 text-[#3A3A46] flex-1 min-h-0 overflow-y-auto overscroll-contain custom-glass-scrollbar pr-3 sm:pr-6"
+            tabIndex={0}
+            data-lenis-prevent="true"
+            className="p-6 sm:p-8 space-y-6 text-[#3A3A46] flex-1 min-h-0 overflow-y-auto overscroll-contain custom-glass-scrollbar pr-3 sm:pr-6 outline-none focus:outline-none"
             style={{
               maxHeight: activeModal === 'contact' ? 'calc(88vh - 75px)' : 'calc(84vh - 75px)',
               overflowY: 'auto',
