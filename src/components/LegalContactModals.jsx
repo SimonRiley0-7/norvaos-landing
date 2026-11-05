@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { X, ShieldCheck, FileText, Mail, Send, CheckCircle2, Lock, ArrowRight, Sparkles } from 'lucide-react'
 import { NorvaBrandLockup } from './NorvaLogo'
@@ -9,6 +9,17 @@ export function LegalContactModals({ activeModal, onClose }) {
   const [contactMessage, setContactMessage] = useState('')
   const [contactSubmitted, setContactSubmitted] = useState(false)
   const [contactSubmitting, setContactSubmitting] = useState(false)
+
+  // Lock background scroll when modal is active
+  useEffect(() => {
+    if (activeModal) {
+      const original = document.body.style.overflow
+      document.body.style.overflow = 'hidden'
+      return () => {
+        document.body.style.overflow = original
+      }
+    }
+  }, [activeModal])
 
   if (!activeModal) return null
 
@@ -23,26 +34,26 @@ export function LegalContactModals({ activeModal, onClose }) {
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 overflow-hidden">
+      <div className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-6">
         {/* Backdrop */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           onClick={onClose}
-          className="fixed inset-0 bg-black/45 backdrop-blur-md"
+          className="absolute inset-0 bg-black/45 backdrop-blur-md"
         />
 
         {/* Modal Container */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.95, y: 16 }}
+          initial={{ opacity: 0, scale: 0.96, y: 14 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.95, y: 16 }}
-          transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
-          className={`relative w-full max-w-3xl rounded-[32px] overflow-hidden shadow-2xl border border-white/90 text-left my-auto z-10 flex flex-col ${
-            activeModal === 'contact' ? 'max-h-[88vh]' : 'h-[82vh] max-h-[85vh]'
-          }`}
+          exit={{ opacity: 0, scale: 0.96, y: 14 }}
+          transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+          className="relative w-full max-w-3xl rounded-[32px] overflow-hidden shadow-2xl border border-white/90 text-left z-10 flex flex-col"
           style={{
+            height: activeModal === 'contact' ? 'auto' : '82vh',
+            maxHeight: activeModal === 'contact' ? '88vh' : '84vh',
             background: 'linear-gradient(160deg, rgba(255, 255, 255, 0.98) 0%, rgba(250, 248, 254, 0.94) 100%)',
             backdropFilter: 'blur(36px) saturate(190%)',
             WebkitBackdropFilter: 'blur(36px) saturate(190%)',
@@ -53,7 +64,7 @@ export function LegalContactModals({ activeModal, onClose }) {
           <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-white to-transparent pointer-events-none" />
 
           {/* Modal Header */}
-          <div className="flex items-center justify-between px-6 sm:px-8 py-5 border-b border-[#E8E6E1]/80 shrink-0 bg-white/60 backdrop-blur-md">
+          <div className="flex items-center justify-between px-6 sm:px-8 py-5 border-b border-[#E8E6E1]/80 shrink-0 bg-white/70 backdrop-blur-md">
             <div className="flex items-center gap-3">
               <NorvaBrandLockup size={24} showWordmark={true} />
               <span className="text-xs text-[#8E8E98] border-l border-[#E8E6E1] pl-3 font-mono uppercase tracking-wider">
@@ -72,13 +83,14 @@ export function LegalContactModals({ activeModal, onClose }) {
             </button>
           </div>
 
-          {/* Modal Body: Smoothly Scrollable with Guaranteed minHeight: 0 */}
+          {/* Modal Body: Smoothly Scrollable with Guaranteed Viewport Constraint */}
           <div
-            className="p-6 sm:p-8 overflow-y-auto space-y-6 text-[#3A3A46] flex-1 min-h-0 overscroll-contain custom-glass-scrollbar pr-3 sm:pr-6"
+            className="p-6 sm:p-8 space-y-6 text-[#3A3A46] flex-1 min-h-0 overflow-y-auto overscroll-contain custom-glass-scrollbar pr-3 sm:pr-6"
             style={{
-              minHeight: 0,
+              maxHeight: activeModal === 'contact' ? 'calc(88vh - 75px)' : 'calc(84vh - 75px)',
               overflowY: 'auto',
               WebkitOverflowScrolling: 'touch',
+              overscrollBehavior: 'contain',
             }}
           >
             {/* =========================================================

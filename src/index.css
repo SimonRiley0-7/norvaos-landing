@@ -457,25 +457,26 @@ html.light .lucide {
    ============================================================ */
 .custom-glass-scrollbar {
   scrollbar-width: thin;
-  scrollbar-color: rgba(123, 92, 240, 0.4) rgba(0, 0, 0, 0.04);
+  scrollbar-color: rgba(123, 92, 240, 0.5) rgba(0, 0, 0, 0.05);
 }
 
 .custom-glass-scrollbar::-webkit-scrollbar {
-  width: 8px;
+  width: 9px;
+  display: block;
 }
 
 .custom-glass-scrollbar::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.03);
+  background: rgba(0, 0, 0, 0.04);
   border-radius: 9999px;
   margin: 6px 0;
 }
 
 .custom-glass-scrollbar::-webkit-scrollbar-thumb {
-  background: rgba(123, 92, 240, 0.35);
+  background: rgba(123, 92, 240, 0.45);
   border-radius: 9999px;
-  border: 1px solid rgba(255, 255, 255, 0.8);
+  border: 2px solid rgba(255, 255, 255, 0.95);
 }
 
 .custom-glass-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: rgba(123, 92, 240, 0.65);
+  background: rgba(123, 92, 240, 0.8);
 }
