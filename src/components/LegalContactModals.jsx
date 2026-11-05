@@ -23,7 +23,7 @@ export function LegalContactModals({ activeModal, onClose }) {
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
+      <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 overflow-hidden">
         {/* Backdrop */}
         <motion.div
           initial={{ opacity: 0 }}
@@ -39,7 +39,9 @@ export function LegalContactModals({ activeModal, onClose }) {
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 16 }}
           transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
-          className="relative w-full max-w-3xl rounded-[32px] overflow-hidden shadow-2xl border border-white/90 text-left my-auto z-10 flex flex-col max-h-[85vh]"
+          className={`relative w-full max-w-3xl rounded-[32px] overflow-hidden shadow-2xl border border-white/90 text-left my-auto z-10 flex flex-col ${
+            activeModal === 'contact' ? 'max-h-[88vh]' : 'h-[82vh] max-h-[85vh]'
+          }`}
           style={{
             background: 'linear-gradient(160deg, rgba(255, 255, 255, 0.98) 0%, rgba(250, 248, 254, 0.94) 100%)',
             backdropFilter: 'blur(36px) saturate(190%)',
@@ -70,8 +72,15 @@ export function LegalContactModals({ activeModal, onClose }) {
             </button>
           </div>
 
-          {/* Modal Body: Smoothly Scrollable with Liquid Glass Scrollbars */}
-          <div className="p-6 sm:p-8 overflow-y-auto space-y-6 text-[#3A3A46] flex-1 overscroll-contain custom-glass-scrollbar pr-3 sm:pr-6">
+          {/* Modal Body: Smoothly Scrollable with Guaranteed minHeight: 0 */}
+          <div
+            className="p-6 sm:p-8 overflow-y-auto space-y-6 text-[#3A3A46] flex-1 min-h-0 overscroll-contain custom-glass-scrollbar pr-3 sm:pr-6"
+            style={{
+              minHeight: 0,
+              overflowY: 'auto',
+              WebkitOverflowScrolling: 'touch',
+            }}
+          >
             {/* =========================================================
                 1. PRIVACY POLICY MODAL
                 ========================================================= */}
