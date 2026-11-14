@@ -108,54 +108,53 @@ app.get('/api/stats', async (req, res) => {
     const allSubscribers = await getSubscribers()
     const recentWaitlist = allSubscribers.slice(0, 50)
 
-    if (!isSupabaseConfigured) {
-      return res.json({
-        waitlistCount,
-        recentWaitlist,
-        totalDownloads: 0,
-        macDownloads: 0,
-        windowsDownloads: 0,
-        recentDownloads: [],
-        dailyDownloads: [],
-      })
+    let macDownloads = 0
+    let windowsDownloads = 0
+    let recentDownloads = []
+    let dailyDownloads = []
+
+    if (isSupabaseConfigured) {
+      try {
+        const { data: platformData, error: platformError } = await supabase
+          .from('downloads')
+          .select('platform')
+
+        if (!platformError && platformData) {
+          macDownloads = platformData.filter(d => d.platform === 'mac').length
+          windowsDownloads = platformData.filter(d => d.platform === 'windows').length
+        }
+
+        // Recent 10 downloads
+        const { data: recData, error: recError } = await supabase
+          .from('downloads')
+          .select('*')
+          .order('created_at', { ascending: false })
+          .limit(10)
+
+        if (!recError && recData) {
+          recentDownloads = recData
+        }
+
+        // Daily download counts for last 14 days
+        const { data: dailyData, error: dailyError } = await supabase
+          .from('downloads')
+          .select('created_at, platform')
+          .gte('created_at', new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString())
+          .order('created_at', { ascending: true })
+
+        if (!dailyError && dailyData) {
+          const dailyMap = {}
+          dailyData.forEach(d => {
+            const date = new Date(d.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
+            if (!dailyMap[date]) dailyMap[date] = { date, mac: 0, windows: 0 }
+            dailyMap[date][d.platform]++
+          })
+          dailyDownloads = Object.values(dailyMap)
+        }
+      } catch (sbErr) {
+        console.warn('[SUPABASE PAUSED/OFFLINE] Downloads query skipped, serving waitlist:', sbErr.message)
+      }
     }
-
-    // Total downloads per platform
-    const { data: platformData, error: platformError } = await supabase
-      .from('downloads')
-      .select('platform')
-
-    if (platformError) throw platformError
-
-    const macDownloads = platformData.filter(d => d.platform === 'mac').length
-    const windowsDownloads = platformData.filter(d => d.platform === 'windows').length
-
-    // Recent 10 downloads
-    const { data: recentDownloads, error: recentError } = await supabase
-      .from('downloads')
-      .select('*')
-      .order('created_at', { ascending: false })
-      .limit(10)
-
-    if (recentError) throw recentError
-
-    // Daily download counts for last 14 days
-    const { data: dailyData, error: dailyError } = await supabase
-      .from('downloads')
-      .select('created_at, platform')
-      .gte('created_at', new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString())
-      .order('created_at', { ascending: true })
-
-    if (dailyError) throw dailyError
-
-    // Group by date
-    const dailyMap = {}
-    dailyData.forEach(d => {
-      const date = new Date(d.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
-      if (!dailyMap[date]) dailyMap[date] = { date, mac: 0, windows: 0 }
-      dailyMap[date][d.platform]++
-    })
-    const dailyDownloads = Object.values(dailyMap)
 
     return res.json({
       waitlistCount,
@@ -165,6 +164,7 @@ app.get('/api/stats', async (req, res) => {
       windowsDownloads,
       recentDownloads,
       dailyDownloads,
+      supabaseStatus: isSupabaseConfigured ? 'configured' : 'unconfigured',
     })
   } catch (err) {
     console.error('[STATS ERROR]', err)

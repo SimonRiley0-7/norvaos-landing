@@ -37,13 +37,17 @@ export async function isEmailSubscribed(email) {
   const normalized = email.toLowerCase().trim()
 
   if (isSupabaseConfigured) {
-    const { data, error } = await supabase
-      .from('waitlist')
-      .select('email')
-      .eq('email', normalized)
-      .maybeSingle()
+    try {
+      const { data, error } = await supabase
+        .from('waitlist')
+        .select('email')
+        .eq('email', normalized)
+        .maybeSingle()
 
-    if (!error && data) return true
+      if (!error && data) return true
+    } catch (err) {
+      console.warn('[SUPABASE] Check failed, falling back to local:', err.message)
+    }
   }
 
   const local = getLocalSubscribers()
@@ -60,16 +64,20 @@ export async function addSubscriber(email) {
   }
 
   if (isSupabaseConfigured) {
-    const { data, error } = await supabase
-      .from('waitlist')
-      .insert([{ email: normalized, status: 'active' }])
-      .select()
+    try {
+      const { data, error } = await supabase
+        .from('waitlist')
+        .insert([{ email: normalized, status: 'active' }])
+        .select()
 
-    if (error) {
-      console.error('Supabase insert error:', error.message)
-    } else if (data && data.length > 0) {
-      const count = await getSubscriberCount()
-      return { success: true, entry: data[0], totalCount: count, provider: 'supabase' }
+      if (error) {
+        console.error('Supabase insert error:', error.message)
+      } else if (data && data.length > 0) {
+        const count = await getSubscriberCount()
+        return { success: true, entry: data[0], totalCount: count, provider: 'supabase' }
+      }
+    } catch (err) {
+      console.warn('[SUPABASE] Insert failed, falling back to local JSON:', err.message)
     }
   }
 
@@ -90,12 +98,16 @@ export async function addSubscriber(email) {
 export async function getSubscriberCount() {
   let count = 0
   if (isSupabaseConfigured) {
-    const { count: sbCount, error } = await supabase
-      .from('waitlist')
-      .select('*', { count: 'exact', head: true })
+    try {
+      const { count: sbCount, error } = await supabase
+        .from('waitlist')
+        .select('*', { count: 'exact', head: true })
 
-    if (!error && typeof sbCount === 'number') {
-      count = sbCount
+      if (!error && typeof sbCount === 'number') {
+        count = sbCount
+      }
+    } catch (err) {
+      console.warn('[SUPABASE] getSubscriberCount failed, using local count:', err.message)
     }
   }
 
@@ -105,12 +117,16 @@ export async function getSubscriberCount() {
 
 export async function getSubscribers() {
   if (isSupabaseConfigured) {
-    const { data, error } = await supabase
-      .from('waitlist')
-      .select('*')
-      .order('created_at', { ascending: false })
+    try {
+      const { data, error } = await supabase
+        .from('waitlist')
+        .select('*')
+        .order('created_at', { ascending: false })
 
-    if (!error && data) return data
+      if (!error && data && data.length > 0) return data
+    } catch (err) {
+      console.warn('[SUPABASE] getSubscribers failed, using local waitlist.json:', err.message)
+    }
   }
 
   return getLocalSubscribers()
