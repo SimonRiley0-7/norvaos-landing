@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { Mail, Copy, Check, Download, Search } from 'lucide-react'
 import { NorvaBot } from './CactusSVG'
 
 // ── Simple bar chart component
@@ -140,6 +141,110 @@ function DownloadRow({ item, index }) {
   )
 }
 
+// ── Beta waitlist subscriber row
+function WaitlistRow({ item, index }) {
+  const [copied, setCopied] = useState(false)
+  const date = new Date(item.created_at)
+  const timeAgo = (() => {
+    const diff = (Date.now() - date.getTime()) / 1000
+    if (diff < 60) return `${Math.floor(diff)}s ago`
+    if (diff < 3600) return `${Math.floor(diff / 60)}m ago`
+    if (diff < 86400) return `${Math.floor(diff / 3600)}h ago`
+    return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+  })()
+
+  const handleCopy = (e) => {
+    e.stopPropagation()
+    navigator.clipboard.writeText(item.email)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
+  }
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, x: -8 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ delay: index * 0.03 }}
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        padding: '12px 14px',
+        borderRadius: 10,
+        marginBottom: 8,
+        background: 'rgba(255,255,255,0.02)',
+        border: '1px solid rgba(255,255,255,0.05)',
+      }}
+    >
+      <div style={{ display: 'flex', alignItems: 'center', gap: 12, minWidth: 0 }}>
+        <div style={{
+          width: 32, height: 32, borderRadius: 8,
+          background: 'rgba(52, 211, 153, 0.12)',
+          border: '1px solid rgba(52, 211, 153, 0.25)',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          color: '#34D399',
+          flexShrink: 0,
+        }}>
+          <Mail size={15} />
+        </div>
+        <div style={{ minWidth: 0 }}>
+          <div style={{
+            fontSize: 13,
+            color: '#fff',
+            fontFamily: 'monospace',
+            display: 'flex',
+            alignItems: 'center',
+            gap: 8,
+          }}>
+            <span style={{ wordBreak: 'break-all' }}>{item.email}</span>
+            <span style={{
+              fontSize: 10,
+              padding: '2px 6px',
+              borderRadius: 4,
+              background: 'rgba(52, 211, 153, 0.15)',
+              color: '#34D399',
+              fontFamily: 'monospace',
+              border: '1px solid rgba(52, 211, 153, 0.25)',
+              flexShrink: 0,
+            }}>
+              Beta
+            </span>
+          </div>
+          <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.25)', fontFamily: 'monospace', marginTop: 2 }}>
+            ID: {item.id?.slice(0, 14)}... · {date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+          </div>
+        </div>
+      </div>
+
+      <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexShrink: 0 }}>
+        <button
+          onClick={handleCopy}
+          title="Copy email to clipboard"
+          style={{
+            background: copied ? 'rgba(52, 211, 153, 0.2)' : 'rgba(255,255,255,0.06)',
+            border: `1px solid ${copied ? 'rgba(52, 211, 153, 0.4)' : 'rgba(255,255,255,0.1)'}`,
+            borderRadius: 6,
+            padding: '5px 9px',
+            color: copied ? '#34D399' : 'rgba(255,255,255,0.7)',
+            fontSize: 11,
+            fontFamily: 'monospace',
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            gap: 5,
+          }}
+        >
+          {copied ? <Check size={12} /> : <Copy size={12} />}
+          <span>{copied ? 'Copied' : 'Copy'}</span>
+        </button>
+        <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.3)', fontFamily: 'monospace', minWidth: 50, textAlign: 'right' }}>
+          {timeAgo}
+        </span>
+      </div>
+    </motion.div>
+  )
+}
+
 // ── Login screen
 function LoginScreen({ onLogin }) {
   const [password, setPassword] = useState('')
@@ -272,6 +377,36 @@ export function Dashboard() {
   }
 
   if (!isAuthed) return <LoginScreen onLogin={handleLogin} />
+
+  const [waitlistSearch, setWaitlistSearch] = useState('')
+
+  const handleExportCSV = () => {
+    const list = stats?.recentWaitlist || []
+    if (list.length === 0) return
+
+    const headers = ['Email', 'Signed Up Date', 'Status', 'ID']
+    const rows = list.map(item => [
+      item.email,
+      new Date(item.created_at).toISOString(),
+      item.status || 'active',
+      item.id,
+    ])
+
+    const csvContent = [headers.join(','), ...rows.map(r => r.map(f => `"${f}"`).join(','))].join('\n')
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' })
+    const url = URL.createObjectURL(blob)
+    const link = document.createElement('a')
+    link.href = url
+    link.setAttribute('download', `norva-beta-waitlist-${new Date().toISOString().slice(0, 10)}.csv`)
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+    URL.revokeObjectURL(url)
+  }
+
+  const filteredWaitlist = (stats?.recentWaitlist || []).filter(item =>
+    item.email?.toLowerCase().includes(waitlistSearch.toLowerCase())
+  )
 
   const macPct = stats?.totalDownloads > 0
     ? Math.round((stats.macDownloads / stats.totalDownloads) * 100)
@@ -432,6 +567,121 @@ export function Dashboard() {
             </div>
           </motion.div>
         </div>
+
+        {/* Beta Waitlist Signups Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.28 }}
+          style={{
+            background: 'rgba(255,255,255,0.03)',
+            border: '1px solid rgba(255,255,255,0.07)',
+            borderRadius: 16,
+            padding: '24px',
+            marginBottom: 24,
+          }}
+        >
+          {/* Header row: Title + Actions */}
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            flexWrap: 'wrap',
+            gap: 12,
+            marginBottom: 16,
+          }}>
+            <div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                <span style={{ fontSize: 11, fontFamily: 'monospace', letterSpacing: '0.12em', color: 'rgba(255,255,255,0.35)', textTransform: 'uppercase' }}>
+                  Beta Waitlist Signups
+                </span>
+                <span style={{
+                  fontSize: 10,
+                  fontFamily: 'monospace',
+                  padding: '2px 8px',
+                  borderRadius: 12,
+                  background: 'rgba(52, 211, 153, 0.15)',
+                  color: '#34D399',
+                  border: '1px solid rgba(52, 211, 153, 0.25)',
+                }}>
+                  {filteredWaitlist.length} {filteredWaitlist.length === 1 ? 'email' : 'emails'}
+                </span>
+              </div>
+              <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)', marginTop: 2 }}>
+                Real-time emails submitted via beta download forms
+              </div>
+            </div>
+
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+              {/* Search input */}
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 6,
+                background: 'rgba(255,255,255,0.05)',
+                border: '1px solid rgba(255,255,255,0.1)',
+                borderRadius: 8,
+                padding: '6px 12px',
+              }}>
+                <Search size={13} style={{ color: 'rgba(255,255,255,0.4)' }} />
+                <input
+                  type="text"
+                  placeholder="Filter emails..."
+                  value={waitlistSearch}
+                  onChange={e => setWaitlistSearch(e.target.value)}
+                  style={{
+                    background: 'transparent',
+                    border: 'none',
+                    outline: 'none',
+                    color: '#fff',
+                    fontFamily: 'monospace',
+                    fontSize: 11,
+                    width: 130,
+                  }}
+                />
+              </div>
+
+              {/* Export CSV Button */}
+              <button
+                onClick={handleExportCSV}
+                disabled={!stats?.recentWaitlist || stats.recentWaitlist.length === 0}
+                title="Download waitlist as CSV spreadsheet"
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 6,
+                  background: 'rgba(52, 211, 153, 0.12)',
+                  border: '1px solid rgba(52, 211, 153, 0.25)',
+                  borderRadius: 8,
+                  padding: '7px 14px',
+                  color: '#34D399',
+                  fontFamily: 'monospace',
+                  fontSize: 11,
+                  cursor: (!stats?.recentWaitlist || stats.recentWaitlist.length === 0) ? 'default' : 'pointer',
+                  opacity: (!stats?.recentWaitlist || stats.recentWaitlist.length === 0) ? 0.5 : 1,
+                  letterSpacing: '0.05em',
+                  transition: 'all 0.2s',
+                }}
+              >
+                <Download size={13} />
+                <span>EXPORT CSV</span>
+              </button>
+            </div>
+          </div>
+
+          {/* List of waitlist subscribers */}
+          <div style={{ maxHeight: 380, overflowY: 'auto', paddingRight: 4 }}>
+            {!filteredWaitlist || filteredWaitlist.length === 0 ? (
+              <div style={{ color: 'rgba(255,255,255,0.25)', fontFamily: 'monospace', fontSize: 13, padding: '30px 0', textAlign: 'center' }}>
+                {waitlistSearch ? 'No emails match your filter' : 'No waitlist signups recorded yet'}
+              </div>
+            ) : (
+              filteredWaitlist.map((item, i) => (
+                <WaitlistRow key={item.id || item.email} item={item} index={i} />
+              ))
+            )}
+          </div>
+        </motion.div>
 
         {/* Recent Downloads */}
         <motion.div

@@ -105,10 +105,13 @@ app.post('/api/download', async (req, res) => {
 app.get('/api/stats', async (req, res) => {
   try {
     const waitlistCount = await getSubscriberCount()
+    const allSubscribers = await getSubscribers()
+    const recentWaitlist = allSubscribers.slice(0, 50)
 
     if (!isSupabaseConfigured) {
       return res.json({
         waitlistCount,
+        recentWaitlist,
         totalDownloads: 0,
         macDownloads: 0,
         windowsDownloads: 0,
@@ -156,6 +159,7 @@ app.get('/api/stats', async (req, res) => {
 
     return res.json({
       waitlistCount,
+      recentWaitlist,
       totalDownloads: macDownloads + windowsDownloads,
       macDownloads,
       windowsDownloads,
@@ -168,6 +172,12 @@ app.get('/api/stats', async (req, res) => {
   }
 })
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`🚀 NORVA Backend API running at http://localhost:${PORT}`)
+}).on('error', (err) => {
+  if (err.code === 'EADDRINUSE') {
+    console.log(`ℹ️ Port ${PORT} already active.`)
+  } else {
+    console.error('Server error:', err)
+  }
 })
