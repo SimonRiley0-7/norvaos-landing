@@ -137,43 +137,50 @@ export function DownloadSection({ onDownloadClick }) {
             </button>
           </div>
 
-          {/* Join Beta Waitlist Module */}
-          <div id="notify-me" className="max-w-[460px] mx-auto pt-6 border-t border-[#F0EEEB]">
-            <p className="text-[14px] text-[#17171C] font-medium mb-3.5 tracking-tight">
+          {/* Join Beta Waitlist Module (Enlarged & Prominent) */}
+          <div id="notify-me" className="max-w-[580px] mx-auto pt-10 sm:pt-12 border-t border-[#E8E6E1]/90">
+            <h3
+              className="text-[20px] sm:text-[24px] md:text-[26px] font-medium text-[#17171C] tracking-tight mb-2"
+              style={{ fontFamily: "'Switzer', sans-serif", fontWeight: 500 }}
+            >
               Join for beta version
+            </h3>
+            <p className="text-[14px] sm:text-[15.5px] text-[#5A5A66] mb-6 leading-relaxed">
+              Get early priority access before public release · macOS &amp; Windows builds
             </p>
+
             {submitted ? (
-              <div className="p-3.5 rounded-2xl bg-[#E8F8EA] border border-[#A7E5AE] text-[#1AAB29] text-[14px] font-medium">
+              <div className="p-4 sm:p-5 rounded-[24px] bg-[#E8F8EA] border border-[#A7E5AE] text-[#1AAB29] text-[15px] font-medium shadow-xs">
                 ✓ You're on the priority waitlist! We'll notify you as soon as your platform build drops.
               </div>
             ) : (
-              <form onSubmit={handleWaitlistSubmit} className="relative flex items-center">
+              <form onSubmit={handleWaitlistSubmit} className="relative flex items-center shadow-lg shadow-black/[0.04] rounded-full">
                 <input
                   id="beta-email-input"
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="name@company.com"
+                  placeholder="Enter your email (e.g. name@company.com)"
                   required
-                  className="w-full bg-white/70 border border-white/90 rounded-full px-5 py-3 text-[14px] text-[#17171C] placeholder-[#8E8E98] outline-none focus:border-[#7B5CF0] focus:ring-2 focus:ring-[#7B5CF0]/15 pr-28 transition-all backdrop-blur-md shadow-inner"
+                  className="w-full bg-white/90 border border-white rounded-full px-6 sm:px-7 py-4 sm:py-4.5 text-[15px] sm:text-[16px] text-[#17171C] placeholder-[#8E8E98] outline-none focus:border-[#7B5CF0] focus:ring-4 focus:ring-[#7B5CF0]/15 pr-36 sm:pr-44 transition-all backdrop-blur-xl shadow-inner"
                 />
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="absolute right-1.5 px-4 py-2 rounded-full bg-[#17171C] hover:bg-black text-white text-[13px] font-medium transition-all active:scale-95 disabled:opacity-50 cursor-pointer"
+                  className="absolute right-2 sm:right-2.5 px-5 sm:px-7 py-2.5 sm:py-3 rounded-full bg-[#17171C] hover:bg-black text-white text-[14px] sm:text-[15px] font-medium transition-all active:scale-95 disabled:opacity-50 cursor-pointer shadow-md hover:shadow-black/20"
                 >
                   {submitting ? 'Joining...' : 'Notify me'}
                 </button>
               </form>
             )}
             {errorMsg && (
-              <p className="text-xs text-red-600 mt-2">{errorMsg}</p>
+              <p className="text-[13.5px] text-red-600 mt-3 font-medium">{errorMsg}</p>
             )}
-            <p className="text-[12.5px] text-[#8E8E98] mt-4">
+            <p className="text-[13px] sm:text-[14px] text-[#7A7A86] mt-5">
               Direct team &amp; enterprise inquiry:{' '}
               <a
                 href="mailto:act@norvaos.co.in"
-                className="font-mono text-[#7B5CF0] font-medium hover:underline"
+                className="font-mono text-[#7B5CF0] font-medium hover:underline ml-1"
               >
                 act@norvaos.co.in
               </a>
