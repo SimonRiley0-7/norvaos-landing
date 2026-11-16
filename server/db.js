@@ -44,7 +44,10 @@ export async function isEmailSubscribed(email) {
         .eq('email', normalized)
         .maybeSingle()
 
-      if (!error && data) return true
+      if (!error) {
+        // Supabase answered successfully
+        return !!data
+      }
     } catch (err) {
       console.warn('[SUPABASE] Check failed, falling back to local:', err.message)
     }
@@ -96,23 +99,21 @@ export async function addSubscriber(email) {
 }
 
 export async function getSubscriberCount() {
-  let count = 0
   if (isSupabaseConfigured) {
     try {
-      const { count: sbCount, error } = await supabase
+      const { count, error } = await supabase
         .from('waitlist')
         .select('*', { count: 'exact', head: true })
 
-      if (!error && typeof sbCount === 'number') {
-        count = sbCount
+      if (!error && typeof count === 'number') {
+        return count
       }
     } catch (err) {
       console.warn('[SUPABASE] getSubscriberCount failed, using local count:', err.message)
     }
   }
 
-  const localCount = getLocalSubscribers().length
-  return Math.max(count, localCount)
+  return getLocalSubscribers().length
 }
 
 export async function getSubscribers() {
@@ -123,7 +124,9 @@ export async function getSubscribers() {
         .select('*')
         .order('created_at', { ascending: false })
 
-      if (!error && data && data.length > 0) return data
+      if (!error && Array.isArray(data)) {
+        return data
+      }
     } catch (err) {
       console.warn('[SUPABASE] getSubscribers failed, using local waitlist.json:', err.message)
     }
