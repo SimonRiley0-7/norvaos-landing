@@ -7,22 +7,26 @@ dotenv.config()
 const resendApiKey = process.env.RESEND_API_KEY
 const resend = resendApiKey ? new Resend(resendApiKey) : null
 
-// Gmail / SMTP Config
-const smtpHost = process.env.SMTP_HOST || 'smtp.gmail.com'
-const smtpUser = process.env.SMTP_USER
-const smtpPass = process.env.SMTP_PASS
+// Outgoing Email Transporter helper (creates fresh with current .env credentials)
+function getTransporter() {
+  const smtpHost = process.env.SMTP_HOST || 'smtpout.secureserver.net'
+  const smtpUser = process.env.SMTP_USER
+  const smtpPass = process.env.SMTP_PASS
 
-let transporter = null
-if (smtpUser && smtpPass && !smtpUser.includes('your-email')) {
-  transporter = nodemailer.createTransport({
-    host: smtpHost,
-    port: Number(process.env.SMTP_PORT || 465),
-    secure: Number(process.env.SMTP_PORT || 465) === 465,
-    auth: { user: smtpUser, pass: smtpPass },
-  })
+  if (smtpUser && smtpPass && !smtpUser.includes('your-email')) {
+    return nodemailer.createTransport({
+      host: smtpHost,
+      port: Number(process.env.SMTP_PORT || 465),
+      secure: Number(process.env.SMTP_PORT || 465) === 465,
+      auth: { user: smtpUser, pass: smtpPass },
+    })
+  }
+  return null
 }
 
-const FROM_ADDRESS = process.env.FROM_EMAIL || `NORVA <${smtpUser || 'onboarding@resend.dev'}>`
+function getFromAddress() {
+  return process.env.FROM_EMAIL || `NORVA <${process.env.SMTP_USER || 'onboarding@resend.dev'}>`
+}
 
 /**
  * Welcome confirmation HTML email template
@@ -253,11 +257,13 @@ export function buildLaunchHTML(recipientEmail, customMessage, downloadUrl) {
 export async function sendWelcomeEmail(toEmail) {
   const subject = "You're on the list · NORVA Beta"
   const html = buildWelcomeHTML(toEmail)
+  const transporter = getTransporter()
+  const fromAddress = getFromAddress()
 
   if (transporter) {
     try {
       const info = await transporter.sendMail({
-        from: FROM_ADDRESS,
+        from: fromAddress,
         to: toEmail,
         subject,
         html,
@@ -272,7 +278,7 @@ export async function sendWelcomeEmail(toEmail) {
   if (resend) {
     try {
       const data = await resend.emails.send({
-        from: FROM_ADDRESS,
+        from: fromAddress,
         to: toEmail,
         subject,
         html,
@@ -284,7 +290,7 @@ export async function sendWelcomeEmail(toEmail) {
     }
   }
 
-  console.log(`[EMAIL SIMULATED] Welcome email queued for ${toEmail}. Set SMTP_USER and SMTP_PASS in .env to send real Gmail emails.`)
+  console.log(`[EMAIL SIMULATED] Welcome email queued for ${toEmail}. Set SMTP_USER and SMTP_PASS in .env to send real emails.`)
   return { success: true, provider: 'simulated' }
 }
 
@@ -294,16 +300,18 @@ export async function sendWelcomeEmail(toEmail) {
 export async function sendLaunchEmail(toEmail, customMessage, downloadUrl) {
   const subject = "🚀 NORVA OS Beta is Live — Download Now!"
   const html = buildLaunchHTML(toEmail, customMessage, downloadUrl)
+  const transporter = getTransporter()
+  const fromAddress = getFromAddress()
 
   if (transporter) {
     try {
       const info = await transporter.sendMail({
-        from: FROM_ADDRESS,
+        from: fromAddress,
         to: toEmail,
         subject,
         html,
       })
-      return { success: true, provider: 'gmail', id: info.messageId }
+      return { success: true, provider: 'smtp', id: info.messageId }
     } catch (err) {
       return { success: false, error: err.message }
     }
@@ -312,7 +320,7 @@ export async function sendLaunchEmail(toEmail, customMessage, downloadUrl) {
   if (resend) {
     try {
       const data = await resend.emails.send({
-        from: FROM_ADDRESS,
+        from: fromAddress,
         to: toEmail,
         subject,
         html,
