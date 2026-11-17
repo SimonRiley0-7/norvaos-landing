@@ -8,7 +8,6 @@ const FOUNDERS = [
     name: 'Bhumi Chavan',
     role: 'Co-Founder · Vision & Product Architecture',
     image: '/bhumi.jpg',
-    status: 'Available for work',
     currentStatus: 'Architecting Autonomous Workflows',
     accentColor: '#7B5CF0', // Signature Purple
     glowColor: 'rgba(123, 92, 240, 0.35)',
@@ -21,7 +20,6 @@ const FOUNDERS = [
     name: 'Shivam Wadatkar',
     role: 'Co-Founder · Systems & Engineering',
     image: '/shivam.png',
-    status: 'Available for work',
     currentStatus: 'Currently High on Creativity',
     accentColor: '#7B5CF0', // Signature Purple
     glowColor: 'rgba(123, 92, 240, 0.35)',
@@ -149,18 +147,7 @@ export function TeamPage({ onBack }) {
                   style={{ background: founder.glowColor }}
                 />
 
-                {/* 1. Top Status Row: Green Dot Status Indicator (Time removed) */}
-                <div className="flex items-center justify-start mb-6 px-1">
-                  <div className="inline-flex items-center gap-2 text-[12.5px] font-medium text-[#4A4A54] px-3 py-1 rounded-full bg-white/70 border border-white/90 shadow-2xs backdrop-blur-md">
-                    <span className="relative flex h-2 w-2">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                      <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-                    </span>
-                    <span>{founder.status}</span>
-                  </div>
-                </div>
-
-                {/* 2. Center Squircle User Profile Image Container */}
+                {/* Center Squircle User Profile Image Container */}
                 <div
                   className="relative mx-auto mb-6 w-52 h-52 sm:w-60 sm:h-60 rounded-[28px] overflow-hidden flex flex-col items-center justify-center transition-transform duration-500 group-hover:scale-105"
                   style={{
