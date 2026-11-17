@@ -7,6 +7,7 @@ const TEAM = [
     name: 'Bhumi Chavan',
     role: 'Vision & Planning',
     image: '/bhumi.jpg',
+    grayscale: true,
     tag: 'CS Major',
     avatarText: 'BC',
     quote: 'If a repetitive task exists on a desktop, a human shouldn’t have to do it twice.',
@@ -109,7 +110,7 @@ export function TeamSection({ theme }) {
                   <img
                     src={member.image}
                     alt={member.name}
-                    className="w-full h-full object-cover object-top"
+                    className={`w-full h-full object-cover object-top ${member.grayscale ? 'grayscale contrast-[1.05]' : ''}`}
                   />
                 </div>
               ) : (

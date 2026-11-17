@@ -8,6 +8,7 @@ const FOUNDERS = [
     name: 'Bhumi Chavan',
     role: 'Co-Founder · Vision & Product Architecture',
     image: '/bhumi.jpg',
+    grayscale: true,
     currentStatus: 'Architecting Autonomous Workflows',
     accentColor: '#7B5CF0', // Signature Purple
     glowColor: 'rgba(123, 92, 240, 0.35)',
@@ -161,7 +162,7 @@ export function TeamPage({ onBack }) {
                       <img
                         src={founder.image}
                         alt={founder.name}
-                        className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                        className={`w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105 ${founder.grayscale ? 'grayscale contrast-[1.05]' : ''}`}
                       />
                       {/* Subtle inner glass overlay rim */}
                       <div className="absolute inset-0 rounded-[28px] pointer-events-none ring-1 ring-inset ring-white/50" />
