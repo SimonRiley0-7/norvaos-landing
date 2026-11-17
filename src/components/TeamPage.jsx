@@ -6,28 +6,39 @@ import { NorvaBrandLockup } from './NorvaLogo'
 const FOUNDERS = [
   {
     name: 'Bhumi Chavan',
-    role: 'Co-Founder · Vision & Product Architecture',
+    role: 'Co-founder · Product, Design & AI Experience',
     image: '/bhumi.jpg',
     grayscale: true,
-    currentStatus: 'Architecting Autonomous Workflows',
-    accentColor: '#7B5CF0', // Signature Purple
+    accentColor: '#7B5CF0',
     glowColor: 'rgba(123, 92, 240, 0.35)',
     email: 'act@norvaos.co.in',
-    bio: 'Leads product direction, interaction paradigms, and human-in-the-loop safety models. Focused on transforming tedious multi-step application hopping into single-breath autonomous actions.',
-    quote: 'If a repetitive task exists on a desktop, a human shouldn’t have to do it twice.',
-    specialties: ['Product Strategy', 'Workflow DAGs', 'Desktop Human-AI UX'],
+    bio: 'Bhumi shapes how Norva feels the second you start using it. From micro-interactions and visual calm to high-level system decisions, she makes autonomous desktop intelligence feel intuitive, transparent, and completely effortless.',
+    leads: ['Product Direction', 'UX Architecture', 'Agent Experience'],
+    knownFor: [
+      'Turning complex agent loops into calm, natural tools',
+      'Designing human-first AI interactions',
+      'Translating subtle user instincts into crisp product decisions',
+    ],
+    focus: 'Making desktop automation feel less like mechanical configuration and more like a thoughtful, reliable partner.',
+    currentStatus: 'Designing Calm Autonomous UX',
   },
   {
     name: 'Shivam Wadatkar',
-    role: 'Co-Founder · Systems & Engineering',
+    role: 'Co-founder · Engineering & Systems',
     image: '/shivam.png',
-    currentStatus: 'Currently High on Creativity',
-    accentColor: '#7B5CF0', // Signature Purple
+    grayscale: false,
+    accentColor: '#7B5CF0',
     glowColor: 'rgba(123, 92, 240, 0.35)',
     email: 'act@norvaos.co.in',
-    bio: 'Architects the local inference engine, native kernel dispatch pipelines, and OS sandboxing across macOS & Windows. Obsessed with microsecond-level dispatch latency and zero cloud egress.',
-    quote: 'Between the two of us — one thinks it, one ships it. Zero cloud compromises.',
-    specialties: ['Low-Level Systems', 'Local Model Runtimes', 'Native OS Sandboxes'],
+    bio: 'Shivam builds the quiet, privacy-first engine behind Norva. He connects local model inference with native OS hooks, obsessed with making automation feel instant without asking you to surrender a single byte of personal data to the cloud.',
+    leads: ['System Architecture', 'Local AI Runtimes', 'Platform Engineering'],
+    knownFor: [
+      'Strict zero-cloud local intelligence architecture',
+      'High-throughput native desktop automation',
+      'Turning ambitious engineering concepts into rock-solid software',
+    ],
+    focus: 'Crafting an OS-native intelligence layer that stays completely out of your way until it matters.',
+    currentStatus: 'Engineering Zero-Cloud Local Systems',
   },
 ]
 
@@ -120,7 +131,7 @@ export function TeamPage({ onBack }) {
         {/* =========================================================
             PROFILE CARDS IN APPLE LIQUID GLASS (EXACT SPEC MATCH)
             ========================================================= */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-4xl mx-auto mb-24">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10 max-w-5xl mx-auto mb-24">
           {FOUNDERS.map((founder, i) => (
             <motion.div
               key={founder.name}
@@ -189,16 +200,66 @@ export function TeamPage({ onBack }) {
 
                 {/* 3. Name & Subtitle */}
                 <h2
-                  className="text-[26px] sm:text-[30px] font-semibold text-[#17171C] tracking-tight leading-none mb-1.5"
+                  className="text-[26px] sm:text-[30px] font-semibold text-[#17171C] tracking-tight leading-none mb-2"
                   style={{ fontFamily: "'Switzer', sans-serif" }}
                 >
                   {founder.name}
                 </h2>
-                <p className="text-[14px] text-[#6B6B76] font-medium mb-6">
-                  {founder.role}
+                <div className="inline-flex items-center justify-center gap-1.5 px-3 py-1 rounded-full bg-[#7B5CF0]/8 border border-[#7B5CF0]/20 text-[#7B5CF0] text-[12.5px] font-medium mb-5 mx-auto">
+                  <span>{founder.role}</span>
+                </div>
+
+                {/* 4. Bio / Human Narrative */}
+                <p className="text-[14px] text-[#4A4A54] leading-relaxed text-left mb-6 font-normal">
+                  {founder.bio}
                 </p>
 
-                {/* 4. Action Buttons (Apple Liquid Glass Pills) */}
+                {/* 5. Details Section: Leads, Known for, Focus */}
+                <div className="space-y-4 text-left border-t border-[#EAE7E0]/90 pt-5 mb-6">
+                  {/* Leads at Norva */}
+                  <div>
+                    <span className="text-[11px] font-mono-jb uppercase tracking-wider text-[#8A8A96] block mb-2 font-medium">
+                      Leads at Norva
+                    </span>
+                    <div className="flex flex-wrap gap-1.5">
+                      {founder.leads.map((item) => (
+                        <span
+                          key={item}
+                          className="text-[12px] font-medium px-2.5 py-1 rounded-lg bg-white/80 border border-[#E8E6E1] text-[#2E2E35] shadow-2xs"
+                        >
+                          {item}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Known for */}
+                  <div>
+                    <span className="text-[11px] font-mono-jb uppercase tracking-wider text-[#8A8A96] block mb-2 font-medium">
+                      Known for
+                    </span>
+                    <ul className="space-y-1.5 text-[13px] text-[#4A4A54] m-0 p-0 list-none">
+                      {founder.knownFor.map((point) => (
+                        <li key={point} className="flex items-start gap-2">
+                          <span className="text-[#7B5CF0] font-bold text-sm leading-none mt-0.5">•</span>
+                          <span className="leading-snug">{point}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  {/* Current focus */}
+                  <div className="rounded-xl p-3 bg-gradient-to-r from-[#7B5CF0]/5 to-transparent border border-[#7B5CF0]/15">
+                    <span className="text-[11px] font-mono-jb uppercase tracking-wider text-[#7B5CF0] block mb-1 font-semibold">
+                      Current Focus
+                    </span>
+                    <p className="text-[12.5px] text-[#2E2E35] italic leading-snug m-0">
+                      "{founder.focus}"
+                    </p>
+                  </div>
+                </div>
+
+                {/* 6. Action Buttons (Apple Liquid Glass Pills) */}
                 <div className="grid grid-cols-2 gap-3 relative z-10">
                   {/* Left Button: Get in touch */}
                   <a

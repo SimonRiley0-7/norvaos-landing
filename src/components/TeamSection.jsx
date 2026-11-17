@@ -5,22 +5,22 @@ import { BorderBeam } from './BorderBeam'
 const TEAM = [
   {
     name: 'Bhumi Chavan',
-    role: 'Vision & Planning',
+    role: 'Product, Design & AI Experience',
     image: '/bhumi.jpg',
     grayscale: true,
-    tag: 'CS Major',
+    tag: 'Co-Founder',
     avatarText: 'BC',
-    quote: 'If a repetitive task exists on a desktop, a human shouldn’t have to do it twice.',
-    skills: ['Product Strategy', 'Workflow Architecture', 'UX Systems'],
+    quote: 'Making automation feel less like mechanical configuration and more like a thoughtful partner.',
+    skills: ['Product Direction', 'UX Architecture', 'Agent Experience'],
   },
   {
     name: 'Shivam Wadatkar',
     role: 'Engineering & Systems',
     image: '/shivam.png',
-    tag: 'CS Major',
+    tag: 'Co-Founder',
     avatarText: 'SW',
-    quote: 'Between the two of us — one thinks it, one ships it. Zero cloud compromises.',
-    skills: ['Local Models', 'Native macOS APIs', 'System Engine'],
+    quote: 'Building an OS-native intelligence layer that stays quiet until the moment it matters.',
+    skills: ['System Architecture', 'Local AI Runtimes', 'Zero-Cloud Privacy'],
   },
 ]
 
