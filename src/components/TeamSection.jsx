@@ -6,6 +6,7 @@ const TEAM = [
   {
     name: 'Bhumi Chavan',
     role: 'Vision & Planning',
+    image: '/bhumi.jpg',
     tag: 'CS Major',
     avatarText: 'BC',
     quote: 'If a repetitive task exists on a desktop, a human shouldn’t have to do it twice.',
@@ -14,6 +15,7 @@ const TEAM = [
   {
     name: 'Shivam Wadatkar',
     role: 'Engineering & Systems',
+    image: '/shivam.png',
     tag: 'CS Major',
     avatarText: 'SW',
     quote: 'Between the two of us — one thinks it, one ships it. Zero cloud compromises.',
@@ -98,20 +100,33 @@ export function TeamSection({ theme }) {
 
             {/* Header: avatar + title */}
             <div className="flex items-center gap-4 mb-6">
-              {/* Avatar circle */}
-              <div
-                className="flex items-center justify-center font-mono-jb text-sm font-bold rounded-2xl flex-shrink-0"
-                style={{
-                  width: 52,
-                  height: 52,
-                  background: 'linear-gradient(135deg, rgba(123,92,240,0.25) 0%, rgba(123,92,240,0.08) 100%)',
-                  border: '1px solid rgba(123,92,240,0.3)',
-                  color: 'var(--purple-soft)',
-                  boxShadow: '0 0 20px rgba(123,92,240,0.2)',
-                }}
-              >
-                {member.avatarText}
-              </div>
+              {/* Avatar circle / Image */}
+              {member.image ? (
+                <div
+                  className="rounded-2xl overflow-hidden flex-shrink-0 flex items-center justify-center border border-[#7B5CF0]/30 shadow-[0_0_20px_rgba(123,92,240,0.2)]"
+                  style={{ width: 52, height: 52 }}
+                >
+                  <img
+                    src={member.image}
+                    alt={member.name}
+                    className="w-full h-full object-cover object-top"
+                  />
+                </div>
+              ) : (
+                <div
+                  className="flex items-center justify-center font-mono-jb text-sm font-bold rounded-2xl flex-shrink-0"
+                  style={{
+                    width: 52,
+                    height: 52,
+                    background: 'linear-gradient(135deg, rgba(123,92,240,0.25) 0%, rgba(123,92,240,0.08) 100%)',
+                    border: '1px solid rgba(123,92,240,0.3)',
+                    color: 'var(--purple-soft)',
+                    boxShadow: '0 0 20px rgba(123,92,240,0.2)',
+                  }}
+                >
+                  {member.avatarText}
+                </div>
+              )}
 
               <div>
                 <div className="flex items-center gap-2">

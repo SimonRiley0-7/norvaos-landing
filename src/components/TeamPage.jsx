@@ -7,6 +7,7 @@ const FOUNDERS = [
   {
     name: 'Bhumi Chavan',
     role: 'Co-Founder · Vision & Product Architecture',
+    image: '/bhumi.jpg',
     status: 'Available for work',
     currentStatus: 'Architecting Autonomous Workflows',
     accentColor: '#7B5CF0', // Signature Purple
@@ -19,6 +20,7 @@ const FOUNDERS = [
   {
     name: 'Shivam Wadatkar',
     role: 'Co-Founder · Systems & Engineering',
+    image: '/shivam.png',
     status: 'Available for work',
     currentStatus: 'Currently High on Creativity',
     accentColor: '#7B5CF0', // Signature Purple
@@ -158,29 +160,43 @@ export function TeamPage({ onBack }) {
                   </div>
                 </div>
 
-                {/* 2. Center Squircle User Profile Placeholder */}
+                {/* 2. Center Squircle User Profile Image Container */}
                 <div
                   className="relative mx-auto mb-6 w-52 h-52 sm:w-60 sm:h-60 rounded-[28px] overflow-hidden flex flex-col items-center justify-center transition-transform duration-500 group-hover:scale-105"
                   style={{
                     background: 'linear-gradient(145deg, rgba(255, 255, 255, 0.95) 0%, rgba(244, 240, 255, 0.8) 100%)',
                     border: '1px solid rgba(255, 255, 255, 0.95)',
-                    boxShadow: 'inset 0 2px 4px 0 rgba(255, 255, 255, 1), 0 8px 24px -4px rgba(123, 92, 240, 0.12)',
+                    boxShadow: 'inset 0 2px 4px 0 rgba(255, 255, 255, 1), 0 12px 28px -4px rgba(123, 92, 240, 0.16)',
                   }}
                 >
-                  {/* Subtle inner radial ambient shine */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#7B5CF0]/10 via-transparent to-white/70 pointer-events-none" />
+                  {founder.image ? (
+                    <>
+                      <img
+                        src={founder.image}
+                        alt={founder.name}
+                        className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                      />
+                      {/* Subtle inner glass overlay rim */}
+                      <div className="absolute inset-0 rounded-[28px] pointer-events-none ring-1 ring-inset ring-white/50" />
+                    </>
+                  ) : (
+                    <>
+                      {/* Subtle inner radial ambient shine */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#7B5CF0]/10 via-transparent to-white/70 pointer-events-none" />
 
-                  {/* Liquid glass avatar circular frame */}
-                  <div
-                    className="w-24 h-24 sm:w-28 sm:h-28 rounded-full flex items-center justify-center relative z-10 shadow-sm"
-                    style={{
-                      background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(240, 235, 254, 0.75) 100%)',
-                      border: '1px solid rgba(255, 255, 255, 0.95)',
-                      boxShadow: 'inset 0 1px 2px 0 rgba(255, 255, 255, 1), 0 4px 14px -2px rgba(123, 92, 240, 0.15)',
-                    }}
-                  >
-                    <User size={46} className="text-[#7B5CF0] stroke-[1.6]" />
-                  </div>
+                      {/* Liquid glass avatar circular frame */}
+                      <div
+                        className="w-24 h-24 sm:w-28 sm:h-28 rounded-full flex items-center justify-center relative z-10 shadow-sm"
+                        style={{
+                          background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(240, 235, 254, 0.75) 100%)',
+                          border: '1px solid rgba(255, 255, 255, 0.95)',
+                          boxShadow: 'inset 0 1px 2px 0 rgba(255, 255, 255, 1), 0 4px 14px -2px rgba(123, 92, 240, 0.15)',
+                        }}
+                      >
+                        <User size={46} className="text-[#7B5CF0] stroke-[1.6]" />
+                      </div>
+                    </>
+                  )}
                 </div>
 
                 {/* 3. Name & Subtitle */}
