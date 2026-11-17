@@ -1,7 +1,21 @@
 import React, { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { ArrowLeft, User, Plus, Copy, Check, Zap, Sparkles, Mail } from 'lucide-react'
+import { ArrowLeft, User, Plus, Copy, Check, Zap, Sparkles, Mail, Globe, ExternalLink } from 'lucide-react'
 import { NorvaBrandLockup } from './NorvaLogo'
+
+function LinkedinIcon({ size = 15, className = '' }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      className={className}
+    >
+      <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z" />
+    </svg>
+  )
+}
 
 const FOUNDERS = [
   {
@@ -12,14 +26,9 @@ const FOUNDERS = [
     accentColor: '#7B5CF0',
     glowColor: 'rgba(123, 92, 240, 0.35)',
     email: 'act@norvaos.co.in',
+    linkedin: 'https://www.linkedin.com/in/bhumi-chavan',
     bio: 'Bhumi shapes how Norva feels the second you start using it. From micro-interactions and visual calm to high-level system decisions, she makes autonomous desktop intelligence feel intuitive, transparent, and completely effortless.',
     leads: ['Product Direction', 'UX Architecture', 'Agent Experience'],
-    knownFor: [
-      'Turning complex agent loops into calm, natural tools',
-      'Designing human-first AI interactions',
-      'Translating subtle user instincts into crisp product decisions',
-    ],
-    focus: 'Making desktop automation feel less like mechanical configuration and more like a thoughtful, reliable partner.',
     currentStatus: 'Designing Calm Autonomous UX',
   },
   {
@@ -30,14 +39,10 @@ const FOUNDERS = [
     accentColor: '#7B5CF0',
     glowColor: 'rgba(123, 92, 240, 0.35)',
     email: 'act@norvaos.co.in',
+    linkedin: 'https://www.linkedin.com/in/shivam-wadatkar',
+    website: 'https://shivamwadatkar.com',
     bio: 'Shivam builds the quiet, privacy-first engine behind Norva. He connects local model inference with native OS hooks, obsessed with making automation feel instant without asking you to surrender a single byte of personal data to the cloud.',
     leads: ['System Architecture', 'Local AI Runtimes', 'Platform Engineering'],
-    knownFor: [
-      'Strict zero-cloud local intelligence architecture',
-      'High-throughput native desktop automation',
-      'Turning ambitious engineering concepts into rock-solid software',
-    ],
-    focus: 'Crafting an OS-native intelligence layer that stays completely out of your way until it matters.',
     currentStatus: 'Engineering Zero-Cloud Local Systems',
   },
 ]
@@ -214,95 +219,113 @@ export function TeamPage({ onBack }) {
                   {founder.bio}
                 </p>
 
-                {/* 5. Details Section: Leads, Known for, Focus */}
-                <div className="space-y-4 text-left border-t border-[#EAE7E0]/90 pt-5 mb-6">
-                  {/* Leads at Norva */}
-                  <div>
-                    <span className="text-[11px] font-mono-jb uppercase tracking-wider text-[#8A8A96] block mb-2 font-medium">
-                      Leads at Norva
-                    </span>
-                    <div className="flex flex-wrap gap-1.5">
-                      {founder.leads.map((item) => (
-                        <span
-                          key={item}
-                          className="text-[12px] font-medium px-2.5 py-1 rounded-lg bg-white/80 border border-[#E8E6E1] text-[#2E2E35] shadow-2xs"
-                        >
-                          {item}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Known for */}
-                  <div>
-                    <span className="text-[11px] font-mono-jb uppercase tracking-wider text-[#8A8A96] block mb-2 font-medium">
-                      Known for
-                    </span>
-                    <ul className="space-y-1.5 text-[13px] text-[#4A4A54] m-0 p-0 list-none">
-                      {founder.knownFor.map((point) => (
-                        <li key={point} className="flex items-start gap-2">
-                          <span className="text-[#7B5CF0] font-bold text-sm leading-none mt-0.5">•</span>
-                          <span className="leading-snug">{point}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  {/* Current focus */}
-                  <div className="rounded-xl p-3 bg-gradient-to-r from-[#7B5CF0]/5 to-transparent border border-[#7B5CF0]/15">
-                    <span className="text-[11px] font-mono-jb uppercase tracking-wider text-[#7B5CF0] block mb-1 font-semibold">
-                      Current Focus
-                    </span>
-                    <p className="text-[12.5px] text-[#2E2E35] italic leading-snug m-0">
-                      "{founder.focus}"
-                    </p>
+                {/* 5. Leads at Norva */}
+                <div className="text-left border-t border-[#EAE7E0]/90 pt-5 mb-6">
+                  <span className="text-[11px] font-mono-jb uppercase tracking-wider text-[#8A8A96] block mb-2 font-medium">
+                    Leads at Norva
+                  </span>
+                  <div className="flex flex-wrap gap-1.5">
+                    {founder.leads.map((item) => (
+                      <span
+                        key={item}
+                        className="text-[12px] font-medium px-2.5 py-1 rounded-lg bg-white/80 border border-[#E8E6E1] text-[#2E2E35] shadow-2xs"
+                      >
+                        {item}
+                      </span>
+                    ))}
                   </div>
                 </div>
 
-                {/* 6. Action Buttons (Apple Liquid Glass Pills) */}
-                <div className="grid grid-cols-2 gap-3 relative z-10">
-                  {/* Left Button: Get in touch */}
-                  <a
-                    href="mailto:act@norvaos.co.in"
-                    className="group/btn inline-flex items-center justify-center gap-2 py-3.5 px-4 rounded-[20px] text-[13.5px] font-medium text-[#17171C] transition-all duration-200 active:scale-[0.97] hover:bg-white"
-                    style={{
-                      background: 'rgba(255, 255, 255, 0.75)',
-                      backdropFilter: 'blur(16px)',
-                      WebkitBackdropFilter: 'blur(16px)',
-                      border: '1px solid rgba(255, 255, 255, 0.95)',
-                      boxShadow:
-                        '0 4px 16px -2px rgba(23, 23, 28, 0.04), inset 0 1px 1px 0 rgba(255, 255, 255, 0.9)',
-                    }}
-                  >
-                    <Plus size={15} className="text-[#6B6B76] transition-transform group-hover/btn:rotate-90" />
-                    <span>Get in Touch</span>
-                  </a>
+                {/* 6. Action Buttons & Profile Links */}
+                <div className="space-y-2.5 relative z-10">
+                  {/* Primary Row: Get in touch & Copy Email */}
+                  <div className="grid grid-cols-2 gap-2.5">
+                    <a
+                      href="mailto:act@norvaos.co.in"
+                      className="group/btn inline-flex items-center justify-center gap-2 py-3 px-3.5 rounded-[18px] text-[13px] font-medium text-[#17171C] transition-all duration-200 active:scale-[0.97] hover:bg-white"
+                      style={{
+                        background: 'rgba(255, 255, 255, 0.75)',
+                        backdropFilter: 'blur(16px)',
+                        WebkitBackdropFilter: 'blur(16px)',
+                        border: '1px solid rgba(255, 255, 255, 0.95)',
+                        boxShadow:
+                          '0 4px 16px -2px rgba(23, 23, 28, 0.04), inset 0 1px 1px 0 rgba(255, 255, 255, 0.9)',
+                      }}
+                    >
+                      <Plus size={14} className="text-[#6B6B76] transition-transform group-hover/btn:rotate-90" />
+                      <span>Get in Touch</span>
+                    </a>
 
-                  {/* Right Button: Copy Email with feedback */}
-                  <button
-                    onClick={() => handleCopyEmail(founder.name, founder.email)}
-                    className="inline-flex items-center justify-center gap-2 py-3.5 px-4 rounded-[20px] text-[13.5px] font-medium text-[#17171C] transition-all duration-200 active:scale-[0.97] hover:bg-white cursor-pointer"
-                    style={{
-                      background: 'rgba(255, 255, 255, 0.75)',
-                      backdropFilter: 'blur(16px)',
-                      WebkitBackdropFilter: 'blur(16px)',
-                      border: '1px solid rgba(255, 255, 255, 0.95)',
-                      boxShadow:
-                        '0 4px 16px -2px rgba(23, 23, 28, 0.04), inset 0 1px 1px 0 rgba(255, 255, 255, 0.9)',
-                    }}
-                  >
-                    {copiedKey === founder.name ? (
-                      <>
-                        <Check size={15} className="text-emerald-600 stroke-[2.5]" />
-                        <span className="text-emerald-700 font-semibold">Copied!</span>
-                      </>
-                    ) : (
-                      <>
-                        <Copy size={15} className="text-[#6B6B76]" />
-                        <span>Copy Email</span>
-                      </>
+                    <button
+                      onClick={() => handleCopyEmail(founder.name, founder.email)}
+                      className="inline-flex items-center justify-center gap-2 py-3 px-3.5 rounded-[18px] text-[13px] font-medium text-[#17171C] transition-all duration-200 active:scale-[0.97] hover:bg-white cursor-pointer"
+                      style={{
+                        background: 'rgba(255, 255, 255, 0.75)',
+                        backdropFilter: 'blur(16px)',
+                        WebkitBackdropFilter: 'blur(16px)',
+                        border: '1px solid rgba(255, 255, 255, 0.95)',
+                        boxShadow:
+                          '0 4px 16px -2px rgba(23, 23, 28, 0.04), inset 0 1px 1px 0 rgba(255, 255, 255, 0.9)',
+                      }}
+                    >
+                      {copiedKey === founder.name ? (
+                        <>
+                          <Check size={14} className="text-emerald-600 stroke-[2.5]" />
+                          <span className="text-emerald-700 font-semibold">Copied!</span>
+                        </>
+                      ) : (
+                        <>
+                          <Copy size={14} className="text-[#6B6B76]" />
+                          <span>Copy Email</span>
+                        </>
+                      )}
+                    </button>
+                  </div>
+
+                  {/* Secondary Row: LinkedIn Profile & Personal Website (Shivam only) */}
+                  <div className={`grid ${founder.website ? 'grid-cols-2' : 'grid-cols-1'} gap-2.5`}>
+                    {founder.linkedin && (
+                      <a
+                        href={founder.linkedin}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group/link inline-flex items-center justify-center gap-2 py-3 px-3.5 rounded-[18px] text-[13px] font-medium text-[#17171C] transition-all duration-200 active:scale-[0.97] hover:bg-white hover:text-[#0A66C2]"
+                        style={{
+                          background: 'rgba(255, 255, 255, 0.75)',
+                          backdropFilter: 'blur(16px)',
+                          WebkitBackdropFilter: 'blur(16px)',
+                          border: '1px solid rgba(255, 255, 255, 0.95)',
+                          boxShadow:
+                            '0 4px 16px -2px rgba(23, 23, 28, 0.04), inset 0 1px 1px 0 rgba(255, 255, 255, 0.9)',
+                        }}
+                      >
+                        <LinkedinIcon size={14} className="text-[#0A66C2]" />
+                        <span>LinkedIn</span>
+                        <ExternalLink size={12} className="text-[#8E8E98] group-hover/link:text-[#0A66C2] transition-colors" />
+                      </a>
                     )}
-                  </button>
+
+                    {founder.website && (
+                      <a
+                        href={founder.website}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group/link inline-flex items-center justify-center gap-2 py-3 px-3.5 rounded-[18px] text-[13px] font-medium text-[#17171C] transition-all duration-200 active:scale-[0.97] hover:bg-white hover:text-[#7B5CF0]"
+                        style={{
+                          background: 'rgba(255, 255, 255, 0.75)',
+                          backdropFilter: 'blur(16px)',
+                          WebkitBackdropFilter: 'blur(16px)',
+                          border: '1px solid rgba(255, 255, 255, 0.95)',
+                          boxShadow:
+                            '0 4px 16px -2px rgba(23, 23, 28, 0.04), inset 0 1px 1px 0 rgba(255, 255, 255, 0.9)',
+                        }}
+                      >
+                        <Globe size={14} className="text-[#7B5CF0]" />
+                        <span>Website</span>
+                        <ExternalLink size={12} className="text-[#8E8E98] group-hover/link:text-[#7B5CF0] transition-colors" />
+                      </a>
+                    )}
+                  </div>
                 </div>
               </div>
 
