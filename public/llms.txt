@@ -1,14 +1,25 @@
-# NORVA OS — The Local-First Agentic OS
+# Norva OS — The Local-First Agentic OS
 > Autonomous Desktop Intelligence for macOS & Windows. Runs 100% locally with zero cloud data egress.
 
 ## Overview
-NORVA is a native Agentic Operating System (Agentic OS) that transforms your desktop into an autonomous workspace. Unlike cloud chatbots that live inside a browser tab and know nothing about your machine, NORVA operates directly at the OS level—observing open application context, reasoning across multi-step execution graphs (DAGs), and executing actions natively across your files, terminal, browser, and local apps.
+Norva OS is a native Agentic Operating System (Agentic OS) that transforms your desktop into an autonomous workspace. Unlike cloud chatbots that live inside a browser tab and know nothing about your machine, Norva OS operates directly at the OS level—observing open application context, reasoning across multi-step execution graphs (DAGs), and executing native actions across your files, terminal, browser, and local apps.
 
 ## Key Differentiators
 - **Agentic OS Architecture**: Autonomous agents collaborate to break down complex natural-language goals into deterministic, step-by-step desktop actions with human-in-the-loop oversight.
 - **Strict Zero-Cloud Privacy**: Built for air-gapped environments. Local SLM/LLM inference (quantized models) and local vector embeddings run on Apple Silicon Metal and Windows DirectX/NPU hardware. No telemetry, screen recordings, or user data ever leave the machine.
 - **Context-Aware Desktop Perception**: Understands active windows, open editor buffers (VS Code), design files (Figma), git branches, and local directory states.
-- **Deterministic Rollback & Safety**: Before executing file system changes or app actions, NORVA generates an inspectable execution DAG with an atomic undo transaction log.
+- **Deterministic Rollback & Safety**: Before executing file system changes or app actions, Norva OS generates an inspectable execution DAG with an atomic undo transaction log.
+
+## Built-In Autonomous Workflows
+Norva OS automates routine, high-friction knowledge work natively on your machine:
+1. **The Morning Briefing**: Daily email triage, calendar snapshot, and pending workspace actions at system startup without opening multiple browser tabs.
+2. **Quick Email Actions & Triage**: Draft replies, summarize long threads, and dictate natural responses directly in native Apple Mail.
+3. **Calendar & Meeting Scheduling**: Conversational meeting scheduling, auto-detection of calendar conflicts, and intelligent rescheduling.
+4. **Document Summarization & Insights**: Semantic document indexing across PDFs, Word, Google Docs, and Markdown files with verifiable page citations.
+5. **Meeting Prep Dossier**: Automatically pulls relevant email threads, files, calendar context, and past decisions 10 minutes prior to calls.
+6. **Task & Reminder Management**: Contextual to-do extraction from emails and meetings, seamlessly synced with Apple Reminders.
+7. **Excel & Spreadsheet Insights**: Local dataset summarization, metric extraction, and formula generation with zero cloud data upload.
+8. **End-of-Day Recap**: Summarizes completed tasks, git commit logs, and prepares tomorrow's workspace priority queue.
 
 ## Target Audience
 - Software engineers, systems programmers, and technical builders

@@ -83,7 +83,7 @@ export function HeroSection({ onWatchDemo, onDownloadClick }) {
               transition={{ delay: 0.35, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
               className="text-[16px] sm:text-[18px] text-[#5A5A66] leading-relaxed max-w-[440px] mb-7 sm:mb-8 font-normal"
             >
-              NORVA is the OS-native agentic layer that understands your active desktop context,
+              Norva OS is the native agentic layer that understands your active desktop context,
               automates complex workflows, and executes tasks natively with zero cloud data egress.
             </motion.p>
 

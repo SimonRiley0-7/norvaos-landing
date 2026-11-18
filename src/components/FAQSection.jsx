@@ -7,32 +7,32 @@ export function FAQSection() {
 
   const faqs = [
     {
-      q: 'What is an Agentic OS and how does NORVA work?',
+      q: 'What is an Agentic OS and how does Norva OS work?',
       a: 'An Agentic OS is an operating system intelligence layer where autonomous AI agents perceive active desktop context, coordinate multi-step workflows across applications, and execute native tasks locally on your device with strict privacy and deterministic undo safety.',
     },
     {
-      q: 'How is NORVA different from ChatGPT or Copilot in the browser?',
-      a: 'Web chatbots are isolated in a browser tab. They know nothing about your open windows, git branches, or local files unless you manually copy-paste context. NORVA is an OS-native Agentic OS layer that runs in background memory, perceiving your actual active screen context, querying local files semantically, and executing multi-step tasks across macOS and Windows natively.',
+      q: 'How is Norva OS different from ChatGPT or Copilot in the browser?',
+      a: 'Web chatbots are isolated in a browser tab. They know nothing about your open windows, git branches, or local files unless you manually copy-paste context. Norva OS is an OS-native Agentic OS layer that runs in background memory, perceiving your actual active screen context, querying local files semantically, and executing multi-step tasks across macOS and Windows natively.',
     },
     {
-      q: 'Does NORVA send my files, documents, or screen to cloud servers?',
-      a: 'No. NORVA is built on a strict local-first architecture. Quantized AI model weights are loaded directly into local hardware memory. Vector embeddings and search indices are stored in an encrypted local database on your drive. No desktop telemetry or document contents ever leave your device.',
+      q: 'Does Norva OS send my files, documents, or screen to cloud servers?',
+      a: 'No. Norva OS is built on a strict local-first architecture. Quantized AI model weights are loaded directly into local hardware memory. Vector embeddings and search indices are stored in an encrypted local database on your drive. No desktop telemetry or document contents ever leave your device.',
     },
     {
-      q: 'Does NORVA work offline in Airplane Mode?',
-      a: 'Yes. All core capabilities—natural language file search, document summarization, desktop automation, context perception, and workflow execution—run 100% on-device using local hardware acceleration. You can disconnect Wi-Fi entirely and NORVA continues to work with zero degradation.',
+      q: 'Does Norva OS work offline in Airplane Mode?',
+      a: 'Yes. All core capabilities—natural language file search, document summarization, desktop automation, context perception, and workflow execution—run 100% on-device using local hardware acceleration. You can disconnect Wi-Fi entirely and Norva OS continues to work with zero degradation.',
     },
     {
       q: 'What are the system requirements and supported operating systems?',
-      a: 'NORVA supports macOS 14+ (Apple Silicon M1-M4 & Intel) and Windows 11 (x64 & ARM64). Local model acceleration leverages native GPU and NPU hardware with zero cloud dependencies.',
+      a: 'Norva OS supports macOS 14+ (Apple Silicon M1-M4 & Intel) and Windows 11 (x64 & ARM64). Local model acceleration leverages native GPU and NPU hardware with zero cloud dependencies.',
     },
     {
       q: 'What capabilities are available today vs planned on the roadmap?',
       a: 'Available today (v1.0.0 Public Beta): Natural-language file discovery, document indexing & semantic QA (PDF, Markdown, TXT), active workspace context radar (VS Code, Figma, Terminal, Slack), multi-step file automation, and daily briefing workflows. Planned for upcoming releases: Multi-modal screen perception via local Vision models, cross-app deep system extensions, and custom workflow triggers.',
     },
     {
-      q: 'How does NORVA prevent accidental or destructive file changes?',
-      a: 'NORVA never performs destructive actions autonomously. Before executing file moves, code token extraction, or email drafting, it generates a deterministic execution plan DAG with rollback capability. You can inspect every step, and changes are logged to an atomic undo transaction log.',
+      q: 'How does Norva OS prevent accidental or destructive file changes?',
+      a: 'Norva OS never performs destructive actions autonomously. Before executing file moves, code token extraction, or email drafting, it generates a deterministic execution plan DAG with rollback capability. You can inspect every step, and changes are logged to an atomic undo transaction log.',
     },
   ]
 
