@@ -40,15 +40,15 @@ export function HeroSection({ onWatchDemo, onDownloadClick }) {
               LEFT COLUMN: EDITORIAL PRODUCT MESSAGING
               ========================================================= */}
           <div className="lg:col-span-5 flex flex-col items-start text-left z-10 pl-0 sm:pl-4 lg:pl-8 xl:pl-12">
-            {/* 1. Small label: "Local by design" */}
+            {/* 1. Small label: "The Local-First Agentic OS" */}
             <motion.div
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
               className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full liquid-glass-pill text-[#17171C] text-[13px] font-medium mb-6 select-none"
             >
-              <Lock size={12} className="text-[#6B6B76] stroke-[2.2]" />
-              <span>Local by design</span>
+              <Lock size={12} className="text-[#7B5CF0] stroke-[2.2]" />
+              <span>The Local-First Agentic OS</span>
             </motion.div>
 
             {/* 2. Main headline: "Your desktop works for you." */}
@@ -83,8 +83,8 @@ export function HeroSection({ onWatchDemo, onDownloadClick }) {
               transition={{ delay: 0.35, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
               className="text-[16px] sm:text-[18px] text-[#5A5A66] leading-relaxed max-w-[440px] mb-7 sm:mb-8 font-normal"
             >
-              NORVA is the OS-native intelligence layer that understands your work,
-              automates the repetitive, and helps you get things done.
+              NORVA is the OS-native agentic layer that understands your active desktop context,
+              automates complex workflows, and executes tasks natively with zero cloud data egress.
             </motion.p>
 
             {/* 4. Action CTAs */}

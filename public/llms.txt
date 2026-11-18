@@ -1,0 +1,23 @@
+# NORVA OS — The Local-First Agentic OS
+> Autonomous Desktop Intelligence for macOS & Windows. Runs 100% locally with zero cloud data egress.
+
+## Overview
+NORVA is a native Agentic Operating System (Agentic OS) that transforms your desktop into an autonomous workspace. Unlike cloud chatbots that live inside a browser tab and know nothing about your machine, NORVA operates directly at the OS level—observing open application context, reasoning across multi-step execution graphs (DAGs), and executing actions natively across your files, terminal, browser, and local apps.
+
+## Key Differentiators
+- **Agentic OS Architecture**: Autonomous agents collaborate to break down complex natural-language goals into deterministic, step-by-step desktop actions with human-in-the-loop oversight.
+- **Strict Zero-Cloud Privacy**: Built for air-gapped environments. Local SLM/LLM inference (quantized models) and local vector embeddings run on Apple Silicon Metal and Windows DirectX/NPU hardware. No telemetry, screen recordings, or user data ever leave the machine.
+- **Context-Aware Desktop Perception**: Understands active windows, open editor buffers (VS Code), design files (Figma), git branches, and local directory states.
+- **Deterministic Rollback & Safety**: Before executing file system changes or app actions, NORVA generates an inspectable execution DAG with an atomic undo transaction log.
+
+## Target Audience
+- Software engineers, systems programmers, and technical builders
+- Designers and creative professionals managing complex project assets
+- Privacy-conscious knowledge workers, executives, and researchers
+
+## Technical Specifications
+- **Supported Platforms**: macOS 14+ (Apple Silicon M1–M4 & Intel), Windows 11 (x64 & ARM64)
+- **Local Runtimes**: Local quantized model runtimes (Qwen, Whisper, LangGraph agent workflows)
+- **Official Website**: https://norvaos.co.in/
+- **Team**: Founded by Bhumi Chavan (Product, Design & AI Experience) and Shivam Wadatkar (Systems & Engineering)
+- **Contact & Beta Waitlist**: act@norvaos.co.in | https://norvaos.co.in/#notify-me

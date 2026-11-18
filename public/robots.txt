@@ -1,5 +1,33 @@
 User-agent: *
 Allow: /
 Disallow: /dashboard
+Disallow: /api/
 
+# AI & LLM Search Crawlers (Generative Engine Optimization)
+User-agent: GPTBot
+Allow: /
+Disallow: /dashboard
+Disallow: /api/
+
+User-agent: ChatGPT-User
+Allow: /
+Disallow: /dashboard
+
+User-agent: PerplexityBot
+Allow: /
+Disallow: /dashboard
+
+User-agent: ClaudeBot
+Allow: /
+Disallow: /dashboard
+
+User-agent: Google-Extended
+Allow: /
+Disallow: /dashboard
+
+User-agent: Applebot-Extended
+Allow: /
+Disallow: /dashboard
+
+# Sitemaps and LLM Knowledge Files
 Sitemap: https://norvaos.co.in/sitemap.xml

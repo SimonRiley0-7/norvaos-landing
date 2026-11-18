@@ -7,8 +7,12 @@ export function FAQSection() {
 
   const faqs = [
     {
+      q: 'What is an Agentic OS and how does NORVA work?',
+      a: 'An Agentic OS is an operating system intelligence layer where autonomous AI agents perceive active desktop context, coordinate multi-step workflows across applications, and execute native tasks locally on your device with strict privacy and deterministic undo safety.',
+    },
+    {
       q: 'How is NORVA different from ChatGPT or Copilot in the browser?',
-      a: 'Web chatbots are isolated in a browser tab. They know nothing about your open windows, git branches, or local files unless you manually copy-paste context. NORVA is an OS-native desktop intelligence layer that runs in background memory, perceiving your actual active screen context, querying local files semantically, and executing multi-step tasks across macOS and Windows natively.',
+      a: 'Web chatbots are isolated in a browser tab. They know nothing about your open windows, git branches, or local files unless you manually copy-paste context. NORVA is an OS-native Agentic OS layer that runs in background memory, perceiving your actual active screen context, querying local files semantically, and executing multi-step tasks across macOS and Windows natively.',
     },
     {
       q: 'Does NORVA send my files, documents, or screen to cloud servers?',
