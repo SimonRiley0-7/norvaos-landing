@@ -18,6 +18,6 @@ NORVA is a native Agentic Operating System (Agentic OS) that transforms your des
 ## Technical Specifications
 - **Supported Platforms**: macOS 14+ (Apple Silicon M1–M4 & Intel), Windows 11 (x64 & ARM64)
 - **Local Runtimes**: Local quantized model runtimes (Qwen, Whisper, LangGraph agent workflows)
-- **Official Website**: https://norvaos.co.in/
+- **Official Website**: https://www.norvaos.co.in/
 - **Team**: Founded by Bhumi Chavan (Product, Design & AI Experience) and Shivam Wadatkar (Systems & Engineering)
-- **Contact & Beta Waitlist**: act@norvaos.co.in | https://norvaos.co.in/#notify-me
+- **Contact & Beta Waitlist**: act@norvaos.co.in | https://www.norvaos.co.in/#notify-me

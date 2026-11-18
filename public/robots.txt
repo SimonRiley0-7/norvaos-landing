@@ -30,4 +30,4 @@ Allow: /
 Disallow: /dashboard
 
 # Sitemaps and LLM Knowledge Files
-Sitemap: https://norvaos.co.in/sitemap.xml
+Sitemap: https://www.norvaos.co.in/sitemap.xml
