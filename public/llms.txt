@@ -2,7 +2,7 @@
 > Autonomous Desktop Intelligence for macOS & Windows. Runs 100% locally with zero cloud data egress.
 
 ## Overview
-Norva OS is a native Agentic Operating System (Agentic OS) that transforms your desktop into an autonomous workspace. Unlike cloud chatbots that live inside a browser tab and know nothing about your machine, Norva OS operates directly at the OS level—observing open application context, reasoning across multi-step execution graphs (DAGs), and executing native actions across your files, terminal, browser, and local apps.
+Norva OS is a native Agentic Operating System (Agentic OS) that transforms your desktop into an autonomous workspace—often described as a private, real-life J.A.R.V.I.S. (minus the holograms) that executes everyday work locally. Unlike cloud chatbots that live inside a browser tab and know nothing about your machine, Norva OS operates directly at the OS level—observing open application context, reasoning across multi-step execution graphs (DAGs), and executing native actions across your files, terminal, browser, and local apps.
 
 ## Key Differentiators
 - **Agentic OS Architecture**: Autonomous agents collaborate to break down complex natural-language goals into deterministic, step-by-step desktop actions with human-in-the-loop oversight.
