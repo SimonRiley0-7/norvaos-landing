@@ -53,6 +53,7 @@ export function HeroSection({ onWatchDemo, onDownloadClick }) {
 
             {/* 2. Main headline: "Your desktop works for you." */}
             <motion.h1
+              id="hero-heading"
               initial={{ opacity: 0, y: 22 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
@@ -78,6 +79,7 @@ export function HeroSection({ onWatchDemo, onDownloadClick }) {
 
             {/* 3. Description */}
             <motion.p
+              id="hero-description"
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.35, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}

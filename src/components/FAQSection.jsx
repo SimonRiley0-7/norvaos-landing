@@ -108,7 +108,7 @@ export function FAQSection() {
                       transition={{ duration: 0.25, ease: 'easeInOut' }}
                       className="overflow-hidden"
                     >
-                      <div className="px-4 sm:px-6 pb-4 sm:pb-5 pt-1 text-[13.5px] sm:text-[14.5px] text-[#5A5A66] leading-relaxed border-t border-black/[0.04]">
+                      <div className="aeo-answer px-4 sm:px-6 pb-4 sm:pb-5 pt-1 text-[13.5px] sm:text-[14.5px] text-[#5A5A66] leading-relaxed border-t border-black/[0.04]">
                         {faq.a}
                       </div>
                     </motion.div>
