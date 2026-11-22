@@ -6,20 +6,28 @@ import { supabase, isSupabaseConfigured } from './supabase.js'
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
-const DATA_DIR = path.join(__dirname, 'data')
+const isVercel = Boolean(process.env.VERCEL)
+const DATA_DIR = isVercel ? '/tmp/data' : path.join(__dirname, 'data')
 const DB_FILE = path.join(DATA_DIR, 'waitlist.json')
 
 // Local JSON storage fallback
-if (!fs.existsSync(DATA_DIR)) {
-  fs.mkdirSync(DATA_DIR, { recursive: true })
-}
-if (!fs.existsSync(DB_FILE)) {
-  fs.writeFileSync(DB_FILE, JSON.stringify([], null, 2), 'utf-8')
+try {
+  if (!fs.existsSync(DATA_DIR)) {
+    fs.mkdirSync(DATA_DIR, { recursive: true })
+  }
+  if (!fs.existsSync(DB_FILE)) {
+    fs.writeFileSync(DB_FILE, JSON.stringify([], null, 2), 'utf-8')
+  }
+} catch (err) {
+  console.warn('[DB] Local filesystem init warning (read-only environment):', err.message)
 }
 
 function getLocalSubscribers() {
   try {
-    return JSON.parse(fs.readFileSync(DB_FILE, 'utf-8'))
+    if (fs.existsSync(DB_FILE)) {
+      return JSON.parse(fs.readFileSync(DB_FILE, 'utf-8'))
+    }
+    return []
   } catch {
     return []
   }
@@ -27,6 +35,9 @@ function getLocalSubscribers() {
 
 function saveLocalSubscribers(subscribers) {
   try {
+    if (!fs.existsSync(DATA_DIR)) {
+      fs.mkdirSync(DATA_DIR, { recursive: true })
+    }
     fs.writeFileSync(DB_FILE, JSON.stringify(subscribers, null, 2), 'utf-8')
   } catch (err) {
     console.error('Error saving local waitlist:', err)

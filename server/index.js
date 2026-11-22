@@ -172,12 +172,16 @@ app.get('/api/stats', async (req, res) => {
   }
 })
 
-const server = app.listen(PORT, () => {
-  console.log(`🚀 NORVA Backend API running at http://localhost:${PORT}`)
-}).on('error', (err) => {
-  if (err.code === 'EADDRINUSE') {
-    console.log(`ℹ️ Port ${PORT} already active.`)
-  } else {
-    console.error('Server error:', err)
-  }
-})
+if (!process.env.VERCEL) {
+  app.listen(PORT, () => {
+    console.log(`🚀 NORVA Backend API running at http://localhost:${PORT}`)
+  }).on('error', (err) => {
+    if (err.code === 'EADDRINUSE') {
+      console.log(`ℹ️ Port ${PORT} already active.`)
+    } else {
+      console.error('Server error:', err)
+    }
+  })
+}
+
+export default app
